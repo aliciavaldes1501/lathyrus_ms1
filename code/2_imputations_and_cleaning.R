@@ -1,0 +1,174 @@
+library(tidyr)
+library(plyr)
+library(sjPlot)
+library(ggplot2)
+library(fmsb)
+
+data_imput<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/data_20062017_forimput.csv",
+                       header=T,sep="\t",dec=",") #Read all data
+bud_sizes<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/bud_sizes.csv",
+                       header=T,sep="\t",dec=",") #Read data on bud sizes
+head(data_imput)
+str(data_imput)
+data_imput$FFD_corr<-as.Date(as.character(data_imput$FFD_corr),format="%d/%m/%Y")
+
+head(bud_sizes)
+
+bud_sizes[sapply(bud_sizes, function(x) all(is.na(x)))] <- NULL #remove columns with all NAs
+str(bud_sizes)
+bud_sizes<-gather(bud_sizes, key=day, value=bud_size, X114:X148,factor_key=T) #Convert from wide to long
+bud_sizes<-subset(bud_sizes,!bud_size=="") #remove rows with blank bud_size
+bud_sizes$day<-as.integer(substring(as.character(bud_sizes$day),2))
+bud_sizes$bud_size[bud_sizes$bud_size=="S"] <- 1
+bud_sizes$bud_size[bud_sizes$bud_size=="M"] <- 2
+bud_sizes$bud_size[bud_sizes$bud_size=="L"] <- 3
+bud_sizes$bud_size[bud_sizes$bud_size=="XL"] <-4
+bud_sizes$bud_size<-as.integer(bud_sizes$bud_size)
+
+head(bud_sizes)
+str(bud_sizes)
+
+#subset to use for building a model of FFD against bud size and day
+subset_model<-subset(bud_sizes,!FFD_action=="impute")
+
+with(subset_model,hist(FFD_julian,breaks=50))
+with(subset_model,hist(bud_size))
+with(subset_model,hist(day))
+with(subset_model,plot(as.factor(bud_size)~day))
+with(subset_model,plot(FFD_julian~as.factor(bud_size)))
+with(subset_model,plot(FFD_julian~day))
+
+model_FFD<-lm(FFD_julian~bud_size*day,subset_model)
+summary(model_FFD)
+plot(model_FFD)
+
+# model_FFD_id<-lmer(FFD_julian~bud_size*day+(1|id),subset_model)
+# summary(model_FFD_id)
+# plot(model_FFD_id) #use lm
+
+sjp.int(model_FFD, type = "eff",mdrt.values = "quart",swap.pred=T) #Plot of interaction effect
+
+model_FFD_yrs<-lmList(FFD_julian~bud_size*day|year,data=subset_model) #All yrs
+summary(model_FFD_yrs)
+plot(model_FFD_yrs)
+
+model_FFD06<-lm(FFD_julian~bud_size+day,subset(subset_model,year==2006))
+model_FFD07<-lm(FFD_julian~bud_size+day,subset(subset_model,year==2007)) 
+model_FFD08<-lm(FFD_julian~bud_size+day,subset(subset_model,year==2008)) 
+model_FFD09<-lm(FFD_julian~bud_size+day,subset(subset_model,year==2009)) 
+model_FFD10<-lm(FFD_julian~bud_size*day,subset(subset_model,year==2010)) 
+model_FFD11<-lm(FFD_julian~bud_size*day,subset(subset_model,year==2011)) 
+model_FFD12<-lm(FFD_julian~bud_size*day,subset(subset_model,year==2012)) 
+model_FFD13<-lm(FFD_julian~bud_size*day,subset(subset_model,year==2013)) 
+model_FFD14<-lm(FFD_julian~bud_size*day,subset(subset_model,year==2014)) 
+model_FFD15<-lm(FFD_julian~bud_size+day,subset(subset_model,year==2015)) 
+
+summary(model_FFD06)
+summary(model_FFD07)
+summary(model_FFD08)
+summary(model_FFD09)
+summary(model_FFD10)
+summary(model_FFD11)
+summary(model_FFD12)
+summary(model_FFD13)
+summary(model_FFD14)
+summary(model_FFD15)
+
+#Compare distributions of predicted vs observed values
+data06<-data.frame(observed=subset(subset_model,year==2006)$FFD_julian, predicted=predict(model_FFD06))
+data07<-data.frame(observed=subset(subset_model,year==2007)$FFD_julian, predicted=predict(model_FFD07))
+data08<-data.frame(observed=subset(subset_model,year==2008)$FFD_julian, predicted=predict(model_FFD08))
+data09<-data.frame(observed=subset(subset_model,year==2009)$FFD_julian, predicted=predict(model_FFD09))
+data10<-data.frame(observed=subset(subset_model,year==2010)$FFD_julian, predicted=predict(model_FFD10))
+data11<-data.frame(observed=subset(subset_model,year==2011)$FFD_julian, predicted=predict(model_FFD11))
+data12<-data.frame(observed=subset(subset_model,year==2012)$FFD_julian, predicted=predict(model_FFD12))
+data13<-data.frame(observed=subset(subset_model,year==2013)$FFD_julian, predicted=predict(model_FFD13))
+data14<-data.frame(observed=subset(subset_model,year==2014)$FFD_julian, predicted=predict(model_FFD14))
+data15<-data.frame(observed=subset(subset_model,year==2015)$FFD_julian, predicted=predict(model_FFD15))
+
+ggplot(data06) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data07) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data08) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data09) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data10) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data11) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data12) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data13) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data14) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+ggplot(data15) +geom_density(aes(x=observed),alpha=.3, fill="blue")+geom_density(aes(x=predicted),alpha=.3, fill="red")
+
+#Use per-year models 
+#or all-year model? 
+#to predict FFD values where FFD_action=biased/imp_bdsize/impute
+
+predict06<-as.data.frame(predict(model_FFD06,newdata=subset(subset(bud_sizes,year==2006),FFD_action=="impute")))
+predict07<-as.data.frame(predict(model_FFD07,newdata=subset(subset(bud_sizes,year==2007),FFD_action=="impute")))
+predict08<-as.data.frame(predict(model_FFD08,newdata=subset(subset(bud_sizes,year==2008),FFD_action=="impute")))
+predict09<-as.data.frame(predict(model_FFD09,newdata=subset(subset(bud_sizes,year==2009),FFD_action=="impute")))
+predict10<-as.data.frame(predict(model_FFD10,newdata=subset(subset(bud_sizes,year==2010),FFD_action=="impute")))
+predict11<-as.data.frame(predict(model_FFD11,newdata=subset(subset(bud_sizes,year==2011),FFD_action=="impute")))
+predict12<-as.data.frame(predict(model_FFD12,newdata=subset(subset(bud_sizes,year==2012),FFD_action=="impute")))
+predict13<-as.data.frame(predict(model_FFD13,newdata=subset(subset(bud_sizes,year==2013),FFD_action=="impute")))
+predict14<-as.data.frame(predict(model_FFD14,newdata=subset(subset(bud_sizes,year==2014),FFD_action=="impute")))
+predict15<-as.data.frame(predict(model_FFD15,newdata=subset(subset(bud_sizes,year==2015),FFD_action=="impute")))
+
+names(predict06)<-c("FFD_i")
+names(predict07)<-c("FFD_i")
+names(predict08)<-c("FFD_i")
+names(predict09)<-c("FFD_i")
+names(predict10)<-c("FFD_i")
+names(predict11)<-c("FFD_i")
+names(predict12)<-c("FFD_i")
+names(predict13)<-c("FFD_i")
+names(predict14)<-c("FFD_i")
+names(predict15)<-c("FFD_i")
+
+predictions<-rbind(predict06,predict07,predict08,predict09,predict10,predict11,predict12,predict13,predict14,predict15)
+
+bud_sizes<-merge(bud_sizes, predictions, by="row.names",all.x=T) #New colum with imputed FFD (FFD_i) for pls where FFD_action=biased/imp_bdsize/impute
+
+bud_sizes$Row.names<-NULL
+bud_sizes$FFD<-ifelse(is.na(bud_sizes$FFD_julian),as.integer(round(bud_sizes$FFD_i)),bud_sizes$FFD_julian)
+bud_sizes$FFD_imputed<-ifelse(is.na(bud_sizes$FFD_julian),1,0) #Says if FFD was imputed (1) or not (0)
+
+head(bud_sizes)
+bud_sizes$year<-as.factor(bud_sizes$year)
+bud_sizes$id<-as.factor(bud_sizes$id)
+bud_sizes<-bud_sizes[with(bud_sizes, order(year,id,day)),]
+
+bud_sizes<-unique(bud_sizes[c(1:2,8:9)])
+head(bud_sizes)
+str(bud_sizes)
+
+#merge with data imput
+data_imput<-merge(data_imput,bud_sizes,by=c("year","id"),all.x=T,all.y=T)
+str(subset(data_imput,FFD_action=="impute"&!is.na(FFD))) #168 cases imputed
+subset(data_imput,FFD_action=="impute"&is.na(FFD)) #11 cases could not be imputed because no info on bud sizes - What to do?
+
+#predict shoot_vol with cum_n_fl?
+
+str(subset(data_imput,data==1&is.na(shoot_vol))) #40 pls with no shoot_vol
+str(subset(data_imput,data==1&is.na(cum_n_fl))) #31 pls with no cum_n_fl
+str(subset(data_imput,data==1&is.na(cum_n_fl)&is.na(shoot_vol))) #4 pls with no shoot_vol and no cum_n_fl
+#2 of them where FFD was imputed (use?), 2 also with no FFD (remove?)
+
+#We can predict shoot_vol from cum_n_fl in 40-4=36 pls
+
+subset(data_imput,data==1&shoot_vol==0) #1 pl with shoot_vol=0, impute?
+
+with(data_imput,hist(log(shoot_vol)))
+with(data_imput,hist(log(cum_n_fl)))
+
+model_vol<-lm(log(shoot_vol)~log(cum_n_fl),subset(data_imput,data==1&shoot_vol>0))
+summary(model_vol)
+plot(model_vol)
+
+with(subset(data_imput,data==1&shoot_vol>0),plot(log(shoot_vol)~log(cum_n_fl)))
+abline(model_vol)
+
+model_vol_nb<-glm.nb(shoot_vol~cum_n_fl,subset(data_imput,data==1&shoot_vol>0))
+summary(model_vol_nb)
+NagelkerkeR2(model_vol_nb)
+plot(model_vol_nb)
+
+

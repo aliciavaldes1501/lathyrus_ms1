@@ -1,0 +1,46 @@
+---
+title: "Exploratory analyses Lathyrus"
+output:
+  pdf_document: default
+---
+
+```{r include=FALSE}
+library(lattice)
+data_imputed_FFD<-read.csv("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/data_imputed_FFD.csv",
+                       header=T,sep="\t",dec=".") #Read data
+```
+
+
+Step 1: Are there outliers in Y and X?
+
+```{r}
+par(mfrow=c(2,4)) 
+boxplot(data_imputed_FFD$grazing,main="grazing")
+boxplot(data_imputed_FFD$shoot_vol,main="shoot_volume")
+boxplot(data_imputed_FFD$cum_n_fl,main="n_fl")
+boxplot(data_imputed_FFD$n_fr,main="n_fr")
+boxplot(data_imputed_FFD$n_ovules,main="n_ovules")
+boxplot(data_imputed_FFD$total_n_seeds,main="total_n_seeds")
+boxplot(data_imputed_FFD$total_n_intact_seeds,main="total_n_intact_seeds")
+boxplot(data_imputed_FFD$FFD,main="FFD")
+
+Z <- cbind(data_imputed_FFD$grazing, data_imputed_FFD$shoot_vol,  
+    data_imputed_FFD$cum_n_fl,data_imputed_FFD$n_fr,
+    data_imputed_FFD$n_ovules,data_imputed_FFD$total_n_seeds,
+    data_imputed_FFD$total_n_intact_seeds,data_imputed_FFD$FFD)
+
+colnames(Z) <- c("grazing","shoot_vol","n_fl","n_fr","n_ovules",
+                 "total_n_seeds","total_n_intact_seeds","FFD")
+
+dotplot(as.matrix(Z), groups = FALSE,
+        strip = strip.custom(bg = 'white',
+        par.strip.text = list(cex = 0.8)),
+        scales = list(x = list(relation = "free"),
+                      y = list(relation = "free"),
+                      draw = F),
+        col = 1, cex  = 0.5, pch = 16,
+        xlab = "Value of the variable",
+        ylab = "Order of the data from text file")
+```
+
+
