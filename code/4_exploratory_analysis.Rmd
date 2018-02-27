@@ -1,0 +1,141 @@
+---
+title: "Exploratory analyses Lathyrus"
+output:
+  pdf_document: 
+    toc: no
+---
+
+```{r include=FALSE}
+library(lattice)
+library(ggplot2)
+library(gridExtra)
+library(sciplot)
+alldata<-read.csv("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata.csv",
+                       header=T,sep="\t",dec=".") #Read data
+alldata$period<-with(alldata,ifelse(grepl("old", alldata$id), "old", "new"))
+alldata$year<-as.factor(alldata$year)
+alldata$id<-as.factor(alldata$id)
+alldata$data<-as.factor(alldata$data)
+alldata$FFD_imputed<-as.factor(alldata$FFD_imputed)
+alldata$period<-as.factor(alldata$period)
+```
+
+Distribution of missing data
+
+```{r echo=FALSE, fig.height=2, fig.width=4}
+ggplot(alldata,aes(x=status,fill=period))+geom_bar(position=position_dodge())
+```
+
+Outliers
+
+```{r echo=FALSE}
+par(mfrow=c(2,4)) 
+boxplot(alldata$grazing,main="grazing")
+boxplot(alldata$shoot_vol,main="shoot_volume")
+boxplot(alldata$n_fl,main="n_fl")
+boxplot(alldata$n_fr,main="n_fr")
+boxplot(alldata$n_ovules,main="n_ovules")
+boxplot(alldata$n_seeds,main="n_seeds")
+boxplot(alldata$n_intact_seeds,main="n_intact_seeds")
+boxplot(alldata$FFD,main="FFD")
+
+Z <- cbind(alldata$grazing, alldata$shoot_vol,  
+    alldata$n_fl,alldata$n_fr,
+    alldata$n_ovules,alldata$n_seeds,
+    alldata$n_intact_seeds,alldata$FFD)
+
+colnames(Z) <- c("grazing","shoot_vol","n_fl","n_fr","n_ovules",
+                 "n_seeds","n_intact_seeds","FFD")
+
+dotplot(as.matrix(Z), groups = FALSE,
+        strip = strip.custom(bg = 'white',
+        par.strip.text = list(cex = 0.8)),
+        scales = list(x = list(relation = "free"),
+                      y = list(relation = "free"),
+                      draw = F),
+        col = 1, cex  = 0.5, pch = 16,
+        xlab = "Value of the variable",
+        ylab = "Order of the data from text file")
+```
+
+Homogeneity of variance
+
+```{r echo=FALSE, fig.height=4, fig.width=10}
+grid.arrange(ggplot(alldata, aes(x=year, y=FFD)) + geom_boxplot(),
+            ggplot(alldata, aes(x=period, y=FFD)) + geom_boxplot(),ncol=2,widths=c(12,3))
+par(mfrow=c(1,2))
+lineplot.CI(alldata$year,alldata$FFD,xlab="year",ylab="FFD")
+lineplot.CI(alldata$period,alldata$FFD,xlab="period",ylab="FFD")
+grid.arrange(ggplot(alldata, aes(x=year, y=n_intact_seeds)) + geom_boxplot(),
+            ggplot(alldata, aes(x=period, y=n_intact_seeds)) + geom_boxplot(),ncol=2,widths=c(12,3))
+par(mfrow=c(1,2))
+lineplot.CI(alldata$year,alldata$n_intact_seeds,xlab="year",ylab="n_intact_seeds")
+lineplot.CI(alldata$period,alldata$n_intact_seeds,xlab="period",ylab="n_intact_seeds")
+```
+
+Distributions
+
+```{r echo=FALSE, fig.height=12, fig.width=8}
+grid.arrange(ggplot(alldata,aes(x=FFD))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=grazing))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=shoot_vol))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=n_fl))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=n_fr))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=n_ovules))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=n_seeds))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=n_intact_seeds))+geom_density(alpha=.2, fill="#FF6666"),ncol=2)
+
+```
+```{r echo=FALSE, fig.height=12, fig.width=8}
+ggplot(alldata,aes(x=FFD))+geom_density(alpha=.2, fill="#FF6666")+facet_wrap(~year, ncol=4)
+```
+
+```{r echo=FALSE, fig.height=12, fig.width=8}
+ggplot(alldata,aes(x=n_intact_seeds))+geom_density(alpha=.2, fill="#FF6666")+facet_wrap(~year, ncol=4)
+```
+
+Zero values
+
+```{r echo=FALSE, fig.height=8, fig.width=10}
+par(mfrow=c(2,2))
+plot(table(round(alldata$n_fr)),type = "h",
+    xlab = "Observed values", ylab = "Frequency",main="Number of fruits")
+plot(table(round(alldata$n_ovules)),type = "h",
+    xlab = "Observed values", ylab = "Frequency",main="Number of ovules")
+plot(table(round(alldata$n_seeds)),type = "h",
+    xlab = "Observed values", ylab = "Frequency",main="Number of total seeds")
+plot(table(round(alldata$n_intact_seeds)),type = "h",
+    xlab = "Observed values", ylab = "Frequency",main="Number of intact seeds")
+```
+
+Collinearity 
+
+Correlation among FFD and number of flowers is not so important
+```{r echo=FALSE}
+with(alldata,cor(FFD,n_fl,use="complete.obs"))
+```
+
+Relationships between variables
+
+```{r echo=FALSE, fig.height=8, fig.width=15}
+grid.arrange(ggplot(alldata,aes(x=FFD,y=n_fr))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=FFD,y=n_seeds))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=FFD,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=n_fl,y=n_fr))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=n_fl,y=n_seeds))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=n_fl,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm),ncol=3)
+```
+
+N intact seeds and FFD for all years
+
+```{r echo=FALSE, fig.height=12, fig.width=12}
+ggplot(alldata,aes(x=FFD,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm)+facet_wrap(~year,ncol=4,scales="free_y")
+```
+
+Grazing and FFD
+
+```{r echo=FALSE, fig.height=4, fig.width=5}
+ggplot(alldata,aes(x=FFD,y=grazing))+geom_point()+geom_smooth(method=glm,method.args=c(family="binomial"))
+```
+
+

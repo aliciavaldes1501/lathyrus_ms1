@@ -1,1056 +1,1058 @@
-year	id	114	115	116	117	118	119	120	121	122	123	124	125	126	127	128	129	130	131	132	133	134	135	136	137	138	139	140	141	142	143	144	145	146	147	148	149	150	151	152	153	154	155	156	FFD_julian	FFD_action
-2006	1																							L																					NA	impute
-2006	2																							L																					136	ok
-2006	3																							L																					136	ok
-2006	5																							L																					135	ok
-2006	6																			L																									133	ok_g
-2006	7																									S																			NA	impute
-2006	8																			L																									133	ok
-2006	9																			L																									NA	impute
-2006	10															M				L																									138	ok_g
-2006	11																			M				L																					139	ok
-2006	12																			L																									133	ok_g
-2006	13																			M				L																					139	ok
-2006	14																			L																									NA	impute
-2006	15															M				L																									138	withered
-2006	16															L																													132	ok
-2006	17															L																													130	ok
-2006	18																			L																									138	ok
-2006	19																			L																									138	withered
-2006	20															L																													138	ok
-2006	21																			L																									138	withered
-2006	22																									L																			NA	impute
-2006	23															L																													NA	impute
-2006	24															S				L																									138	ok
-2006	25															S				L																									NA	impute
-2006	26															M				L																									NA	impute
-2006	27															S				L																									NA	impute
-2006	29															S				L																									138	ok
-2006	30															S				L																									NA	impute
-2006	31																			L																									138	ok
-2006	32																			L																									138	ok
-2006	33															S				L																									NA	impute
-2006	34															M				L																									NA	impute
-2006	35															M				L																									138	ok_g + withered
-2006	36															M				L																									138	ok
-2006	37															M				L																									138	withered
-2006	38																																												139	ok
-2006	39																																												139	withered
-2006	40																									L																			NA	impute
-2006	43															S				L																									NA	impute
-2006	46															M				L																									135	withered
-2006	47																			L																									138	ok
-2006	48																			L																									138	withered
-2006	49																			L																									NA	impute
-2006	50																			L																									138	ok_g
-2006	53															S				L																									138	withered
-2006	54																			M						L																			142	withered
-2006	55															L				L																									130	ok
-2006	56																							S						L															155	ok_added
-2006	57																							L																					136	ok
-2006	58																							L																					142	ok_g
-2006	59																							L																					142	ok
-2006	60																							L																					138	ok
-2006	61																							L																					142	ok
-2006	62																							L																					NA	impute
-2006	63																							L																					142	withered
-2006	64																							L																					135	ok
-2006	65																							L																					134	withered
-2006	66																							L																					134	withered
-2006	67																							L																					136	ok
-2006	68																							L																					136	ok
-2006	69																							L																					135	ok
-2006	70																							L																					138	ok
-2006	71																							L																					136	ok
-2006	72																							L																					134	withered
-2006	73																							L																					134	withered
-2006	74																							L																					142	withered
-2006	75																							S						L															150	withered
-2006	76																								S					L															142	ok
-2006	77																								S					L															155	ok_added
-2006	78																								M																				144	ok
-2006	79																								L																				142	ok
-2006	80																								L																				142	withered
-2006	81																								M	L																			146	ok
-2006	82																								M	L																			142	ok
-2006	83																								M	L																			142	ok
-2006	84																										S			L															151	ok_added
-2006	85																										L																		142	withered
-2006	90															M				L																									138	withered
-2006	91																			L																									137	ok
-2006	93										S					M				L																									133	ok
-2006	94																			L																									133	ok
-2006	97																			L																									138	ok_added + withered
-2006	98																																												NA	impute
-2006	99																			L																									NA	impute
-2006	114																			M						L																			NA	impute
-2006	121																			L																									NA	impute
-2006	122																							L																					136	ok
-2006	139																										L																		141	ok
-2006	140																										L																		140	ok
-2006	141																			L																									139	ok
-2006	142																							L																					139	ok
-2006	143																																												137	ok
-2006	144																																												137	ok
-2006	145																																												137	ok
-2006	146																																												137	ok
-2006	147																								L																				139	ok
-2006	148																																												137	ok
-2006	149																																												137	ok
-2006	150																								L																				148	ok
-2006	151																																												137	ok
-2006	152																																												137	ok
-2006	153																								L																				139	ok
-2006	154																								L																				139	ok
-2006	155																																												137	ok
-2006	156																																												137	ok
-2007	2	S																L																											NA	impute
-2007	3	S																L																											NA	impute
-2007	4	L																																											125	ok
-2007	6	S																L																											132	ok
-2007	7	S																L																											136	ok
-2007	8	S																					L																						138	ok
-2007	9	S													L																														126	ok
-2007	10	L																																											123	ok
-2007	11	S																																											NA	impute
-2007	12	M																L																											132	ok
-2007	13	L																																											128	ok_g
-2007	14	L																																											125	ok
-2007	15	S																L																											137	ok
-2007	16	S													M																														135	ok
-2007	17	M																L																											NA	impute
-2007	18	L																																											125	ok
-2007	19	S													L																														127	ok
-2007	20	L																																											124	ok_g
-2007	22	L																																											123	ok_g
-2007	23	S																L																											132	ok
-2007	24	S													L																														129	ok_g
-2007	25	S								M								L																											134	ok
-2007	26	S																																											127	ok
-2007	27	L																																											NA	impute
-2007	29	M																L																											133	ok
-2007	30	S																L																											133	ok
-2007	31	S																					L																						135	ok
-2007	34	S													M								L																						138	ok
-2007	35	L																																											118	ok
-2007	36	S																					M						S																NA	impute
-2007	37	M													L																														128	ok
-2007	38	M																L																											133	ok
-2007	39	S																L																											132	ok
-2007	46	L																																											125	ok
-2007	47	M																L																											133	ok
-2007	48	M								L																																			122	ok
-2007	49	M													L																														128	ok
-2007	50	S																											L																NA	impute
-2007	52	S																L																											133	ok
-2007	53	L																																											131	ok
-2007	54	L																																											123	ok
-2007	55	S													L																														127	ok
-2007	56	M																L																											136	ok
-2007	57	S								L																																			NA	impute
-2007	59	S																																											141	ok
-2007	61	S																L																											137	ok
-2007	63	S													L																														NA	impute
-2007	75	S													M			L																											136	ok_g
-2007	84	S								L																																			129	ok
-2007	85	M																L																											134	ok
-2007	90	S																																											130	ok_g
-2007	91	M								L																																			121	ok
-2007	92	M																																											129	ok_g
-2007	93	L																																											124	ok
-2007	94	S																L																											132	ok_g
-2007	95	M																																											NA	impute
-2007	96	S																L																											NA	impute
-2007	97	L																																											125	ok
-2007	98	L																																											119	ok
-2007	99	S								L																																			126	ok
-2007	100	M								L																																			120	ok
-2007	101	S																L																											134	ok
-2007	102	L																																											125	ok
-2007	103	S								L																																			126	ok
-2007	104	S								M								L																											129	ok
-2007	105									S													L																						NA	impute
-2007	106									S																																			135	ok
-2007	107									M																																			130	ok
-2007	108									M					L																														129	ok
-2007	109									M								L																											130	ok_g
-2007	110									S								L																											133	ok
-2007	111									S																																			141	ok
-2007	112									S								M																											140	ok
-2007	113									M					L																														131	ok
-2007	114									S					M			L																											133	ok
-2007	115									S								L																											137	ok
-2007	116									S					L																														131	ok
-2007	117									S								L																											134	ok
-2007	118									S								L																											134	ok
-2007	119									S								L																											133	ok
-2007	120									S								L																											132	ok
-2007	121														S								L																						138	ok
-2007	122														S								L																						139	ok
-2007	123														S								M						L																143	ok
-2007	124														S								L																						NA	impute
-2007	125																	S					M						L																143	ok
-2007	126																	L																											134	ok
-2007	127																	S																											NA	impute
-2007	128																						L																						138	ok
-2007	129																						L																						139	ok
-2007	130																						L																						139	ok
-2007	131																						S						L																NA	impute
-2007	132																																L												NA	impute
-2007	133																																L												NA	impute
-2007	211	L																																											124	ok
-2008	4										L																																		124	ok
-2008	6																																												134	ok
-2008	8										L																																		125	ok
-2008	9										L																																		126	ok
-2008	10										L																																		125	ok_g
-2008	12										L																																		125	ok
-2008	13										L																																		125	ok
-2008	14										M					L																													130	ok
-2008	15										L																																		124	ok
-2008	16										L																																		125	ok
-2008	17										L																																		127	ok
-2008	18										L																																		124	ok
-2008	19										L																																		125	ok
-2008	20																																												120	ok
-2008	21																																												120	ok
-2008	22																																												120	ok
-2008	23																																												128	ok
-2008	24										L																																		127	ok
-2008	25										M					L																													130	ok
-2008	26										L																																		125	ok
-2008	27																																												120	ok
-2008	29										S					L																													132	ok
-2008	30										M																																		128	ok
-2008	31										L																																		127	ok
-2008	33										S					L																													131	ok
-2008	35																																												120	ok
-2008	36										M					L																													131	ok
-2008	37															L																													130	ok
-2008	38																																												120	ok
-2008	39										M					L																													129	ok
-2008	48																																												120	ok
-2008	49										M																																		133	ok
-2008	50										L																																		125	ok
-2008	52										M																																		128	ok
-2008	53										L																																		126	ok
-2008	54																																												120	ok
-2008	56										L																																		125	ok
-2008	57										S					M																													134	ok
-2008	61																																												128	ok
-2008	75										L																																		127	ok
-2008	84										L																																		127	ok
-2008	85															L																													NA	impute
-2008	90										M																																		134	ok
-2008	91										L					L																													129	ok
-2008	92										L																																		125	ok
-2008	93															M																													134	ok
-2008	94										M					L																													129	ok
-2008	95															L																													129	ok
-2008	97										L																																		124	ok
-2008	98															L																													129	ok
-2008	99																											M								L									147	ok_added
-2008	100										M																																		128	ok
-2008	101										M					L																													131	ok
-2008	102										L																																		127	ok
-2008	103										M																																		128	ok
-2008	105										L																																		125	ok
-2008	106															L																													131	ok
-2008	107										L																																		124	ok
-2008	109										L																																		126	ok
-2008	110										L																																		127	ok
-2008	111										M					L																													133	ok
-2008	112																																			L									151	ok
-2008	113										L																																		124	ok
-2008	114										L																																		127	ok
-2008	115										L																																		127	ok
-2008	116															L																													132	ok
-2008	117										M					L																													131	ok
-2008	118																																												120	ok
-2008	120										L																																		124	ok
-2008	121																																												120	ok
-2008	122															M																													134	ok
-2008	123										L																																		127	ok
-2008	125										M					L																													132	ok
-2008	129																											M																	145	ok
-2008	131																											L																	143	ok
-2008	132															L																													132	ok
-2008	133															L																													133	ok
-2008	134															L																													131	ok
-2008	135															M																													134	ok
-2008	136															M																													NA	impute
-2008	137															L																													131	ok
-2008	138															L																													132	ok
-2008	211															L																													130	ok
-2009	2																			L																									136	ok
-2009	3												S							L																									135	ok
-2009	4												M			L																													130	ok
-2009	6																			S							S			L															145	ok
-2009	7																										S			S				S											NA	impute
-2009	8												S			M				L																									NA	impute
-2009	9												M			M																													131	ok
-2009	10												M			L																													129	ok
-2009	12																			M																									138	ok
-2009	13												S			L				M																									137	ok_g
-2009	14																										M			L															NA	impute
-2009	15												M			L																													130	ok
-2009	16												M			L																													130	ok
-2009	17																			S							L																		140	ok
-2009	19												M			L																													130	ok
-2009	20																			S							M																		141	ok
-2009	21												S							M																									138	ok
-2009	22												M			L																													130	ok
-2009	23												S			L																													130	ok
-2009	24												S							L																									135	ok
-2009	26																			S							L																		140	ok
-2009	27																			M																									139	ok
-2009	35																			L																									135	ok
-2009	37												S			M																													131	ok
-2009	39												S			M				L																									133	ok
-2009	48												S							L																									136	ok
-2009	50												S			S				S							L			L															144	ok
-2009	52																			S							L																		140	ok
-2009	53												S							L																									136	ok
-2009	54												L																																127	ok
-2009	56																										S			L															144	ok
-2009	60												S							S							L																		140	ok
-2009	61												S							S							S			L															145	ok
-2009	75												S			M				L																									134	ok
-2009	84												S							M																									137	ok
-2009	90																																												132	ok
-2009	91												M			L																													130	ok
-2009	93												S			L																													130	ok
-2009	94												S			M																													131	ok
-2009	95												S			M																													131	ok
-2009	96																			S							L																		NA	impute
-2009	98												S			M																													131	ok
-2009	99																			S							M																		142	ok
-2009	102												M			L																													130	ok
-2009	103												M			L				L																									136	ok
-2009	108																			L																									136	ok
-2009	109																			S							S			S				M											149	ok
-2009	110												M			L																													130	ok
-2009	111																										S			L															145	ok
-2009	112												S							M							L																		138	ok
-2009	113												S							M							L																		140	ok
-2009	114												S			M				L																									135	ok_g
-2009	115																			M																									137	ok
-2009	117															M				L																									135	ok
-2009	118															S				L																									136	ok
-2009	120												M																																128	ok
-2009	121																																	M											NA	impute
-2009	122												M																																128	ok
-2009	128																			L																									134	ok
-2009	129												S			S				L																									135	ok
-2009	130																			M							L																		140	ok
-2009	133												S			M																													131	ok
-2009	134																			M																									139	ok
-2009	135																			L																									136	ok
-2009	137																			L																									135	ok
-2009	211												M			L																													130	ok
-2010	2														S			S			S						XL																		140	ok
-2010	3														S			S			M																								136	ok
-2010	6												S					S			M																								137	ok
-2010	7												S					S			M																								138	ok
-2010	8												S					S			S																								NA	impute
-2010	9												M					L			L																								134	ok
-2010	10												S					S			M																								137	ok
-2010	12																	S			S						L																		142	ok
-2010	13												S					S			S																								139	ok
-2010	14												S					S			M																								138	ok
-2010	15																															XL													145	ok
-2010	16												S					M			L																								135	ok
-2010	18														S			M			L						L																		143	ok
-2010	19														S			S			S						XL																		141	ok
-2010	20														S			L			L																								134	ok
-2010	21														S			L			L																								134	ok
-2010	22												S					M			L																								135	ok
-2010	24												S					S			M																								137	ok
-2010	25												S					S			S						XL																		141	ok
-2010	26												M					L			L																								135	ok
-2010	27												S					S			M																								138	ok
-2010	30																				S																								144	ok
-2010	35												S					M			L																								134	ok
-2010	36														S			S			S																								139	ok
-2010	37												M					M			L																								134	ok
-2010	38												S					M			L																								135	ok
-2010	39												S					S			M																								NA	impute
-2010	48														S			S			S						XL																		NA	impute
-2010	49														S			M			L																								135	ok
-2010	50														S			M			M																								136	ok
-2010	53														S			S			S																								144	ok
-2010	54												S					M			L																								135	ok
-2010	55																				L																								134	ok
-2010	56												S					M			M						XL																		140	ok
-2010	59														S			S			S						XL																		141	ok
-2010	60														S			S			M																								138	ok
-2010	75												M					M			M																								137	ok
-2010	84														S			M			M																								137	ok
-2010	85												S					S			S						XL																		141	ok
-2010	90												S					M			M																								138	ok
-2010	91														S			S			M																								138	ok
-2010	92												S					S			S						L																		142	ok
-2010	93												S					S			S						XL																		141	ok
-2010	94																	S			M																								138	ok
-2010	96												S					S			L																								135	ok
-2010	97																																												148	ok
-2010	98												S					S			S																								139	ok
-2010	99														S			M			M																								138	ok
-2010	100												S					M			L																								135	ok
-2010	101														S			S			S						L																		143	ok
-2010	102												S					S			S																								139	ok_g
-2010	103												S					M			L																								135	ok
-2010	104																																												143	ok
-2010	106												S					S			S																								139	ok
-2010	107												S					S			S						XL																		141	ok
-2010	108												S					M			M																								138	ok
-2010	109												M					L			L																								135	ok
-2010	111												S					S			L																								135	ok
-2010	112														S			M			L																								135	ok
-2010	113												S					M			L																								135	ok
-2010	114												S					M			M																								NA	impute
-2010	115														S			S			S						L																		142	ok
-2010	117																	S			M																								138	ok
-2010	118														S			M			L																								135	ok
-2010	120														S			S			S																								139	ok
-2010	121												S					S			M																								138	ok
-2010	123																				S						L																		143	ok
-2010	125														S			S			S						L																		142	ok
-2010	128												S					S			S						L																		142	ok
-2010	130												S					M			L																								135	ok
-2010	131														S			S			S						S					L													146	ok
-2010	132																				S						XL																		140	ok
-2010	133														S			S			S																								139	ok
-2010	134												S					M			L																								135	ok
-2010	135														S												XL																		141	ok
-2010	137														S			S			M																								136	ok
-2010	138														S			M			M						XL																		140	ok
-2011	2					M						XL		XL																															128	ok
-2011	3					S						M		L					XL																										132	ok
-2011	4					S						S		M					XL																										132	ok
-2011	6											S							M		L																								NA	impute
-2011	7					S						S		S					XL																										132	ok
-2011	8					S						M		M					XL																										132	ok
-2011	9					S						L		L																															128	ok
-2011	10					S						L		XL																															127	ok
-2011	12					S						M		M					XL																										132	ok
-2011	13					S						M		L					XL																										132	ok
-2011	14					S						S		S					XL		XL																								134	ok
-2011	15					S						S		S					M		XL																								134	ok
-2011	18					S						XL		XL																															129	ok
-2011	20					S						S		M																															129	ok
-2011	21					S						L		L																															128	ok
-2011	22					S						S		M																															127	ok
-2011	24					S						L		L																															130	ok
-2011	25					S						S		S					XL		XL																								138	ok
-2011	26					M						XL		XL																															127	ok
-2011	27					S						S		S					S		S						L																		143	ok
-2011	31																		M		L																								136	ok
-2011	33											M		M					XL																										132	ok
-2011	34					S						S		S					L																										132	ok
-2011	35					S						S		S																															129	ok
-2011	37																		S		S						XL																		NA	impute
-2011	38											M		L					XL																										132	ok
-2011	39											L		L																															130	ok
-2011	43																		S		S																								144	ok
-2011	48					S						XL		XL																															131	ok
-2011	49					S						M		L																															129	ok
-2011	50					S						S		S					S		M						XL																		142	ok
-2011	52					S						L		L																															127	ok
-2011	53					S						L		L					XL																										133	ok
-2011	54					S						S		S					M		XL																								134	ok
-2011	55											S		S					L		XL																								136	ok
-2011	56																		M		L																								135	ok
-2011	59					S						M		M					XL																										132	ok
-2011	61																		S		M						XL																		141	ok
-2011	84					S						M		L					XL																										132	ok
-2011	85																		S		S						L																		145	ok
-2011	90					S						S		M																															NA	impute
-2011	91																										S																		NA	impute
-2011	92					S						S		S					M		XL																								136	ok
-2011	93					M						XL		XL																															130	ok
-2011	94											M		M					XL																										132	ok
-2011	95													XL																															131	ok
-2011	96					S						S		M					XL																										132	ok
-2011	97					S						S		S					XL																										NA	impute
-2011	98					S						S		S					XL																										132	ok
-2011	99											S		S					M		M																								138	ok
-2011	101					S						S		S					M																										132	ok
-2011	102					S						M		M					XL																										132	ok
-2011	104																		M		M						XL																		140	ok
-2011	107																		L		XL																								139	ok
-2011	109					S						M		L																															129	ok
-2011	111					S						S		S					XL																										132	ok
-2011	112																																L												150	ok
-2011	114					S						S		S					XL																										133	ok
-2011	115					M						XL		XL																															127	ok
-2011	116					L																																							121	ok
-2011	117					S						S		S					XL																										132	ok
-2011	118					S						L		XL																															129	ok
-2011	120					S						M		L																															129	ok_g
-2011	121					M						XL		XL																															130	ok
-2011	123																										M																		141	ok
-2011	125																		M		M						XL																		140	ok
-2011	128					S						L		L					XL																										132	ok
-2011	130																																												127	ok
-2011	133					S						S		S					XL																										132	ok
-2011	136											S		S					XL																										132	ok
-2011	138																				S						M						XL												146	ok
-2011	211											M		M					XL																										132	ok
-2011	212											L		XL																															NA	impute
-2011	213											S		S					XL		XL																								134	ok
-2011	214											S		S					XL																										132	ok
-2011	215											M		M																															128	ok
-2011	216											M		L					XL																										132	ok
-2011	217											M		M																															129	ok
-2011	219																		L		XL																								137	ok
-2011	220																		M		M						XL																		140	ok
-2011	221																		L		XL																								136	ok
-2011	222																		M		M																								136	ok
-2011	223																		L		XL																								136	ok
-2011	224																		L		XL																								139	ok
-2011	225																		L		XL																								137	ok
-2011	226																		XL		XL																								137	ok
-2011	227																				XL																								137	ok
-2011	228																																												133	ok
-2012	2	S							S							S			M				XL																						NA	impute
-2012	3	S							S							XL			XL																										132	ok
-2012	4	S																																											NA	impute
-2012	6	S							S							S			L				XL																						136	ok
-2012	7	S							S							S			M				L			XL																			139	ok
-2012	8	S							S							M			L				XL																						137	ok
-2012	9	S							S							L			XL																										132	ok
-2012	10	S							S							M			L																										134	ok
-2012	12	S							S							M			XL																										NA	impute
-2012	13	S							S							L			XL				XL																						137	ok_g
-2012	14	S							S							M			L																										134	ok
-2012	15	S							S							M			XL																										133	ok
-2012	16	S							S							M			L																										134	ok
-2012	18	S							S							L			XL																										133	ok
-2012	20	S							S							XL			XL																										132	ok
-2012	21	S							S							M			M				L			L																			141	ok
-2012	22	S							S							XL																													129	ok
-2012	24	S							S							M			L				XL																						136	ok
-2012	25	S							S							L			L																										134	ok
-2012	26	S							S							L			XL																										NA	impute
-2012	27	S							S							S			M				XL																						137	ok
-2012	29	S							S							M			M				XL																						137	ok
-2012	30															S			M				L			XL																			139	ok
-2012	31	S							S							XL			XL																										NA	impute
-2012	33	S							S							L			XL																										133	ok
-2012	35	S							S							XL																													129	ok
-2012	36	S							S							S			M				XL			XL																			139	ok
-2012	37	S							S							XL																													129	ok
-2012	38	S							S							L			XL																										132	ok
-2012	39	S							S							S			L																										134	ok
-2012	43	S							S							S			M				XL			XL																			139	ok
-2012	48	S							S							L			XL																										132	ok
-2012	49	S							S							XL			XL																										132	ok
-2012	50															S			S				S			M				XL															143	ok
-2012	52	S							S							S			M				XL																						137	ok
-2012	53	S							M							L			L																										134	ok
-2012	54	S							M							XL																													129	ok
-2012	55	S							L							XL																													129	ok
-2012	56	S							S							S			S				M			L																			141	ok
-2012	57	S							S							M			XL																										133	ok
-2012	59	S							S							S			M				M			L																			141	ok
-2012	60	S							S							L			XL																										133	ok
-2012	61															S			S				M			L				XL															143	ok
-2012	75	S							S							S			M				XL			XL																			139	ok
-2012	84	S							S							XL			XL																										132	ok
-2012	85	S							S							S			S				L			XL																			139	ok
-2012	90																		S				S			S				M			L												147	ok
-2012	91	S							S							M			L				XL																						136	ok
-2012	93	S							M							L			XL																										132	ok
-2012	94	S							S							S			M				XL			XL																			139	ok
-2012	95	S							S							S			S				L																						138	ok
-2012	96	S							S							M			XL																										133	ok
-2012	97																						S			S				M			XL												146	ok
-2012	98	S							S							M			XL																										132	ok
-2012	99															S			S				M			M				XL															NA	impute
-2012	100	S							S							L			XL																										133	ok
-2012	101								S							M			M				L			XL																			139	ok
-2012	102	S							S							XL																													129	ok
-2012	103	S							S							M			L																										134	ok
-2012	106	S							S							S			M				L			XL																			139	ok
-2012	107	S							S							S			S				L																						140	ok
-2012	108								S							S			M				L			XL																			139	ok
-2012	109	S							S							M			L																										134	ok_g
-2012	110								S							M			L				XL																						137	ok
-2012	111	S							S							S			M				XL																						137	ok
-2012	112								S							M			XL																										133	ok
-2012	114																																												NA	impute
-2012	115	S							S							L			XL																										133	ok
-2012	116	S							S							S			S				M			L																			141	ok
-2012	117	S							S							M			L																										134	ok
-2012	118	S							M							XL																													129	ok
-2012	120	S							S							L			XL																										132	ok
-2012	121																						S			S				M			L												148	ok
-2012	122	S							M							M			L																										NA	impute
-2012	123	S							S							M			M				XL																						137	ok
-2012	125	S							S							M			L				XL																						137	ok
-2012	128	S							M							XL			XL																										132	ok
-2012	130								S							S			M				XL																						137	ok
-2012	133	S							S							M			L				XL																						136	ok
-2012	134								S							S			S				M			L				XL															143	ok
-2012	135								S							S			S				L			XL																			139	ok
-2012	136	S							S							M			L				XL																						137	ok
-2012	137															S			S				S			M				L															145	ok
-2012	138	S							S							XL			XL																										132	ok
-2012	212																																												NA	impute
-2012	213	S							S							L			XL																										132	ok
-2012	216	S							S							S			S				L			XL																			139	ok
-2012	217	S							S							M			L																										134	ok
-2012	219	S							S							S			M				XL																						137	ok
-2012	220								S							M			M				L			XL																			139	ok
-2012	221	S							M							XL																													129	ok
-2012	222															M			M				L			XL																			139	ok
-2012	223	S							S							L			XL																										133	ok
-2012	224	S							S							L			XL																										132	ok
-2012	226								S							M			L																										134	ok
-2012	227	S							S							M			M				XL																						137	ok
-2012	228																																												NA	impute
-2012	229	S							S							L			XL																										NA	impute
-2012	230	S							S							M			L																										134	ok
-2012	231								S							S			M				XL																						136	ok
-2012	232								S							S			S				L			XL																			139	ok
-2012	233								S							L			XL																										132	ok
-2012	234								M							L			XL																										133	ok
-2012	235								S							M			L				XL																						136	ok
-2012	236	S							S							S			M				L			XL																			139	ok
-2012	237								S							L			XL																										132	ok
-2012	238								S							XL																													129	ok
-2012	239															M			L																										134	ok
-2012	240															S			M				M			L																			141	ok
-2012	241															S			L				XL																						137	ok
-2012	242															M			M				L			XL																			139	ok
-2012	243																						M			L				XL															NA	impute
-2012	244																						L			XL																			139	ok
-2012	245																																												142	ok
-2012	246																													XL															144	ok
-2013	2																						XL																						137	ok
-2013	3																						M																						137	ok
-2013	9																						M																						136	ok
-2013	10																						XL																						139	ok
-2013	13																						L																						136	ok
-2013	15																						XL																						136	ok
-2013	18																																												NA	impute
-2013	20																						L																						141	ok
-2013	21																						M																						140	ok
-2013	22															S							L																						137	ok
-2013	24																						S						XL																142	ok
-2013	26																						L																						139	ok
-2013	29																						L																						138	ok
-2013	30																						M																						137	ok
-2013	33																						S						XL																142	ok
-2013	35																												XL																142	ok
-2013	36																						XL																						136	ok
-2013	37																						XL																						141	ok
-2013	38																						M																						NA	impute
-2013	39																																												139	ok
-2013	40																																												NA	impute
-2013	43																						S																						136	ok
-2013	46																						L																						140	ok
-2013	48																						M																						138	ok
-2013	54															S							L																						138	ok
-2013	56																												L																143	ok
-2013	57																						L																						137	ok
-2013	60																						XL																						140	ok
-2013	75																						S						XL																142	ok
-2013	84																																												138	ok
-2013	90																						M																						139	ok
-2013	93																						XL																						139	ok
-2013	94																						S																						138	ok
-2013	98																						L																						139	ok
-2013	100																						L																						141	ok
-2013	101																						S						XL																142	ok
-2013	102																						L																						137	ok
-2013	103																						S						XL																142	ok
-2013	106																						S																						139	ok
-2013	107																						S						L			XL													145	ok
-2013	108															S							M																						136	ok
-2013	109																						M																						139	ok
-2013	110																						S						XL																142	ok
-2013	111																						L																						138	ok
-2013	112																						M																						137	ok
-2013	114																																												136	ok
-2013	117																						L																						140	ok
-2013	118																						S						XL																142	ok
-2013	121																						XL																						140	ok
-2013	125																						M						XL																142	ok
-2013	126																						M																						139	ok
-2013	128																						L																						137	ok
-2013	130																						L																						136	ok
-2013	131																						S																						NA	impute
-2013	133																						XL																						140	ok
-2013	136																						S																						136	ok
-2013	211																						S																						139	ok
-2013	212																						L																						138	ok
-2013	216															S							XL																						140	ok
-2013	217																						S																						140	ok
-2013	225																						M																						138	ok
-2013	226																						M						L																143	ok
-2013	230																						L																						136	ok
-2013	231																						S																						136	ok
-2013	239																						S																						136	ok
-2013	241															S							XL																						136	ok
-2013	247																						XL																						140	ok
-2013	248															S							XL																						139	ok
-2013	249																						S																						137	ok
-2013	250																						M																						137	ok
-2013	251																						L																						141	ok
-2013	252																																												139	ok
-2013	253																																												141	ok
-2014	2													S																															NA	impute
-2014	3		S			S								L																															124	ok
-2014	9													L																															129	ok
-2014	10					S								S								L																							135	ok
-2014	12													S								L																							135	ok
-2014	13													S								L																							136	ok
-2014	15		S			M																																							122	ok
-2014	16													S								M																							137	ok
-2014	20		S			S								L																															129	ok
-2014	21		S			S								L																															127	ok
-2014	22					S								L																															128	ok
-2014	24													S								L																							136	ok
-2014	26																					S						L																	142	ok
-2014	34													S								L																							136	ok
-2014	36													S								M																							138	ok
-2014	37													S								M																							138	ok
-2014	38		S			M																																							122	ok
-2014	39																					M																							138	ok
-2014	43													S								S						S						L											144	ok
-2014	46		S			L																																							121	ok
-2014	47																					S						L																	142	ok
-2014	48													M																															138	ok
-2014	50													M																															132	ok
-2014	52													S								L																							135	ok
-2014	54		S			S								M																															131	ok
-2014	55		M			L																																							121	ok
-2014	56													S																															NA	impute
-2014	60													S								L																							135	ok
-2014	61																											S																	146	ok
-2014	75					S								S								L																							NA	impute
-2014	84													S								L																							136	ok
-2014	85					S								S																															133	ok
-2014	93		S			S								L																															128	ok
-2014	94													S								S																							133	ok
-2014	95													S								M																							137	ok
-2014	100					S								M																															131	ok
-2014	101		S			S								S								L																							NA	impute
-2014	102		M			L																																							121	ok
-2014	103													S								L																							136	ok
-2014	104													S								S						L																	143	ok
-2014	107													S								L																							NA	impute
-2014	108													S								M																							138	ok
-2014	109													S								L																							136	ok
-2014	110		S			M																																							122	ok
-2014	111																					S																							139	ok
-2014	117													S								L																							NA	impute
-2014	118													S								M																							137	ok
-2014	125													S								S																							140	ok
-2014	128		M			L																																							120	ok
-2014	133																					S						L																	142	ok
-2014	135																					S																							140	ok
-2014	211		S			S																																							123	ok
-2014	212													S								L																							NA	impute
-2014	214		S			S								M																															131	ok
-2014	215													S								L																							NA	impute
-2014	221													S								S																							138	ok
-2014	227		S			S								L																															130	ok
-2014	237		S			S								M																															132	ok
-2014	239													S								M																							138	ok
-2014	244													S								L																							NA	impute
-2014	249																					S																							145	ok
-2014	300		S			S								M																															132	ok
-2014	301		S			S								S								L																							NA	impute
-2014	302													S																															133	ok
-2014	303													S								L																							135	ok
-2014	304													M																															132	ok
-2014	305																																												134	ok
-2015	2	M																																											118	ok
-2015	9							S																																					NA	impute
-2015	13	S						M																																					125	ok
-2015	14							S							L																														130	ok
-2015	17							S							M							L																							136	ok
-2015	37							S																																					NA	impute
-2015	39														S							L																							137	ok
-2015	46	S						L																																					122	ok
-2015	49	S						M																																					125	ok
-2015	55	M						L																																					NA	impute
-2015	59							M																																					NA	impute
-2015	84																					S																							NA	impute
-2015	85	S						L																																					123	ok
-2015	92														S							L																							139	ok
-2015	94	S						S							S																														NA	impute
-2015	103							S							S							L																							138	ok
-2015	104							S							S							L																							137	ok
-2015	109																					M																							NA	impute
-2015	111														S							S								L															NA	impute
-2015	112							M							L																														129	ok
-2015	133	S						M																																					124	ok
-2015	134																					S								L															145	ok
-2015	135							S							S																														NA	impute
-2015	138	M						L																																					NA	impute
-2015	212														M							L																							137	ok
-2015	216	S						S							L																														130	ok
-2015	219																																												134	ok
-2015	220														M																														132	ok
-2015	221														M							L																							138	ok
-2015	225																					M																							NA	impute
-2015	233														S																														139	ok
-2015	247							S																																					NA	impute
-2015	249																																												NA	impute
-2015	250														S							M																							140	ok
-2015	251														S																														NA	impute
-2015	306	S						L																																					NA	impute
-2015	307	S						S																																					NA	impute
-2015	308							S							S																														141	ok
-2015	309																																												131	ok
-2015	310																					M								L															145	ok
-2016	2																																												129	ok
-2016	3																																												131	ok
-2016	7																																												138	ok
-2016	8																																												135	ok
-2016	9																																												131	ok
-2016	10																																												129	ok
-2016	13																																												129	ok
-2016	14																																												132	ok
-2016	16																																												129	ok
-2016	17																																												137	ok
-2016	18																																												132	ok
-2016	20																																												132	ok
-2016	21																																												133	ok
-2016	22																																												132	ok
-2016	23																																												131	ok
-2016	26																																												136	ok
-2016	27																																												133	ok
-2016	29																																												132	ok
-2016	31																																												131	ok
-2016	33																																												129	ok
-2016	34																																												133	ok
-2016	35																																												133	ok
-2016	36																																												134	ok
-2016	38																																												127	ok
-2016	43																																												133	ok
-2016	46																																												133	ok
-2016	48																																												126	ok
-2016	49																																												133	ok
-2016	54																																												130	ok
-2016	55																																												133	ok
-2016	59																																												130	ok
-2016	60																																												130	ok
-2016	75																																												NA	impute
-2016	84																																												136	ok
-2016	90																																												128	ok
-2016	91																																												133	ok
-2016	92																																												130	ok
-2016	93																																												131	ok
-2016	94																																												136	ok
-2016	95																																												129	ok
-2016	96																																												139	ok
-2016	98																																												128	ok
-2016	100																																												131	ok
-2016	101																																												134	ok
-2016	102																																												134	ok
-2016	103																																												133	ok
-2016	104																																												135	ok
-2016	106																																												126	ok
-2016	107																																												133	ok
-2016	109																																												129	ok
-2016	110																																												129	ok
-2016	111																																												128	ok
-2016	116																																												134	ok
-2016	117																																												133	ok
-2016	126																																												134	ok
-2016	128																																												143	ok
-2016	129																																												132	ok
-2016	130																																												128	ok
-2016	131																																												142	ok
-2016	132																																												146	ok
-2016	133																																												132	ok
-2016	135																																												130	ok
-2016	136																																												137	ok
-2016	138																																												137	ok
-2016	211																																												135	ok
-2016	212																																												129	ok
-2016	215																																												129	ok
-2016	216																																												145	ok
-2016	217																																												133	ok
-2016	220																																												129	ok
-2016	221																																												128	ok
-2016	222																																												142	ok
-2016	223																																												132	ok
-2016	225																																												138	ok
-2016	226																																												129	ok
-2016	228																																												132	ok
-2016	229																																												131	ok
-2016	230																																												131	ok
-2016	232																																												132	ok
-2016	233																																												134	ok
-2016	234																																												133	ok
-2016	236																																												129	ok
-2016	237																																												133	ok
-2016	238																																												145	ok
-2016	240																																												137	ok
-2016	241																																												130	ok
-2016	248																																												131	ok
-2016	249																																												145	ok
-2016	250																																												131	ok
-2016	251																																												135	ok
-2016	252																																												133	ok
-2016	253																																												130	ok
-2016	301																																												130	ok
-2016	303																																												127	ok
-2016	304																																												129	ok
-2016	305																																												134	ok
-2016	308																																												128	ok
-2016	309																																												138	ok
-2016	310																																												131	ok
-2016	339																																												140	ok
-2016	401																																												135	ok
-2016	402																																												131	ok
-2016	403																																												137	ok
-2016	404																																												137	ok
-2016	405																																												130	ok
-2016	406																																												133	ok
-2016	407																																												127	ok
-2016	408																																												128	ok
-2016	409																																												128	ok
-2016	410																																												128	ok
-2016	411																																												130	ok
-2016	412																																												135	ok
-2016	413																																												132	ok
-2016	1413																																												130	ok
-2017	2																																												136	ok
-2017	3																																												137	ok
-2017	6																																												142	ok
-2017	7																																												142	ok
-2017	8																																												138	ok
-2017	9																																												137	ok
-2017	10																																												136	ok
-2017	13																																												137	ok
-2017	15																																												137	ok
-2017	16																																												139	ok
-2017	18																																												137	ok
-2017	20																																												136	ok
-2017	21																																												141	ok
-2017	22																																												141	ok
-2017	24																																												141	ok
-2017	26																																												137	ok
-2017	29																																												139	ok
-2017	33																																												142	ok
-2017	35																																												NA	impute
-2017	36																																												135	ok
-2017	37																																												140	ok
-2017	38																																												137	ok
-2017	39																																												140	ok
-2017	46																																												135	ok
-2017	47																																												140	ok
-2017	48																																												135	ok
-2017	49																																												133	ok
-2017	50																																												137	ok
-2017	52																																												145	ok
-2017	53																																												137	ok
-2017	55																																												125	ok
-2017	57																																												136	ok
-2017	59																																												145	ok
-2017	60																																												134	ok
-2017	61																																												139	ok
-2017	84																																												138	ok
-2017	90																																												139	ok
-2017	91																																												143	ok
-2017	92																																												136	ok
-2017	93																																												136	ok
-2017	94																																												140	ok
-2017	95																																												137	ok
-2017	98																																												135	ok
-2017	100																																												134	ok
-2017	101																																												142	ok
-2017	102																																												142	ok
-2017	103																																												143	ok
-2017	104																																												136	ok
-2017	106																																												140	ok
-2017	107																																												145	ok
-2017	108																																												143	ok
-2017	109																																												139	ok
-2017	110																																												139	ok
-2017	111																																												143	ok
-2017	112																																												135	ok
-2017	116																																												136	ok
-2017	117																																												143	ok
-2017	119																																												138	ok
-2017	120																																												137	ok
-2017	126																																												137	ok
-2017	128																																												141	ok
-2017	129																																												138	ok
-2017	130																																												137	ok
-2017	131																																												136	ok
-2017	132																																												143	ok
-2017	133																																												135	ok
-2017	134																																												137	ok
-2017	212																																												125	ok
-2017	214																																												134	ok
-2017	215																																												137	ok
-2017	216																																												NA	impute
-2017	217																																												143	ok
-2017	221																																												138	ok
-2017	222																																												147	ok
-2017	225																																												145	ok
-2017	226																																												145	ok
-2017	228																																												141	ok
-2017	229																																												138	ok
-2017	232																																												134	ok
-2017	233																																												137	ok
-2017	234																																												144	ok
-2017	235																																												141	ok
-2017	236																																												139	ok
-2017	237																																												140	ok
-2017	238																																												138	ok
-2017	239																																												137	ok
-2017	240																																												141	ok
-2017	241																																												135	ok
-2017	244																																												137	ok
-2017	246																																												139	ok
-2017	247																																												137	ok
-2017	248																																												137	ok
-2017	250																																												138	ok
-2017	251																																												138	ok
-2017	253																																												143	ok
-2017	301																																												138	ok
-2017	303																																												134	ok
-2017	304																																												136	ok
-2017	305																																												141	ok
-2017	307																																												139	ok
-2017	308																																												139	ok
-2017	309																																												139	ok
-2017	310																																												135	ok
-2017	401																																												135	ok
-2017	402																																												135	ok
-2017	403																																												138	ok
-2017	405																																												137	ok
-2017	406																																												143	ok
-2017	407																																												135	ok
-2017	408																																												NA	impute
-2017	409																																												137	ok
-2017	410																																												140	ok
-2017	411																																												139	ok
-2017	413																																												136	ok
-2017	501																																												136	ok
-2017	502																																												140	ok
-2017	503																																												140	ok
-2017	504																																												138	ok
-2017	505																																												143	ok
-2017	506																																												143	ok
-2017	507																																												138	ok
-2017	508																																												143	ok
-2017	509																																												139	ok
-2017	510																																												142	ok
-2017	511																																												139	ok
-2017	512																																												137	ok
-2017	513																																												137	ok
-2017	514																																												140	ok
-2017	515																																												140	ok
-2017	516																																												146	ok
-2017	517																																												147	ok
-2017	518																																												140	ok
+year	id	114	115	116	117	118	119	120	121	122	123	124	125	126	127	128	129	130	131	132	133	134	135	136	137	138	139	140	141	142	143	144	145	146	147	148	149	150	151	152	153	154	155	156	FFD_corr	vernal	FFD_julian	FFD_action	grazing_date	grazing_julian	bud_data
+2006	1																							L																					NA	20/03/06 18:25	NA	impute	19/05/2006	59,2326388889	1
+2006	2																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	3																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	5																							L																					15/05/2006	20/03/06 18:25	55,2326388889	ok			1
+2006	6																			L																									13/05/2006	20/03/06 18:25	53,2326388889	ok_g			1
+2006	7																																												NA	20/03/06 18:25	NA	impute	18/05/2006	58,2326388889	0
+2006	8																			L																									13/05/2006	20/03/06 18:25	53,2326388889	ok			1
+2006	9																																												NA	20/03/06 18:25	NA	impute	08/05/2006	48,2326388889	0
+2006	10															M				L																									18/05/2006	20/03/06 18:25	58,2326388889	ok_g			1
+2006	11																			M				L																					19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	12																			L																									13/05/2006	20/03/06 18:25	53,2326388889	ok_g			1
+2006	13																			M				L																					19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	14																																												NA	20/03/06 18:25	NA	impute	03/05/2006	43,2326388889	0
+2006	15															M				L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	16															L																													12/05/2006	20/03/06 18:25	52,2326388889	ok			1
+2006	17															L																													10/05/2006	20/03/06 18:25	50,2326388889	ok			1
+2006	18																			L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	19																			L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	20															L																													18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	21																			L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	22																																												NA	20/03/06 18:25	NA	impute	03/05/2006	43,2326388889	0
+2006	23															L																													NA	20/03/06 18:25	NA	impute	12/05/2006	52,2326388889	1
+2006	24															S				L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	25																			L																									NA	20/03/06 18:25	NA	impute			1
+2006	26																			L																									NA	20/03/06 18:25	NA	impute			1
+2006	27																			L																									NA	20/03/06 18:25	NA	impute	18/05/2006	58,2326388889	1
+2006	29															S				L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	30																			L																									NA	20/03/06 18:25	NA	impute	18/05/2006	58,2326388889	1
+2006	31																			L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	32																			L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	33																			L																									NA	20/03/06 18:25	NA	impute	18/05/2006	58,2326388889	1
+2006	34																			L																									NA	20/03/06 18:25	NA	impute	18/05/2006	58,2326388889	1
+2006	35															M				L																									18/05/2006	20/03/06 18:25	58,2326388889	ok_g + withered			1
+2006	36															M				L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	37															M				L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	38																																												19/05/2006	20/03/06 18:25	59,2326388889	ok			0
+2006	39																																												19/05/2006	20/03/06 18:25	59,2326388889	withered			0
+2006	40																																												NA	20/03/06 18:25	NA	impute	08/05/2006	48,2326388889	0
+2006	43																			L																									NA	20/03/06 18:25	NA	impute	18/05/2006	58,2326388889	1
+2006	46															M				L																									15/05/2006	20/03/06 18:25	55,2326388889	withered			1
+2006	47																			L																									18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	48																			L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	49																																												NA	20/03/06 18:25	NA	impute	08/05/2006	48,2326388889	0
+2006	50																			L																									18/05/2006	20/03/06 18:25	58,2326388889	ok_g			1
+2006	53															S				L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	54																			M						L																			22/05/2006	20/03/06 18:25	62,2326388889	withered			1
+2006	55															L				L																									10/05/2006	20/03/06 18:25	50,2326388889	ok			1
+2006	56																							S						L															04/06/2006	20/03/06 18:25	75,2326388889	ok_added			1
+2006	57																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	58																							L																					22/05/2006	20/03/06 18:25	62,2326388889	ok_g			1
+2006	59																							L																					22/05/2006	20/03/06 18:25	62,2326388889	ok			1
+2006	60																							L																					18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	61																							L																					22/05/2006	20/03/06 18:25	62,2326388889	ok			1
+2006	62																																												NA	20/03/06 18:25	NA	impute	16/05/2006	56,2326388889	0
+2006	63																							L																					22/05/2006	20/03/06 18:25	62,2326388889	withered			1
+2006	64																							L																					15/05/2006	20/03/06 18:25	55,2326388889	ok			1
+2006	65																							L																					14/05/2006	20/03/06 18:25	54,2326388889	withered			1
+2006	66																							L																					14/05/2006	20/03/06 18:25	54,2326388889	withered			1
+2006	67																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	68																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	69																							L																					15/05/2006	20/03/06 18:25	55,2326388889	ok			1
+2006	70																							L																					18/05/2006	20/03/06 18:25	58,2326388889	ok			1
+2006	71																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	72																							L																					14/05/2006	20/03/06 18:25	54,2326388889	withered			1
+2006	73																							L																					14/05/2006	20/03/06 18:25	54,2326388889	withered			1
+2006	74																							L																					22/05/2006	20/03/06 18:25	62,2326388889	withered			1
+2006	75																							S						L															30/05/2006	20/03/06 18:25	70,2326388889	withered			1
+2006	76																								S					L															22/05/2006	20/03/06 18:25	62,2326388889	ok			1
+2006	77																								S					L															04/06/2006	20/03/06 18:25	75,2326388889	ok_added			1
+2006	78																								M																				24/05/2006	20/03/06 18:25	64,2326388889	ok			1
+2006	79																								L																				22/05/2006	20/03/06 18:25	62,2326388889	ok			1
+2006	80																								L																				22/05/2006	20/03/06 18:25	62,2326388889	withered			1
+2006	81																								M	L																			26/05/2006	20/03/06 18:25	66,2326388889	ok			1
+2006	82																								M	L																			22/05/2006	20/03/06 18:25	62,2326388889	ok			1
+2006	83																								M	L																			22/05/2006	20/03/06 18:25	62,2326388889	ok			1
+2006	84																										S			L															31/05/2006	20/03/06 18:25	71,2326388889	ok_added			1
+2006	85																										L																		22/05/2006	20/03/06 18:25	62,2326388889	withered			1
+2006	90															M				L																									18/05/2006	20/03/06 18:25	58,2326388889	withered			1
+2006	91																			L																									17/05/2006	20/03/06 18:25	57,2326388889	ok			1
+2006	93										S					M				L																									13/05/2006	20/03/06 18:25	53,2326388889	ok			1
+2006	94																			L																									13/05/2006	20/03/06 18:25	53,2326388889	ok			1
+2006	97																			L																									18/05/2006	20/03/06 18:25	58,2326388889	ok_added + withered			1
+2006	98																																												NA	20/03/06 18:25	NA	impute	03/05/2006	43,2326388889	0
+2006	99																																												NA	20/03/06 18:25	NA	impute	08/05/2006	48,2326388889	0
+2006	114																																												NA	20/03/06 18:25	NA	impute	08/05/2006	48,2326388889	0
+2006	121																																												NA	20/03/06 18:25	NA	impute	12/05/2006	52,2326388889	0
+2006	122																							L																					16/05/2006	20/03/06 18:25	56,2326388889	ok			1
+2006	139																										L																		21/05/2006	20/03/06 18:25	61,2326388889	ok			1
+2006	140																										L																		20/05/2006	20/03/06 18:25	60,2326388889	ok			1
+2006	141																			L																									19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	142																							L																					19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	143																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	144																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	145																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	146																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	147																								L																				19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	148																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	149																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	150																								L																				28/05/2006	20/03/06 18:25	68,2326388889	ok			1
+2006	151																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	152																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	153																								L																				19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	154																								L																				19/05/2006	20/03/06 18:25	59,2326388889	ok			1
+2006	155																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2006	156																																												17/05/2006	20/03/06 18:25	57,2326388889	ok			0
+2007	2																	L																											NA	21/03/07 00:14	NA	impute			1
+2007	3																	L																											NA	21/03/07 00:14	NA	impute			1
+2007	4	L																																											05/05/2007	21/03/07 00:14	44,9902777778	ok			1
+2007	6	S																L																											12/05/2007	21/03/07 00:14	51,9902777778	ok			1
+2007	7	S																L																											16/05/2007	21/03/07 00:14	55,9902777778	ok			1
+2007	8	S																					L																						18/05/2007	21/03/07 00:14	57,9902777778	ok			1
+2007	9	S													L																														06/05/2007	21/03/07 00:14	45,9902777778	ok			1
+2007	10	L																																											03/05/2007	21/03/07 00:14	42,9902777778	ok			1
+2007	11	S																																											NA	21/03/07 00:14	NA	impute	02/05/2007	41,9902777778	1
+2007	12	M																L																											12/05/2007	21/03/07 00:14	51,9902777778	ok			1
+2007	13	L																																											08/05/2007	21/03/07 00:14	47,9902777778	ok_g			1
+2007	14	L																																											05/05/2007	21/03/07 00:14	44,9902777778	ok			1
+2007	15	S																L																											17/05/2007	21/03/07 00:14	56,9902777778	ok			1
+2007	16	S													M																														15/05/2007	21/03/07 00:14	54,9902777778	ok			1
+2007	17	M																																											NA	21/03/07 00:14	NA	impute	10/05/2007	49,9902777778	1
+2007	18	L																																											05/05/2007	21/03/07 00:14	44,9902777778	ok			1
+2007	19	S													L																														07/05/2007	21/03/07 00:14	46,9902777778	ok			1
+2007	20	L																																											04/05/2007	21/03/07 00:14	43,9902777778	ok_g			1
+2007	22	L																																											03/05/2007	21/03/07 00:14	42,9902777778	ok_g			1
+2007	23	S																L																											12/05/2007	21/03/07 00:14	51,9902777778	ok			1
+2007	24	S													L																														09/05/2007	21/03/07 00:14	48,9902777778	ok_g			1
+2007	25	S								M								L																											14/05/2007	21/03/07 00:14	53,9902777778	ok			1
+2007	26	S																																											07/05/2007	21/03/07 00:14	46,9902777778	ok			1
+2007	27	L																																											NA	21/03/07 00:14	NA	impute	02/05/2007	41,9902777778	1
+2007	29	M																L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	30	S																L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	31	S																					L																						15/05/2007	21/03/07 00:14	54,9902777778	ok			1
+2007	34	S													M								L																						18/05/2007	21/03/07 00:14	57,9902777778	ok			1
+2007	35	L																																											28/04/2007	21/03/07 00:14	37,9902777778	ok			1
+2007	36																						M																						NA	21/03/07 00:14	NA	impute	21/05/2007	60,9902777778	1
+2007	37	M													L																														08/05/2007	21/03/07 00:14	47,9902777778	ok			1
+2007	38	M																L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	39	S																L																											12/05/2007	21/03/07 00:14	51,9902777778	ok			1
+2007	46	L																																											05/05/2007	21/03/07 00:14	44,9902777778	ok			1
+2007	47	M																L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	48	M								L																																			02/05/2007	21/03/07 00:14	41,9902777778	ok			1
+2007	49	M													L																														08/05/2007	21/03/07 00:14	47,9902777778	ok			1
+2007	50																												L																NA	21/03/07 00:14	NA	impute			1
+2007	52	S																L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	53	L																																											11/05/2007	21/03/07 00:14	50,9902777778	ok			1
+2007	54	L																																											03/05/2007	21/03/07 00:14	42,9902777778	ok			1
+2007	55	S													L																														07/05/2007	21/03/07 00:14	46,9902777778	ok			1
+2007	56	M																L																											16/05/2007	21/03/07 00:14	55,9902777778	ok			1
+2007	57									L																																			NA	21/03/07 00:14	NA	impute			1
+2007	59	S																																											21/05/2007	21/03/07 00:14	60,9902777778	ok			1
+2007	61	S																L																											17/05/2007	21/03/07 00:14	56,9902777778	ok			1
+2007	63														L																														NA	21/03/07 00:14	NA	impute			1
+2007	75	S													M			L																											16/05/2007	21/03/07 00:14	55,9902777778	ok_g			1
+2007	84	S								L																																			09/05/2007	21/03/07 00:14	48,9902777778	ok			1
+2007	85	M																L																											14/05/2007	21/03/07 00:14	53,9902777778	ok			1
+2007	90	S																																											10/05/2007	21/03/07 00:14	49,9902777778	ok_g			1
+2007	91	M								L																																			01/05/2007	21/03/07 00:14	40,9902777778	ok			1
+2007	92	M																																											09/05/2007	21/03/07 00:14	48,9902777778	ok_g			1
+2007	93	L																																											04/05/2007	21/03/07 00:14	43,9902777778	ok			1
+2007	94	S																L																											12/05/2007	21/03/07 00:14	51,9902777778	ok_g			1
+2007	95	M																																											NA	21/03/07 00:14	NA	impute			1
+2007	96	S																																											NA	21/03/07 00:14	NA	impute	07/05/2007	46,9902777778	1
+2007	97	L																																											05/05/2007	21/03/07 00:14	44,9902777778	ok			1
+2007	98	L																																											29/04/2007	21/03/07 00:14	38,9902777778	ok			1
+2007	99	S								L																																			06/05/2007	21/03/07 00:14	45,9902777778	ok			1
+2007	100	M								L																																			30/04/2007	21/03/07 00:14	39,9902777778	ok			1
+2007	101	S																L																											14/05/2007	21/03/07 00:14	53,9902777778	ok			1
+2007	102	L																																											05/05/2007	21/03/07 00:14	44,9902777778	ok			1
+2007	103	S								L																																			06/05/2007	21/03/07 00:14	45,9902777778	ok			1
+2007	104	S								M								L																											09/05/2007	21/03/07 00:14	48,9902777778	ok			1
+2007	105									S																																			NA	21/03/07 00:14	NA	impute	07/05/2007	46,9902777778	1
+2007	106									S																																			15/05/2007	21/03/07 00:14	54,9902777778	ok			1
+2007	107									M																																			10/05/2007	21/03/07 00:14	49,9902777778	ok			1
+2007	108									M					L																														09/05/2007	21/03/07 00:14	48,9902777778	ok			1
+2007	109									M								L																											10/05/2007	21/03/07 00:14	49,9902777778	ok_g			1
+2007	110									S								L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	111									S																																			21/05/2007	21/03/07 00:14	60,9902777778	ok			1
+2007	112									S								M																											20/05/2007	21/03/07 00:14	59,9902777778	ok			1
+2007	113									M					L																														11/05/2007	21/03/07 00:14	50,9902777778	ok			1
+2007	114									S					M			L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	115									S								L																											17/05/2007	21/03/07 00:14	56,9902777778	ok			1
+2007	116									S					L																														11/05/2007	21/03/07 00:14	50,9902777778	ok			1
+2007	117									S								L																											14/05/2007	21/03/07 00:14	53,9902777778	ok			1
+2007	118									S								L																											14/05/2007	21/03/07 00:14	53,9902777778	ok			1
+2007	119									S								L																											13/05/2007	21/03/07 00:14	52,9902777778	ok			1
+2007	120									S								L																											12/05/2007	21/03/07 00:14	51,9902777778	ok			1
+2007	121														S								L																						18/05/2007	21/03/07 00:14	57,9902777778	ok			1
+2007	122														S								L																						19/05/2007	21/03/07 00:14	58,9902777778	ok			1
+2007	123														S								M						L																23/05/2007	21/03/07 00:14	62,9902777778	ok			1
+2007	124																						L																						NA	21/03/07 00:14	NA	impute			1
+2007	125																	S					M						L																23/05/2007	21/03/07 00:14	62,9902777778	ok			1
+2007	126																	L																											14/05/2007	21/03/07 00:14	53,9902777778	ok			1
+2007	127																	S																											NA	21/03/07 00:14	NA	impute	15/05/2007	54,9902777778	1
+2007	128																						L																						18/05/2007	21/03/07 00:14	57,9902777778	ok			1
+2007	129																						L																						19/05/2007	21/03/07 00:14	58,9902777778	ok			1
+2007	130																						L																						19/05/2007	21/03/07 00:14	58,9902777778	ok			1
+2007	131																												L																NA	21/03/07 00:14	NA	impute			1
+2007	132																																L												NA	21/03/07 00:14	NA	impute			1
+2007	133																																												NA	21/03/07 00:14	NA	impute	21/05/2007	60,9902777778	0
+2007	211	L																																											04/05/2007	21/03/07 00:14	43,9902777778	ok			1
+2008	4										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	6																																												13/05/2008	20/03/08 06:04	53,7472222222	ok			0
+2008	8										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	9										L																																		05/05/2008	20/03/08 06:04	45,7472222222	ok			1
+2008	10										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok_g			1
+2008	12										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	13										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	14										M					L																													09/05/2008	20/03/08 06:04	49,7472222222	ok			1
+2008	15										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	16										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	17										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	18										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	19										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	20																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	21																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	22																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	23																																												07/05/2008	20/03/08 06:04	47,7472222222	ok			0
+2008	24										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	25										M					L																													09/05/2008	20/03/08 06:04	49,7472222222	ok			1
+2008	26										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	27																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	29										S					L																													11/05/2008	20/03/08 06:04	51,7472222222	ok			1
+2008	30										M																																		07/05/2008	20/03/08 06:04	47,7472222222	ok			1
+2008	31										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	33										S					L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	35																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	36										M					L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	37															L																													09/05/2008	20/03/08 06:04	49,7472222222	ok			1
+2008	38																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	39										M					L																													08/05/2008	20/03/08 06:04	48,7472222222	ok			1
+2008	48																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	49										M																																		12/05/2008	20/03/08 06:04	52,7472222222	ok			1
+2008	50										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	52										M																																		07/05/2008	20/03/08 06:04	47,7472222222	ok			1
+2008	53										L																																		05/05/2008	20/03/08 06:04	45,7472222222	ok			1
+2008	54																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	56										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	57										S					M																													13/05/2008	20/03/08 06:04	53,7472222222	ok			1
+2008	61																																												07/05/2008	20/03/08 06:04	47,7472222222	ok			0
+2008	75										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	84										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	85																																												NA	20/03/08 06:04	NA	impute	07/05/2008	47,7472222222	0
+2008	90										M																																		13/05/2008	20/03/08 06:04	53,7472222222	ok			1
+2008	91										L					L																													08/05/2008	20/03/08 06:04	48,7472222222	ok			1
+2008	92										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	93															M																													13/05/2008	20/03/08 06:04	53,7472222222	ok			1
+2008	94										M					L																													08/05/2008	20/03/08 06:04	48,7472222222	ok			1
+2008	95															L																													08/05/2008	20/03/08 06:04	48,7472222222	ok			1
+2008	97										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	98															L																													08/05/2008	20/03/08 06:04	48,7472222222	ok			1
+2008	99																											M								L									26/05/2008	20/03/08 06:04	66,7472222222	ok_added			1
+2008	100										M																																		07/05/2008	20/03/08 06:04	47,7472222222	ok			1
+2008	101										M					L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	102										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	103										M																																		07/05/2008	20/03/08 06:04	47,7472222222	ok			1
+2008	105										L																																		04/05/2008	20/03/08 06:04	44,7472222222	ok			1
+2008	106															L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	107										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	109										L																																		05/05/2008	20/03/08 06:04	45,7472222222	ok			1
+2008	110										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	111										M					L																													12/05/2008	20/03/08 06:04	52,7472222222	ok			1
+2008	112																																			L									30/05/2008	20/03/08 06:04	70,7472222222	ok			1
+2008	113										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	114										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	115										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	116															L																													11/05/2008	20/03/08 06:04	51,7472222222	ok			1
+2008	117										M					L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	118																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	120										L																																		03/05/2008	20/03/08 06:04	43,7472222222	ok			1
+2008	121																																												29/04/2008	20/03/08 06:04	39,7472222222	ok			0
+2008	122															M																													13/05/2008	20/03/08 06:04	53,7472222222	ok			1
+2008	123										L																																		06/05/2008	20/03/08 06:04	46,7472222222	ok			1
+2008	125										M					L																													11/05/2008	20/03/08 06:04	51,7472222222	ok			1
+2008	129																											M																	24/05/2008	20/03/08 06:04	64,7472222222	ok			1
+2008	131																											L																	22/05/2008	20/03/08 06:04	62,7472222222	ok			1
+2008	132															L																													11/05/2008	20/03/08 06:04	51,7472222222	ok			1
+2008	133															L																													12/05/2008	20/03/08 06:04	52,7472222222	ok			1
+2008	134															L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	135															M																													13/05/2008	20/03/08 06:04	53,7472222222	ok			1
+2008	136																																												NA	20/03/08 06:04	NA	impute	07/05/2008	47,7472222222	0
+2008	137															L																													10/05/2008	20/03/08 06:04	50,7472222222	ok			1
+2008	138															L																													11/05/2008	20/03/08 06:04	51,7472222222	ok			1
+2008	211															L																													09/05/2008	20/03/08 06:04	49,7472222222	ok			1
+2009	2																			L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	3												S							L																									15/05/2009	20/03/09 11:53	55,5048611111	ok			1
+2009	4												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	6																			S							S			L															25/05/2009	20/03/09 11:53	65,5048611111	ok			1
+2009	7																																												NA	20/03/09 11:53	NA	impute	12/05/2009	52,5048611111	0
+2009	8																			L																									NA	20/03/09 11:53	NA	impute	19/05/2009	59,5048611111	1
+2009	9												M			M																													11/05/2009	20/03/09 11:53	51,5048611111	ok			1
+2009	10												M			L																													09/05/2009	20/03/09 11:53	49,5048611111	ok			1
+2009	12																			M																									18/05/2009	20/03/09 11:53	58,5048611111	ok			1
+2009	13												S			L				M																									17/05/2009	20/03/09 11:53	57,5048611111	ok_g			1
+2009	14																																												NA	20/03/09 11:53	NA	impute	12/05/2009	52,5048611111	0
+2009	15												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	16												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	17																			S							L																		20/05/2009	20/03/09 11:53	60,5048611111	ok			1
+2009	19												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	20																			S							M																		21/05/2009	20/03/09 11:53	61,5048611111	ok			1
+2009	21												S							M																									18/05/2009	20/03/09 11:53	58,5048611111	ok			1
+2009	22												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	23												S			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	24												S							L																									15/05/2009	20/03/09 11:53	55,5048611111	ok			1
+2009	26																			S							L																		20/05/2009	20/03/09 11:53	60,5048611111	ok			1
+2009	27																			M																									19/05/2009	20/03/09 11:53	59,5048611111	ok			1
+2009	35																			L																									15/05/2009	20/03/09 11:53	55,5048611111	ok			1
+2009	37												S			M																													11/05/2009	20/03/09 11:53	51,5048611111	ok			1
+2009	39												S			M				L																									13/05/2009	20/03/09 11:53	53,5048611111	ok			1
+2009	48												S							L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	50												S			S				S							L			L															24/05/2009	20/03/09 11:53	64,5048611111	ok			1
+2009	52																			S							L																		20/05/2009	20/03/09 11:53	60,5048611111	ok			1
+2009	53												S							L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	54												L																																07/05/2009	20/03/09 11:53	47,5048611111	ok			1
+2009	56																										S			L															24/05/2009	20/03/09 11:53	64,5048611111	ok			1
+2009	60												S							S							L																		20/05/2009	20/03/09 11:53	60,5048611111	ok			1
+2009	61												S							S							S			L															25/05/2009	20/03/09 11:53	65,5048611111	ok			1
+2009	75												S			M				L																									14/05/2009	20/03/09 11:53	54,5048611111	ok			1
+2009	84												S							M																									17/05/2009	20/03/09 11:53	57,5048611111	ok			1
+2009	90																																												12/05/2009	20/03/09 11:53	52,5048611111	ok			0
+2009	91												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	93												S			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	94												S			M																													11/05/2009	20/03/09 11:53	51,5048611111	ok			1
+2009	95												S			M																													11/05/2009	20/03/09 11:53	51,5048611111	ok			1
+2009	96																																												NA	20/03/09 11:53	NA	impute	12/05/2009	52,5048611111	0
+2009	98												S			M																													11/05/2009	20/03/09 11:53	51,5048611111	ok			1
+2009	99																			S							M																		22/05/2009	20/03/09 11:53	62,5048611111	ok			1
+2009	102												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	103												M			L				L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	108																			L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	109																			S							S			S				M											29/05/2009	20/03/09 11:53	69,5048611111	ok			1
+2009	110												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2009	111																										S			L															25/05/2009	20/03/09 11:53	65,5048611111	ok			1
+2009	112												S							M							L																		18/05/2009	20/03/09 11:53	58,5048611111	ok			1
+2009	113												S							M							L																		20/05/2009	20/03/09 11:53	60,5048611111	ok			1
+2009	114												S			M				L																									15/05/2009	20/03/09 11:53	55,5048611111	ok_g			1
+2009	115																			M																									17/05/2009	20/03/09 11:53	57,5048611111	ok			1
+2009	117															M				L																									15/05/2009	20/03/09 11:53	55,5048611111	ok			1
+2009	118															S				L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	120												M																																08/05/2009	20/03/09 11:53	48,5048611111	ok			1
+2009	121																																												NA	20/03/09 11:53	NA	impute	12/05/2009	52,5048611111	0
+2009	122												M																																08/05/2009	20/03/09 11:53	48,5048611111	ok			1
+2009	128																			L																									14/05/2009	20/03/09 11:53	54,5048611111	ok			1
+2009	129												S			S				L																									15/05/2009	20/03/09 11:53	55,5048611111	ok			1
+2009	130																			M							L																		20/05/2009	20/03/09 11:53	60,5048611111	ok			1
+2009	133												S			M																													11/05/2009	20/03/09 11:53	51,5048611111	ok			1
+2009	134																			M																									19/05/2009	20/03/09 11:53	59,5048611111	ok			1
+2009	135																			L																									16/05/2009	20/03/09 11:53	56,5048611111	ok			1
+2009	137																			L																									15/05/2009	20/03/09 11:53	55,5048611111	ok			1
+2009	211												M			L																													10/05/2009	20/03/09 11:53	50,5048611111	ok			1
+2010	2														S			S			S						XL																		20/05/2010	20/03/10 17:42	60,2625	ok			1
+2010	3														S			S			M																								16/05/2010	20/03/10 17:42	56,2625	ok			1
+2010	6												S					S			M																								17/05/2010	20/03/10 17:42	57,2625	ok			1
+2010	7												S					S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	8																																												NA	20/03/10 17:42	NA	impute	05/05/2010	45,2625	0
+2010	9												M					L			L																								14/05/2010	20/03/10 17:42	54,2625	ok			1
+2010	10												S					S			M																								17/05/2010	20/03/10 17:42	57,2625	ok			1
+2010	12																	S			S						L																		22/05/2010	20/03/10 17:42	62,2625	ok			1
+2010	13												S					S			S																								19/05/2010	20/03/10 17:42	59,2625	ok			1
+2010	14												S					S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	15																															XL													25/05/2010	20/03/10 17:42	65,2625	ok			1
+2010	16												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	18														S			M			L						L																		23/05/2010	20/03/10 17:42	63,2625	ok			1
+2010	19														S			S			S						XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	20														S			L			L																								14/05/2010	20/03/10 17:42	54,2625	ok			1
+2010	21														S			L			L																								14/05/2010	20/03/10 17:42	54,2625	ok			1
+2010	22												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	24												S					S			M																								17/05/2010	20/03/10 17:42	57,2625	ok			1
+2010	25												S					S			S						XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	26												M					L			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	27												S					S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	30																				S																								24/05/2010	20/03/10 17:42	64,2625	ok			1
+2010	35												S					M			L																								14/05/2010	20/03/10 17:42	54,2625	ok			1
+2010	36														S			S			S																								19/05/2010	20/03/10 17:42	59,2625	ok			1
+2010	37												M					M			L																								14/05/2010	20/03/10 17:42	54,2625	ok			1
+2010	38												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	39																																												NA	20/03/10 17:42	NA	impute	05/05/2010	45,2625	0
+2010	48																																												NA	20/03/10 17:42	NA	impute	07/05/2010	47,2625	0
+2010	49														S			M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	50														S			M			M																								16/05/2010	20/03/10 17:42	56,2625	ok			1
+2010	53														S			S			S																								24/05/2010	20/03/10 17:42	64,2625	ok			1
+2010	54												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	55																				L																								14/05/2010	20/03/10 17:42	54,2625	ok			1
+2010	56												S					M			M						XL																		20/05/2010	20/03/10 17:42	60,2625	ok			1
+2010	59														S			S			S						XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	60														S			S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	75												M					M			M																								17/05/2010	20/03/10 17:42	57,2625	ok			1
+2010	84														S			M			M																								17/05/2010	20/03/10 17:42	57,2625	ok			1
+2010	85												S					S			S						XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	90												S					M			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	91														S			S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	92												S					S			S						L																		22/05/2010	20/03/10 17:42	62,2625	ok			1
+2010	93												S					S			S						XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	94																	S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	96												S					S			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	97																																												28/05/2010	20/03/10 17:42	68,2625	ok			0
+2010	98												S					S			S																								19/05/2010	20/03/10 17:42	59,2625	ok			1
+2010	99														S			M			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	100												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	101														S			S			S						L																		23/05/2010	20/03/10 17:42	63,2625	ok			1
+2010	102												S					S			S																								19/05/2010	20/03/10 17:42	59,2625	ok_g			1
+2010	103												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	104																																												23/05/2010	20/03/10 17:42	63,2625	ok			0
+2010	106												S					S			S																								19/05/2010	20/03/10 17:42	59,2625	ok			1
+2010	107												S					S			S						XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	108												S					M			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	109												M					L			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	111												S					S			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	112														S			M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	113												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	114																	M																											NA	20/03/10 17:42	NA	impute	13/05/2010	53,2625	1
+2010	115														S			S			S						L																		22/05/2010	20/03/10 17:42	62,2625	ok			1
+2010	117																	S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	118														S			M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	120														S			S			S																								19/05/2010	20/03/10 17:42	59,2625	ok			1
+2010	121												S					S			M																								18/05/2010	20/03/10 17:42	58,2625	ok			1
+2010	123																				S						L																		23/05/2010	20/03/10 17:42	63,2625	ok			1
+2010	125														S			S			S						L																		22/05/2010	20/03/10 17:42	62,2625	ok			1
+2010	128												S					S			S						L																		22/05/2010	20/03/10 17:42	62,2625	ok			1
+2010	130												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	131														S			S			S						S					L													26/05/2010	20/03/10 17:42	66,2625	ok			1
+2010	132																				S						XL																		20/05/2010	20/03/10 17:42	60,2625	ok			1
+2010	133														S			S			S																								19/05/2010	20/03/10 17:42	59,2625	ok			1
+2010	134												S					M			L																								15/05/2010	20/03/10 17:42	55,2625	ok			1
+2010	135														S												XL																		21/05/2010	20/03/10 17:42	61,2625	ok			1
+2010	137														S			S			M																								16/05/2010	20/03/10 17:42	56,2625	ok			1
+2010	138														S			M			M						XL																		20/05/2010	20/03/10 17:42	60,2625	ok			1
+2011	2					M						XL		XL																															08/05/2011	20/03/11 23:31	48,0201388889	ok			1
+2011	3					S						M		L					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	4					S						S		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	6																																												NA	20/03/11 23:31	NA	impute	04/05/2011	44,0201388889	0
+2011	7					S						S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	8					S						M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	9					S						L		L																															08/05/2011	20/03/11 23:31	48,0201388889	ok			1
+2011	10					S						L		XL																															07/05/2011	20/03/11 23:31	47,0201388889	ok			1
+2011	12					S						M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	13					S						M		L					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	14					S						S		S					XL		XL																								14/05/2011	20/03/11 23:31	54,0201388889	ok			1
+2011	15					S						S		S					M		XL																								14/05/2011	20/03/11 23:31	54,0201388889	ok			1
+2011	16																										XL																		NA	20/03/11 23:31	NA	impute			1
+2011	18					S						XL		XL																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	20					S						S		M																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	21					S						L		L																															08/05/2011	20/03/11 23:31	48,0201388889	ok			1
+2011	22					S						S		M																															07/05/2011	20/03/11 23:31	47,0201388889	ok			1
+2011	24					S						L		L																															10/05/2011	20/03/11 23:31	50,0201388889	ok			1
+2011	25					S						S		S					XL		XL																								18/05/2011	20/03/11 23:31	58,0201388889	ok			1
+2011	26					M						XL		XL																															07/05/2011	20/03/11 23:31	47,0201388889	ok			1
+2011	27					S						S		S					S		S						L																		23/05/2011	20/03/11 23:31	63,0201388889	ok			1
+2011	31																		M		L																								16/05/2011	20/03/11 23:31	56,0201388889	ok			1
+2011	33											M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	34					S						S		S					L																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	35					S						S		S																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	37																																												NA	20/03/11 23:31	NA	impute	11/05/2011	51,0201388889	0
+2011	38											M		L					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	39											L		L																															10/05/2011	20/03/11 23:31	50,0201388889	ok			1
+2011	43																		S		S																								24/05/2011	20/03/11 23:31	64,0201388889	ok			1
+2011	48					S						XL		XL																															11/05/2011	20/03/11 23:31	51,0201388889	ok			1
+2011	49					S						M		L																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	50					S						S		S					S		M						XL																		22/05/2011	20/03/11 23:31	62,0201388889	ok			1
+2011	52					S						L		L																															07/05/2011	20/03/11 23:31	47,0201388889	ok			1
+2011	53					S						L		L					XL																										13/05/2011	20/03/11 23:31	53,0201388889	ok			1
+2011	54					S						S		S					M		XL																								14/05/2011	20/03/11 23:31	54,0201388889	ok			1
+2011	55											S		S					L		XL																								16/05/2011	20/03/11 23:31	56,0201388889	ok			1
+2011	56																		M		L																								15/05/2011	20/03/11 23:31	55,0201388889	ok			1
+2011	59					S						M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	61																		S		M						XL																		21/05/2011	20/03/11 23:31	61,0201388889	ok			1
+2011	84					S						M		L					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	85																		S		S						L																		25/05/2011	20/03/11 23:31	65,0201388889	ok			1
+2011	90											S																																	NA	20/03/11 23:31	NA	impute	06/05/2011	46,0201388889	1
+2011	91																																												NA	20/03/11 23:31	NA	impute	11/05/2011	51,0201388889	0
+2011	92					S						S		S					M		XL																								16/05/2011	20/03/11 23:31	56,0201388889	ok			1
+2011	93					M						XL		XL																															10/05/2011	20/03/11 23:31	50,0201388889	ok			1
+2011	94											M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	95													XL																															11/05/2011	20/03/11 23:31	51,0201388889	ok			1
+2011	96					S						S		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	97					S																																							NA	20/03/11 23:31	NA	impute	04/05/2011	44,0201388889	1
+2011	98					S						S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	99											S		S					M		M																								18/05/2011	20/03/11 23:31	58,0201388889	ok			1
+2011	101					S						S		S					M																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	102					S						M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	104																		M		M						XL																		20/05/2011	20/03/11 23:31	60,0201388889	ok			1
+2011	107																		L		XL																								19/05/2011	20/03/11 23:31	59,0201388889	ok			1
+2011	109					S						M		L																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	111					S						S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	112																																L												30/05/2011	20/03/11 23:31	70,0201388889	ok			1
+2011	114					S						S		S					XL																										13/05/2011	20/03/11 23:31	53,0201388889	ok			1
+2011	115					M						XL		XL																															07/05/2011	20/03/11 23:31	47,0201388889	ok			1
+2011	116					L																																							01/05/2011	20/03/11 23:31	41,0201388889	ok			1
+2011	117					S						S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	118					S						L		XL																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	120					S						M		L																															09/05/2011	20/03/11 23:31	49,0201388889	ok_g			1
+2011	121					M						XL		XL																															10/05/2011	20/03/11 23:31	50,0201388889	ok			1
+2011	123																										M																		21/05/2011	20/03/11 23:31	61,0201388889	ok			1
+2011	125																		M		M						XL																		20/05/2011	20/03/11 23:31	60,0201388889	ok			1
+2011	128					S						L		L					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	130																																												07/05/2011	20/03/11 23:31	47,0201388889	ok			0
+2011	133					S						S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	136											S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	138																				S						M						XL												26/05/2011	20/03/11 23:31	66,0201388889	ok			1
+2011	211											M		M					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	212													XL																															NA	20/03/11 23:31	NA	impute	11/05/2011	51,0201388889	1
+2011	213											S		S					XL		XL																								14/05/2011	20/03/11 23:31	54,0201388889	ok			1
+2011	214											S		S					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	215											M		M																															08/05/2011	20/03/11 23:31	48,0201388889	ok			1
+2011	216											M		L					XL																										12/05/2011	20/03/11 23:31	52,0201388889	ok			1
+2011	217											M		M																															09/05/2011	20/03/11 23:31	49,0201388889	ok			1
+2011	219																		L		XL																								17/05/2011	20/03/11 23:31	57,0201388889	ok			1
+2011	220																		M		M						XL																		20/05/2011	20/03/11 23:31	60,0201388889	ok			1
+2011	221																		L		XL																								16/05/2011	20/03/11 23:31	56,0201388889	ok			1
+2011	222																		M		M																								16/05/2011	20/03/11 23:31	56,0201388889	ok			1
+2011	223																		L		XL																								16/05/2011	20/03/11 23:31	56,0201388889	ok			1
+2011	224																		L		XL																								19/05/2011	20/03/11 23:31	59,0201388889	ok			1
+2011	225																		L		XL																								17/05/2011	20/03/11 23:31	57,0201388889	ok			1
+2011	226																		XL		XL																								17/05/2011	20/03/11 23:31	57,0201388889	ok			1
+2011	227																				XL																								17/05/2011	20/03/11 23:31	57,0201388889	ok			1
+2011	228																																												13/05/2011	20/03/11 23:31	53,0201388889	ok			0
+2012	2																																												NA	20/03/12 05:20	NA	impute	23/04/2012	33,7777777778	0
+2012	3	S							S							XL			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	4	S																																											NA	20/03/12 05:20	NA	impute	30/04/2012	40,7777777778	1
+2012	6	S							S							S			L				XL																						15/05/2012	20/03/12 05:20	55,7777777778	ok			1
+2012	7	S							S							S			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	8	S							S							M			L				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	9	S							S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	10	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	12																		XL																										NA	20/03/12 05:20	NA	impute	14/05/2012	54,7777777778	1
+2012	13	S							S							L			XL				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok_g			1
+2012	14	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	15	S							S							M			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	16	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	18	S							S							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	20	S							S							XL			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	21	S							S							M			M				L			L																			20/05/2012	20/03/12 05:20	60,7777777778	ok			1
+2012	22	S							S							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	24	S							S							M			L				XL																						15/05/2012	20/03/12 05:20	55,7777777778	ok			1
+2012	25	S							S							L			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	26																		XL																										NA	20/03/12 05:20	NA	impute	14/05/2012	54,7777777778	1
+2012	27	S							S							S			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	29	S							S							M			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	30															S			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	31																		XL																										NA	20/03/12 05:20	NA	impute	14/05/2012	54,7777777778	1
+2012	33	S							S							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	35	S							S							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	36	S							S							S			M				XL			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	37	S							S							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	38	S							S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	39	S							S							S			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	43	S							S							S			M				XL			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	48	S							S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	49	S							S							XL			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	50															S			S				S			M				XL															22/05/2012	20/03/12 05:20	62,7777777778	ok			1
+2012	52	S							S							S			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	53	S							M							L			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	54	S							M							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	55	S							L							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	56	S							S							S			S				M			L																			20/05/2012	20/03/12 05:20	60,7777777778	ok			1
+2012	57	S							S							M			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	59	S							S							S			M				M			L																			20/05/2012	20/03/12 05:20	60,7777777778	ok			1
+2012	60	S							S							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	61															S			S				M			L				XL															22/05/2012	20/03/12 05:20	62,7777777778	ok			1
+2012	75	S							S							S			M				XL			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	84	S							S							XL			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	85	S							S							S			S				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	90																		S				S			S				M			L												26/05/2012	20/03/12 05:20	66,7777777778	ok			1
+2012	91	S							S							M			L				XL																						15/05/2012	20/03/12 05:20	55,7777777778	ok			1
+2012	93	S							M							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	94	S							S							S			M				XL			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	95	S							S							S			S				L																						17/05/2012	20/03/12 05:20	57,7777777778	ok			1
+2012	96	S							S							M			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	97																						S			S				M			XL												25/05/2012	20/03/12 05:20	65,7777777778	ok			1
+2012	98	S							S							M			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	99																																												NA	20/03/12 05:20	NA	impute	30/04/2012	40,7777777778	0
+2012	100	S							S							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	101								S							M			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	102	S							S							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	103	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	106	S							S							S			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	107	S							S							S			S				L																						19/05/2012	20/03/12 05:20	59,7777777778	ok			1
+2012	108								S							S			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	109	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok_g			1
+2012	110								S							M			L				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	111	S							S							S			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	112								S							M			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	114																																												NA	20/03/12 05:20	NA	impute	23/04/2012	33,7777777778	0
+2012	115	S							S							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	116	S							S							S			S				M			L																			20/05/2012	20/03/12 05:20	60,7777777778	ok			1
+2012	117	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	118	S							M							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	120	S							S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	121																						S			S				M			L												27/05/2012	20/03/12 05:20	67,7777777778	ok			1
+2012	122															M																													NA	20/03/12 05:20	NA	impute	10/05/2012	50,7777777778	1
+2012	123	S							S							M			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	125	S							S							M			L				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	128	S							M							XL			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	130								S							S			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	133	S							S							M			L				XL																						15/05/2012	20/03/12 05:20	55,7777777778	ok			1
+2012	134								S							S			S				M			L				XL															22/05/2012	20/03/12 05:20	62,7777777778	ok			1
+2012	135								S							S			S				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	136	S							S							M			L				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	137															S			S				S			M				L															24/05/2012	20/03/12 05:20	64,7777777778	ok			1
+2012	138	S							S							XL			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	212																																												NA	20/03/12 05:20	NA	impute	23/04/2012	33,7777777778	0
+2012	213	S							S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	216	S							S							S			S				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	217	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	219	S							S							S			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	220								S							M			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	221	S							M							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	222															M			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	223	S							S							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	224	S							S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	226								S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	227	S							S							M			M				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	228																																												NA	20/03/12 05:20	NA	impute	30/04/2012	40,7777777778	0
+2012	229																		XL																										NA	20/03/12 05:20	NA	impute	14/05/2012	54,7777777778	1
+2012	230	S							S							M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	231								S							S			M				XL																						15/05/2012	20/03/12 05:20	55,7777777778	ok			1
+2012	232								S							S			S				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	233								S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	234								M							L			XL																										12/05/2012	20/03/12 05:20	52,7777777778	ok			1
+2012	235								S							M			L				XL																						15/05/2012	20/03/12 05:20	55,7777777778	ok			1
+2012	236	S							S							S			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	237								S							L			XL																										11/05/2012	20/03/12 05:20	51,7777777778	ok			1
+2012	238								S							XL																													08/05/2012	20/03/12 05:20	48,7777777778	ok			1
+2012	239															M			L																										13/05/2012	20/03/12 05:20	53,7777777778	ok			1
+2012	240															S			M				M			L																			20/05/2012	20/03/12 05:20	60,7777777778	ok			1
+2012	241															S			L				XL																						16/05/2012	20/03/12 05:20	56,7777777778	ok			1
+2012	242															M			M				L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	243																													XL															NA	20/03/12 05:20	NA	impute	24/05/2012	64,7777777778	1
+2012	244																						L			XL																			18/05/2012	20/03/12 05:20	58,7777777778	ok			1
+2012	245																																												21/05/2012	20/03/12 05:20	61,7777777778	ok			0
+2012	246																													XL															23/05/2012	20/03/12 05:20	63,7777777778	ok			1
+2013	2																						XL																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	3																						M																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	9																						M																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	10																						XL																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	13																						L																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	15																						XL																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	18																																												NA	20/03/13 11:10	NA	impute	08/05/2013	48,5347222222	0
+2013	20																						L																						21/05/2013	20/03/13 11:10	61,5347222222	ok			1
+2013	21																						M																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	22															S							L																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	24																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	26																						L																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	29																						L																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	30																						M																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	33																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	35																												XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	36																						XL																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	37																						XL																						21/05/2013	20/03/13 11:10	61,5347222222	ok			1
+2013	38																																												NA	20/03/13 11:10	NA	impute	15/05/2013	55,5347222222	0
+2013	39																																												19/05/2013	20/03/13 11:10	59,5347222222	ok			0
+2013	40																																												NA	20/03/13 11:10	NA	impute	08/05/2013	48,5347222222	0
+2013	43																						S																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	46																						L																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	48																						M																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	54															S							L																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	56																												L																23/05/2013	20/03/13 11:10	63,5347222222	ok			1
+2013	57																						L																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	60																						XL																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	75																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	84																																												18/05/2013	20/03/13 11:10	58,5347222222	ok			0
+2013	90																						M																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	93																						XL																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	94																						S																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	98																						L																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	100																						L																						21/05/2013	20/03/13 11:10	61,5347222222	ok			1
+2013	101																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	102																						L																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	103																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	106																						S																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	107																						S						L			XL													25/05/2013	20/03/13 11:10	65,5347222222	ok			1
+2013	108															S							M																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	109																						M																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	110																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	111																						L																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	112																						M																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	114																																												16/05/2013	20/03/13 11:10	56,5347222222	ok			0
+2013	117																						L																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	118																						S						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	121																						XL																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	125																						M						XL																22/05/2013	20/03/13 11:10	62,5347222222	ok			1
+2013	126																						M																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	128																						L																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	130																						L																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	131																																												NA	20/03/13 11:10	NA	impute	15/05/2013	55,5347222222	0
+2013	133																						XL																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	136																						S																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	211																						S																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	212																						L																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	216															S							XL																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	217																						S																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	225																						M																						18/05/2013	20/03/13 11:10	58,5347222222	ok			1
+2013	226																						M						L																23/05/2013	20/03/13 11:10	63,5347222222	ok			1
+2013	230																						L																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	231																						S																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	239																						S																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	241															S							XL																						16/05/2013	20/03/13 11:10	56,5347222222	ok			1
+2013	247																						XL																						20/05/2013	20/03/13 11:10	60,5347222222	ok			1
+2013	248															S							XL																						19/05/2013	20/03/13 11:10	59,5347222222	ok			1
+2013	249																						S																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	250																						M																						17/05/2013	20/03/13 11:10	57,5347222222	ok			1
+2013	251																						L																						21/05/2013	20/03/13 11:10	61,5347222222	ok			1
+2013	252																																												19/05/2013	20/03/13 11:10	59,5347222222	ok			0
+2013	253																																												21/05/2013	20/03/13 11:10	61,5347222222	ok			0
+2014	2													S																															NA	20/03/14 16:59	NA	impute			1
+2014	3		S			S								L																															04/05/2014	20/03/14 16:59	44,2923611111	ok			1
+2014	9													L																															09/05/2014	20/03/14 16:59	49,2923611111	ok			1
+2014	10					S								S								L																							15/05/2014	20/03/14 16:59	55,2923611111	ok			1
+2014	12													S								L																							15/05/2014	20/03/14 16:59	55,2923611111	ok			1
+2014	13													S								L																							16/05/2014	20/03/14 16:59	56,2923611111	ok			1
+2014	15		S			M																																							02/05/2014	20/03/14 16:59	42,2923611111	ok			1
+2014	16													S								M																							17/05/2014	20/03/14 16:59	57,2923611111	ok			1
+2014	20		S			S								L																															09/05/2014	20/03/14 16:59	49,2923611111	ok			1
+2014	21		S			S								L																															07/05/2014	20/03/14 16:59	47,2923611111	ok			1
+2014	22					S								L																															08/05/2014	20/03/14 16:59	48,2923611111	ok			1
+2014	24													S								L																							16/05/2014	20/03/14 16:59	56,2923611111	ok			1
+2014	26																					S						L																	22/05/2014	20/03/14 16:59	62,2923611111	ok			1
+2014	34													S								L																							16/05/2014	20/03/14 16:59	56,2923611111	ok			1
+2014	36													S								M																							18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	37													S								M																							18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	38		S			M																																							02/05/2014	20/03/14 16:59	42,2923611111	ok			1
+2014	39																					M																							18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	43													S								S						S						L											24/05/2014	20/03/14 16:59	64,2923611111	ok			1
+2014	46		S			L																																							01/05/2014	20/03/14 16:59	41,2923611111	ok			1
+2014	47																					S						L																	22/05/2014	20/03/14 16:59	62,2923611111	ok			1
+2014	48													M																															18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	50													M																															12/05/2014	20/03/14 16:59	52,2923611111	ok			1
+2014	52													S								L																							15/05/2014	20/03/14 16:59	55,2923611111	ok			1
+2014	54		S			S								M																															11/05/2014	20/03/14 16:59	51,2923611111	ok			1
+2014	55		M			L																																							01/05/2014	20/03/14 16:59	41,2923611111	ok			1
+2014	56													S																															NA	20/03/14 16:59	NA	impute			1
+2014	60													S								L																							15/05/2014	20/03/14 16:59	55,2923611111	ok			1
+2014	61																											S																	26/05/2014	20/03/14 16:59	66,2923611111	ok			1
+2014	75																					L																							NA	20/03/14 16:59	NA	impute	20/05/2014	60,2923611111	1
+2014	84													S								L																							16/05/2014	20/03/14 16:59	56,2923611111	ok			1
+2014	85					S								S																															13/05/2014	20/03/14 16:59	53,2923611111	ok			1
+2014	93		S			S								L																															08/05/2014	20/03/14 16:59	48,2923611111	ok			1
+2014	94													S								S																							13/05/2014	20/03/14 16:59	53,2923611111	ok			1
+2014	95													S								M																							17/05/2014	20/03/14 16:59	57,2923611111	ok			1
+2014	100					S								M																															11/05/2014	20/03/14 16:59	51,2923611111	ok			1
+2014	101					S																																							NA	20/03/14 16:59	NA	impute	06/05/2014	46,2923611111	1
+2014	102		M			L																																							01/05/2014	20/03/14 16:59	41,2923611111	ok			1
+2014	103													S								L																							16/05/2014	20/03/14 16:59	56,2923611111	ok			1
+2014	104													S								S						L																	23/05/2014	20/03/14 16:59	63,2923611111	ok			1
+2014	107																																												NA	20/03/14 16:59	NA	impute	06/05/2014	46,2923611111	0
+2014	108													S								M																							18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	109													S								L																							16/05/2014	20/03/14 16:59	56,2923611111	ok			1
+2014	110		S			M																																							02/05/2014	20/03/14 16:59	42,2923611111	ok			1
+2014	111																					S																							19/05/2014	20/03/14 16:59	59,2923611111	ok			1
+2014	117																																												NA	20/03/14 16:59	NA	impute	25/04/2014	35,2923611111	0
+2014	118													S								M																							17/05/2014	20/03/14 16:59	57,2923611111	ok			1
+2014	125													S								S																							20/05/2014	20/03/14 16:59	60,2923611111	ok			1
+2014	128		M			L																																							30/04/2014	20/03/14 16:59	40,2923611111	ok			1
+2014	133																					S						L																	22/05/2014	20/03/14 16:59	62,2923611111	ok			1
+2014	135																					S																							20/05/2014	20/03/14 16:59	60,2923611111	ok			1
+2014	211		S			S																																							03/05/2014	20/03/14 16:59	43,2923611111	ok			1
+2014	212																																												NA	20/03/14 16:59	NA	impute	28/04/2014	38,2923611111	0
+2014	214		S			S								M																															11/05/2014	20/03/14 16:59	51,2923611111	ok			1
+2014	215																																												NA	20/03/14 16:59	NA	impute	28/04/2014	38,2923611111	0
+2014	221													S								S																							18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	227		S			S								L																															10/05/2014	20/03/14 16:59	50,2923611111	ok			1
+2014	237		S			S								M																															12/05/2014	20/03/14 16:59	52,2923611111	ok			1
+2014	239													S								M																							18/05/2014	20/03/14 16:59	58,2923611111	ok			1
+2014	244																																												NA	20/03/14 16:59	NA	impute	06/05/2014	46,2923611111	0
+2014	248																					L																							NA	20/03/14 16:59	NA	impute			1
+2014	249																					S																							25/05/2014	20/03/14 16:59	65,2923611111	ok			1
+2014	300		S			S								M																															12/05/2014	20/03/14 16:59	52,2923611111	ok			1
+2014	301													S																															NA	20/03/14 16:59	NA	impute	14/05/2014	54,2923611111	1
+2014	302													S																															13/05/2014	20/03/14 16:59	53,2923611111	ok			1
+2014	303													S								L																							15/05/2014	20/03/14 16:59	55,2923611111	ok			1
+2014	304													M																															12/05/2014	20/03/14 16:59	52,2923611111	ok			1
+2014	305																																												14/05/2014	20/03/14 16:59	54,2923611111	ok			0
+2015	2	M																																											28/04/2015	20/03/15 22:48	38,05	ok			1
+2015	9							S																																					NA	20/03/15 22:48	NA	impute	07/05/2015	47,05	1
+2015	13	S						M																																					05/05/2015	20/03/15 22:48	45,05	ok			1
+2015	14							S							L																														10/05/2015	20/03/15 22:48	50,05	ok			1
+2015	17							S							M							L																							16/05/2015	20/03/15 22:48	56,05	ok			1
+2015	37							S																																					NA	20/03/15 22:48	NA	impute	07/05/2015	47,05	1
+2015	39														S							L																							17/05/2015	20/03/15 22:48	57,05	ok			1
+2015	46	S						L																																					02/05/2015	20/03/15 22:48	42,05	ok			1
+2015	49	S						M																																					05/05/2015	20/03/15 22:48	45,05	ok			1
+2015	55							L																																					NA	20/03/15 22:48	NA	impute	07/05/2015	47,05	1
+2015	59							M																																					NA	20/03/15 22:48	NA	impute	07/05/2015	47,05	1
+2015	84																																												NA	20/03/15 22:48	NA	impute	30/04/2015	40,05	0
+2015	85	S						L																																					03/05/2015	20/03/15 22:48	43,05	ok			1
+2015	92														S							L																							19/05/2015	20/03/15 22:48	59,05	ok			1
+2015	94														S																														NA	20/03/15 22:48	NA	impute	14/05/2015	54,05	1
+2015	103							S							S							L																							18/05/2015	20/03/15 22:48	58,05	ok			1
+2015	104							S							S							L																							17/05/2015	20/03/15 22:48	57,05	ok			1
+2015	109																																												NA	20/03/15 22:48	NA	impute	24/04/2015	34,05	0
+2015	111																																												NA	20/03/15 22:48	NA	impute	30/04/2015	40,05	0
+2015	112							M							L																														09/05/2015	20/03/15 22:48	49,05	ok			1
+2015	133	S						M																																					04/05/2015	20/03/15 22:48	44,05	ok			1
+2015	134																					S								L															25/05/2015	20/03/15 22:48	65,05	ok			1
+2015	135														S																														NA	20/03/15 22:48	NA	impute			1
+2015	138							L																																					NA	20/03/15 22:48	NA	impute			1
+2015	212														M							L																							17/05/2015	20/03/15 22:48	57,05	ok			1
+2015	216	S						S							L																														10/05/2015	20/03/15 22:48	50,05	ok			1
+2015	219																																												14/05/2015	20/03/15 22:48	54,05	ok			0
+2015	220														M																														12/05/2015	20/03/15 22:48	52,05	ok			1
+2015	221														M							L																							18/05/2015	20/03/15 22:48	58,05	ok			1
+2015	225																					M																							NA	20/03/15 22:48	NA	impute			1
+2015	233														S																														19/05/2015	20/03/15 22:48	59,05	ok			1
+2015	247							S																																					NA	20/03/15 22:48	NA	impute	07/05/2015	47,05	1
+2015	249																																												NA	20/03/15 22:48	NA	impute	30/04/2015	40,05	0
+2015	250														S							M																							20/05/2015	20/03/15 22:48	60,05	ok			1
+2015	251														S																														NA	20/03/15 22:48	NA	impute	28/05/2015	68,05	1
+2015	306							L																																					NA	20/03/15 22:48	NA	impute	07/05/2015	47,05	1
+2015	307							S																																					NA	20/03/15 22:48	NA	impute			1
+2015	308							S							S																														21/05/2015	20/03/15 22:48	61,05	ok			1
+2015	309																																												11/05/2015	20/03/15 22:48	51,05	ok			0
+2015	310																					M								L															25/05/2015	20/03/15 22:48	65,05	ok			1
+2016	2																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	3																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	7																																												17/05/2016	20/03/16 04:37	57,8076388889	ok			0
+2016	8																																												14/05/2016	20/03/16 04:37	54,8076388889	ok			0
+2016	9																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	10																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	13																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	14																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	16																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	17																																												16/05/2016	20/03/16 04:37	56,8076388889	ok			0
+2016	18																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	20																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	21																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	22																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	23																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	26																																												15/05/2016	20/03/16 04:37	55,8076388889	ok			0
+2016	27																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	29																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	31																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	33																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	34																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	35																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	36																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	38																																												06/05/2016	20/03/16 04:37	46,8076388889	ok			0
+2016	43																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	46																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	48																																												05/05/2016	20/03/16 04:37	45,8076388889	ok			0
+2016	49																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	54																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	55																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	59																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	60																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	75																																												NA	20/03/16 04:37	NA	impute			0
+2016	84																																												15/05/2016	20/03/16 04:37	55,8076388889	ok			0
+2016	90																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	91																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	92																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	93																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	94																																												15/05/2016	20/03/16 04:37	55,8076388889	ok			0
+2016	95																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	96																																												18/05/2016	20/03/16 04:37	58,8076388889	ok			0
+2016	98																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	100																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	101																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	102																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	103																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	104																																												14/05/2016	20/03/16 04:37	54,8076388889	ok			0
+2016	106																																												05/05/2016	20/03/16 04:37	45,8076388889	ok			0
+2016	107																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	109																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	110																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	111																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	116																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	117																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	126																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	128																																												22/05/2016	20/03/16 04:37	62,8076388889	ok			0
+2016	129																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	130																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	131																																												21/05/2016	20/03/16 04:37	61,8076388889	ok			0
+2016	132																																												25/05/2016	20/03/16 04:37	65,8076388889	ok			0
+2016	133																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	135																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	136																																												16/05/2016	20/03/16 04:37	56,8076388889	ok			0
+2016	138																																												16/05/2016	20/03/16 04:37	56,8076388889	ok			0
+2016	211																																												14/05/2016	20/03/16 04:37	54,8076388889	ok			0
+2016	212																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	215																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	216																																												24/05/2016	20/03/16 04:37	64,8076388889	ok			0
+2016	217																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	220																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	221																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	222																																												21/05/2016	20/03/16 04:37	61,8076388889	ok			0
+2016	223																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	225																																												17/05/2016	20/03/16 04:37	57,8076388889	ok			0
+2016	226																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	228																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	229																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	230																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	232																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	233																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	234																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	236																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	237																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	238																																												24/05/2016	20/03/16 04:37	64,8076388889	ok			0
+2016	240																																												16/05/2016	20/03/16 04:37	56,8076388889	ok			0
+2016	241																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	248																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	249																																												24/05/2016	20/03/16 04:37	64,8076388889	ok			0
+2016	250																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	251																																												14/05/2016	20/03/16 04:37	54,8076388889	ok			0
+2016	252																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	253																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	301																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	303																																												06/05/2016	20/03/16 04:37	46,8076388889	ok			0
+2016	304																																												08/05/2016	20/03/16 04:37	48,8076388889	ok			0
+2016	305																																												13/05/2016	20/03/16 04:37	53,8076388889	ok			0
+2016	308																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	309																																												17/05/2016	20/03/16 04:37	57,8076388889	ok			0
+2016	310																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	339																																												19/05/2016	20/03/16 04:37	59,8076388889	ok			0
+2016	401																																												14/05/2016	20/03/16 04:37	54,8076388889	ok			0
+2016	402																																												10/05/2016	20/03/16 04:37	50,8076388889	ok			0
+2016	403																																												16/05/2016	20/03/16 04:37	56,8076388889	ok			0
+2016	404																																												16/05/2016	20/03/16 04:37	56,8076388889	ok			0
+2016	405																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	406																																												12/05/2016	20/03/16 04:37	52,8076388889	ok			0
+2016	407																																												06/05/2016	20/03/16 04:37	46,8076388889	ok			0
+2016	408																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	409																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	410																																												07/05/2016	20/03/16 04:37	47,8076388889	ok			0
+2016	411																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2016	412																																												14/05/2016	20/03/16 04:37	54,8076388889	ok			0
+2016	413																																												11/05/2016	20/03/16 04:37	51,8076388889	ok			0
+2016	1413																																												09/05/2016	20/03/16 04:37	49,8076388889	ok			0
+2017	2																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	3																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	6																																												22/05/2017	20/03/17 10:26	62,5652777778	ok			0
+2017	7																																												22/05/2017	20/03/17 10:26	62,5652777778	ok			0
+2017	8																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	9																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	10																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	13																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	15																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	16																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	18																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	20																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	21																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	22																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	24																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	26																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	29																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	33																																												22/05/2017	20/03/17 10:26	62,5652777778	ok			0
+2017	35																																												NA	20/03/17 10:26	NA	impute			0
+2017	36																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	37																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	38																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	39																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	46																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	47																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	48																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	49																																												13/05/2017	20/03/17 10:26	53,5652777778	ok			0
+2017	50																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	52																																												25/05/2017	20/03/17 10:26	65,5652777778	ok			0
+2017	53																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	55																																												05/05/2017	20/03/17 10:26	45,5652777778	ok			0
+2017	57																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	59																																												25/05/2017	20/03/17 10:26	65,5652777778	ok			0
+2017	60																																												14/05/2017	20/03/17 10:26	54,5652777778	ok			0
+2017	61																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	84																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	90																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	91																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	92																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	93																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	94																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	95																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	98																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	100																																												14/05/2017	20/03/17 10:26	54,5652777778	ok			0
+2017	101																																												22/05/2017	20/03/17 10:26	62,5652777778	ok			0
+2017	102																																												22/05/2017	20/03/17 10:26	62,5652777778	ok			0
+2017	103																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	104																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	106																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	107																																												25/05/2017	20/03/17 10:26	65,5652777778	ok			0
+2017	108																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	109																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	110																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	111																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	112																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	116																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	117																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	119																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	120																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	126																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	128																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	129																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	130																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	131																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	132																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	133																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	134																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	212																																												05/05/2017	20/03/17 10:26	45,5652777778	ok			0
+2017	214																																												14/05/2017	20/03/17 10:26	54,5652777778	ok			0
+2017	215																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	216																																												NA	20/03/17 10:26	NA	impute			0
+2017	217																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	221																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	222																																												27/05/2017	20/03/17 10:26	67,5652777778	ok			0
+2017	225																																												25/05/2017	20/03/17 10:26	65,5652777778	ok			0
+2017	226																																												25/05/2017	20/03/17 10:26	65,5652777778	ok			0
+2017	228																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	229																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	232																																												14/05/2017	20/03/17 10:26	54,5652777778	ok			0
+2017	233																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	234																																												24/05/2017	20/03/17 10:26	64,5652777778	ok			0
+2017	235																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	236																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	237																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	238																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	239																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	240																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	241																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	244																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	246																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	247																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	248																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	250																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	251																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	253																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	301																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	303																																												14/05/2017	20/03/17 10:26	54,5652777778	ok			0
+2017	304																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	305																																												21/05/2017	20/03/17 10:26	61,5652777778	ok			0
+2017	307																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	308																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	309																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	310																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	401																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	402																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	403																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	405																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	406																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	407																																												15/05/2017	20/03/17 10:26	55,5652777778	ok			0
+2017	408																																												NA	20/03/17 10:26	NA	impute			0
+2017	409																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	410																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	411																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	413																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	501																																												16/05/2017	20/03/17 10:26	56,5652777778	ok			0
+2017	502																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	503																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	504																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	505																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	506																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	507																																												18/05/2017	20/03/17 10:26	58,5652777778	ok			0
+2017	508																																												23/05/2017	20/03/17 10:26	63,5652777778	ok			0
+2017	509																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	510																																												22/05/2017	20/03/17 10:26	62,5652777778	ok			0
+2017	511																																												19/05/2017	20/03/17 10:26	59,5652777778	ok			0
+2017	512																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	513																																												17/05/2017	20/03/17 10:26	57,5652777778	ok			0
+2017	514																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	515																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
+2017	516																																												26/05/2017	20/03/17 10:26	66,5652777778	ok			0
+2017	517																																												27/05/2017	20/03/17 10:26	67,5652777778	ok			0
+2017	518																																												20/05/2017	20/03/17 10:26	60,5652777778	ok			0
