@@ -1,3 +1,5 @@
+library(dplyr)
+
 # #Matching of ids from 88 onwards to ruta+genet in 87
 # data87<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/edited/matching87-88/data87.csv",header=T,sep="\t",dec=",") 
 # data88<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/edited/matching87-88/data88.csv",header=T,sep="\t",dec=",") 
@@ -21,12 +23,17 @@ str(data_8796)
 data_8796$id<-paste("old",data_8796$id,sep="_") #Add "old" to the ids
 data_8796$FFD1<-NULL
 data_8796$start<-NULL
+data_8796$FFD_corr<-as.Date(as.character(data_8796$FFD_date),format="%d/%m/%Y")
 data_8796$FFD_date<-NULL
 data_imput$ruta<-NA
 data_imput$genet<-NA
 data_imput<-data_imput[c("year", "id", "ruta","genet","data","vernal","FFD_action","grazing","shoot_vol","shoot_vol_action",
-            "cum_n_fl","cum_n_fl_action","n_fr","n_ovules","total_n_seeds","total_n_intact_seeds","FFD_imputed","FFD")]
+            "cum_n_fl","cum_n_fl_action","n_fr","n_ovules","total_n_seeds","total_n_intact_seeds","FFD_imputed","FFD_corr","FFD")]
+data_8796$vernal<-as.POSIXct(data_8796$vernal,format="%d/%m/%y %H:%M")
+data_8796$FFD<-as.numeric(with(data_8796,as.POSIXct(FFD_corr)-vernal))
 
+head(data_8796)
+head(data_imput)
 alldata<-rbind(data_8796,data_imput) #Join both "old" and "new" data
 head(alldata)
 str(alldata)
@@ -37,8 +44,6 @@ alldata$id<-as.factor(alldata$id)
 alldata$data<-as.factor(alldata$data)
 alldata$FFD_imputed<-as.factor(alldata$FFD_imputed)
 alldata$period<-as.factor(alldata$period)
-
-hist(alldata) #Quickly see all distributions - looks OK!
 
 subset(alldata,n_ovules>0&n_fr==0) #No pls with ovules but not fruits
 subset(alldata,total_n_seeds>0&n_ovules==0) #No pls with seeds but not ovules
@@ -61,7 +66,7 @@ subset(alldata,data==0&!is.na(grazing)) #No
 
 #Pls with data=1 and FFD missing
 nrow(subset(alldata,data==1&period=="new"&is.na(FFD))) #46 from new period (where data could not be imputed)-OK
-nrow(subset(alldata,data==1&period=="old"&is.na(FFD))) #88 from old period
+nrow(subset(alldata,data==1&period=="old"&is.na(FFD))) #85 from old period
 
 #See them per years
 data.frame(table(subset(alldata,data==1&is.na(FFD))$year))
@@ -69,10 +74,10 @@ data.frame(table(subset(alldata,data==1&is.na(FFD))$year))
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1987) #0
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1988) #6 - with n_fl but no FFD
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1989) #30 - with n_fl but no FFD
-subset(alldata,data==1&period=="old"&is.na(FFD)&year==1990) #4 - with n_fl but no FFD
+subset(alldata,data==1&period=="old"&is.na(FFD)&year==1990) #3 - with n_fl but no FFD
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1991) #1 - with n_fl but no FFD
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1992) #1 - with n_fl but no FFD
-subset(alldata,data==1&period=="old"&is.na(FFD)&year==1993) #3 - with n_fl but no FFD
+subset(alldata,data==1&period=="old"&is.na(FFD)&year==1993) #1 - with n_fl but no FFD
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1994) #8 - with n_fl but no FFD
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1995) #35
 subset(alldata,data==1&period=="old"&is.na(FFD)&year==1996) #0
@@ -160,7 +165,7 @@ plot(alldata$status)
 plot(subset(alldata,period=="old")$status)
 plot(subset(alldata,period=="new")$status)
 
-nrow(subset(alldata,status=="missFFD")) #134
+nrow(subset(alldata,status=="missFFD")) #131
 nrow(subset(alldata,status=="missnfl")) #66 
 nrow(subset(alldata,status=="missnfl"&!is.na(shoot_vol))) #63 to impute cum_n_fl from shoot_vol
 
@@ -200,23 +205,31 @@ alldata$n_fl_imputed<-ifelse(alldata$cum_n_fl_action=="impute",1,0) #Says if n_f
 alldata$status<-as.factor(ifelse(is.na(alldata$FFD)&alldata$data==1,"missFFD",ifelse(alldata$data==0,"nodata",
                 ifelse(is.na(alldata$n_fl)&alldata$data==1,"missnfl","ok"))))
 plot(alldata$status)
-nrow(subset(alldata,status=="missFFD")) #134
+nrow(subset(alldata,status=="missFFD")) #131
 nrow(subset(alldata,status=="missnfl")) #3 
 
 #Remove unnecesary columns
-alldata<-alldata[c(1:5,8,9,13:20,22:23)]
+names(alldata)
+alldata<-alldata[c(1:6,8,9,13:21,23:24)]
 alldata$n_seeds<-alldata$total_n_seeds
 alldata$n_intact_seeds<-alldata$total_n_intact_seeds
 alldata$total_n_seeds<-NULL
 alldata$total_n_intact_seeds<-NULL
 
-alldata<-alldata[c("year","period","id","ruta","genet","data","status","FFD","FFD_imputed","n_fl","n_fl_imputed",
-                "shoot_vol","grazing","n_fr","n_ovules","n_seeds","n_intact_seeds")]
+names(alldata)
+alldata<-alldata[c("year","period","id","ruta","genet","data","status","vernal","FFD_corr",
+            "FFD","FFD_imputed","n_fl","n_fl_imputed","shoot_vol","grazing","n_fr",
+            "n_ovules","n_seeds","n_intact_seeds")]
 head(alldata)
-subset(alldata,status=="missFFD"|status=="missnfl") #137
+subset(alldata,status=="missFFD"|status=="missnfl") #134
 subset(subset(alldata,status=="missFFD"|status=="missnfl"),period=="new") #49
-subset_old_missing<-subset(subset(alldata,status=="missFFD"|status=="missnfl"),period=="old") #88 (only missing FFD)
-subset_old_missing[order(subset_old_missing$year,subset_old_missing$ruta,subset_old_missing$genet),] #Send to Johan for double-checking
+subset(subset(alldata,status=="missFFD"|status=="missnfl"),period=="old") #85
+subset(subset(alldata,status=="missFFD"),period=="old") #85
+#All these individuals without FFD from old period were either not included in the phenology study (most)
+#or damaged by trampling before the recordings started (2 ind:s)
+#Remove them (Johan)
+
+alldata<-setdiff(alldata, subset(subset(alldata,status=="missFFD"),period=="old"))
 
 alldata_ok<-subset(alldata,status=="ok")
 plot(alldata_ok$year)  
@@ -224,4 +237,5 @@ plot(alldata_ok$year)
 write.table(alldata,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata.csv",sep="\t",dec=".",col.names=T)
 write.table(alldata_ok,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_ok.csv",sep="\t",dec=".",col.names=T)
 
+save(alldata, file="alldata.RData")
 

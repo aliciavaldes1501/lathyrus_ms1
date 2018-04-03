@@ -24,6 +24,8 @@ bud_sizes<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/bud
 head(data_imput)
 str(data_imput)
 data_imput$FFD_corr<-as.Date(as.character(data_imput$FFD_corr),format="%d/%m/%Y")
+data_imput$vernal<-as.POSIXct(data_imput$vernal,format="%d/%m/%y %H:%M")
+data_imput$FFD<-as.numeric(with(data_imput,as.POSIXct(FFD_corr)-vernal))
 
 head(bud_sizes)
 
@@ -161,9 +163,7 @@ str(bud_sizes)
 
 #merge with data imput
 data_imput<-merge(data_imput,bud_sizes[c(1:2,6,7)],by=c("year","id"),all.x=T,all.y=T)
-data_imput$FFD_corr<-NULL
-data_imput$FFD<-ifelse(is.na(data_imput$FFD_jul),data_imput$FFD_buds,data_imput$FFD_jul)
-data_imput$FFD_jul<-NULL
+data_imput$FFD<-ifelse(is.na(data_imput$FFD),data_imput$FFD_buds,data_imput$FFD)
 data_imput$FFD_buds<-NULL
 head(data_imput)
 str(data_imput)
