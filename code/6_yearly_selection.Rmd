@@ -1,0 +1,640 @@
+---
+title: "Yearly selection models Lathyrus"
+output:
+  pdf_document: 
+    toc: yes
+    toc_depth: 4
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r load image and packages, include=FALSE}
+load(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/code/image1.RData")
+library(dplyr)
+library(broom)
+library(knitr)
+library(car)
+library(ggplot2)
+library(fmsb)
+library(gridExtra)
+library(papeR)
+```
+\newpage
+# Select data and look at variables
+
+```{r Select data and look at variables, echo=TRUE}
+data_sel<-subset(alldata_weather_subs,!is.na(n_fl)&!is.na(FFD)) 
+#Select data where both FFD and n_fl are available
+nrow(subset(data_sel,is.na(n_intact_seeds))) #No NAs for seed data
+```
+
+```{r Histograms, echo=FALSE, fig.height=4, fig.width=12}
+par(mfrow=c(1,3))
+with(data_sel,hist(FFD))
+with(data_sel,hist(n_fl))
+with(data_sel,hist(n_intact_seeds))
+```
+
+# Calculation of relative fitness and standardized traits  
+Relativization and standardization was done within each year.
+
+```{r Relative fitness and standardized traits}
+data_sel<-data.frame(
+  data_sel %>% 
+  group_by(year) %>% 
+  mutate(n_intact_seeds_rel=n_intact_seeds/mean(n_intact_seeds)) %>% #Relative fitness
+  mutate(FFD_std=(FFD-mean(FFD))/sd(FFD)) %>%                        #Standardized FFD
+  mutate(n_fl_std=(n_fl-mean(n_fl))/sd(n_fl)))                       #Standardized n_fl
+```
+
+# Phenotypic selection models with all data
+
+```{r Phenotypic selection models all data}
+Anova(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:year, data = data_sel),type="II") 
+#Not sure about type - II for interactions?
+Anova(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:year+n_fl_std+n_fl_std:year, 
+         data = data_sel),type="II")
+#Selection for early flowering differs among years when considering only FFD, but
+#does not differ among years when including also number of flowers as a covariate
+
+Anova(update(lm(n_intact_seeds_rel ~ (FFD_std+I(FFD_std^2))*year,
+                data = data_sel),.~.-year),type="II") 
+Anova(update(lm(n_intact_seeds_rel~(FFD_std+I(FFD_std^2)+n_fl_std+I(n_fl_std^2)+
+      FFD_std:n_fl_std)*year, data = data_sel),.~.-year),type="II") 
+#No evidence of non-linear selection for FFD (but quadratic selection for n_fl)
+```
+
+# Phenotypic selection models for each year
+
+## With only FFD
+
+```{r Selection models with FFD}
+sel_models1<-data_sel %>% 
+  group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std, data = .)) 
+sel_models1_coefs<-data.frame(sel_models1 %>% tidy(model))
+sel_models1_coefs$sig<-ifelse(sel_models1_coefs$p.value<0.05,"*","") 
+sel_models1_rsq<-data.frame(sel_models1 %>% glance(model))[1:3]
+sel_models1_anova<-cbind(
+  year=c("1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","2006",
+         "2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017"),
+  variable=rep(c("FFD_std"),22),
+   plyr::ldply(lapply(as.list(sel_models1)$model,FUN=Anova), function(x) data.frame(x)[1,3:4]))
+sel_models1_anova$sig<-ifelse(sel_models1_anova$Pr..F.<0.05,"*","")
+kable(sel_models1_coefs)  #Selection gradients
+#FFD * (selection for early flowering) in all years but 1995,2009,2013,2015,2017
+kable(sel_models1_rsq) #R squares
+kable(sel_models1_anova) #Anova results
+```
+
+Plots seeds vs FFD
+
+```{r Plots fitness vs FFD, echo=FALSE, fig.height=3, fig.width=5}
+ggplot(data_sel,aes(FFD_std,n_intact_seeds_rel,colour=year))+
+  geom_smooth(method="lm",se=F,size=0.6)+geom_point(size=0.5)+
+  xlab("Standardized FFD")+ylab("Relative number of intact seeds")
+```
+
+Same plot but with only the fit lines (no data points)
+
+```{r Plots fitness vs FFD no points, echo=FALSE, fig.height=3, fig.width=5}
+ggplot(data_sel,aes(FFD_std,n_intact_seeds_rel,colour=year))+
+  geom_smooth(method="lm",se=F,size=0.6)+
+  xlab("Standardized FFD")+ylab("Relative number of intact seeds")
+```
+
+There is one outlier in 2017 with a very high relative number of intact seeds. This is a correct value (the plant had 9 intact seeds but the relative value is so high because only 7 plants produced seeds in 2017, so the mean for that year is very low). I think this value is driving the pattern for 2017 (year with the most positive slope in the previous graph).
+
+## With FFD & number of flowers
+
+```{r Selection models with FFD & n_fl}
+sel_models2<-as.list(data_sel %>% 
+  group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std+n_fl_std, data = .)) )
+sel_models2<-data_sel %>% 
+  group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std+n_fl_std, data = .)) 
+sel_models2_coefs<-data.frame(sel_models2 %>% tidy(model))
+sel_models2_coefs$sig<-ifelse(sel_models2_coefs$p.value<0.05,"*","") 
+sel_models2_rsq<-data.frame(sel_models2 %>% glance(model))[1:3]
+sel_models2_anova<-cbind(
+  year=c("1987","1987","1988","1988","1989","1989","1990","1990","1991","1991",
+  "1992","1992","1993","1993","1994","1994","1995","1995","1996","1996","2006",
+  "2006","2007","2007","2008","2008","2009","2009","2010","2010","2011","2011",
+  "2012","2012","2013","2013","2014","2014","2015","2015","2016","2016",
+  "2017","2017"),variable=rep(c("FFD_std","n_fl_std"),22),
+   plyr::ldply(lapply(as.list(sel_models2)$model,FUN=Anova), 
+   function(x) data.frame(x)[1:2,3:4]))
+sel_models2_anova$sig<-ifelse(sel_models2_anova$Pr..F.<0.05,"*","") 
+
+kable(sel_models2_coefs) #Selection gradients
+#FFD * (selection for early flowering) in 1991,1992,1993,2007,2010,2012,2014
+kable(sel_models2_rsq) #R squares
+kable(sel_models2_anova) #Anova results
+
+sel_grads_FFD<-subset(sel_models2_coefs,term=="FFD_std")[c(1,3,7)]
+sel_grads_FFD 
+#These are the per-year selection gradients for FFD, to be used in further analyses
+```
+
+## Non-linear selection (with FFD & number of flowers)
+
+```{r Non-linear selection}
+sel_models3<-data_sel %>% 
+  group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2)+n_fl_std+I(n_fl_std^2)+
+                  FFD_std:n_fl_std, data = .)) 
+sel_models3_coefs<-data.frame(sel_models3 %>% tidy(model))
+sel_models3_coefs$sig<-ifelse(sel_models3_coefs$p.value<0.05,"*","") 
+sel_models3_rsq<-data.frame(sel_models3 %>% glance(model))[1:3]
+sel_models3_anova<-cbind(
+  year=c("1987","1987","1987","1987","1987","1988","1988","1988","1988","1988",
+         "1989","1989","1989","1989","1989","1990","1990","1990","1990","1990",
+         "1991","1991","1991","1991","1991","1992","1992","1992","1992","1992",
+         "1993","1993","1993","1993","1993","1994","1994","1994","1994","1994",
+         "1995","1995","1995","1995","1995","1996","1996","1996","1996","1996",
+         "2006","2006","2006","2006","2006","2007","2007","2007","2007","2007",
+         "2008","2008","2008","2008","2008","2009","2009","2009","2009","2009",
+         "2010","2010","2010","2010","2010","2011","2011","2011","2011","2011",
+         "2012","2012","2012","2012","2012","2013","2013","2013","2013","2013",
+         "2014","2014","2014","2014","2014","2015","2015","2015","2015","2015",
+         "2016","2016","2016","2016","2016","2017","2017","2017","2017","2017"),
+  variable=rep(c("FFD_std","I(FFD_std^2)","n_fl_std","I(n_fl_std^2)","FFD_std:n_fl_std"),22),
+  plyr::ldply(lapply(as.list(sel_models3)$model,FUN=Anova), function(x) data.frame(x)[1:5,3:4]))
+sel_models3_anova$sig<-ifelse(sel_models3_anova$Pr..F.<0.05,"*","") 
+
+kable(sel_models3_coefs) #Selection gradients
+#Correlational selection in 1988, 2016
+#Quadratic selection on n_fl in 1990, 2006, 2015 and on FFD in 2015
+kable(sel_models3_rsq) #R squares
+kable(sel_models3_anova) #Anova results
+```
+
+Selection gradients for FFD for each year, from models including also number of flowers
+
+```{r Selection gradients for each year, echo=FALSE}
+ggplot(sel_grads_FFD,aes(estimate,year,colour=sig))+geom_point()+ylab("Selection gradient")+
+  scale_color_manual(labels = c("Not significant", "Significant"), values = c("blue", "red"))+
+  geom_vline(xintercept=0)+theme(legend.position="top")
+```
+
+# Models to explain variation in selection gradients among years
+
+## How are yearly selection gradients linked to climatic variables?
+
+```{r Effects of climatic variables on selection gradients}
+sel_grads_FFD$signif<-as.factor(with(sel_grads_FFD,ifelse(sig=="*","1","0")))
+sel_grads_FFD$sig<-NULL
+names(sel_grads_FFD)<-c("year","selgradFFD","sig_selgradFFD")
+data_sel_agg<-merge(mean_weather5,sel_grads_FFD)
+
+#Fit univariate linear models of selgradFFD against each predictor (climatic variables)
+varlist<-names(data_sel_agg)[c(8:10,20:22,32:34,42:46,56:58,68:70,80:82,
+                 92:94,104:106,116:118,128:130,134,138:142,146:217,217,223:232)]
+models_selgrads<-lapply(varlist, function(x) {
+  summary(lm(substitute(selgradFFD ~ scale(i), list(i = as.name(x))),data=data_sel_agg))})
+
+#Build a table with estimate, p and r square for all fitted models
+models_selgrads<-cbind(varlist,
+              plyr::ldply(models_selgrads, function(x) coef(x)[2]),
+              plyr::ldply(models_selgrads, function(x) coef(x)[8]),
+              plyr::ldply(models_selgrads, function(x) x$adj.r.square))
+names(models_selgrads)<-c("variable","estimate","p","adj.rsquare")
+models_selgrads$sig<-ifelse(models_selgrads$p<0.05,"*","") # *=p<0.05
+
+#Order models with significant variables by R square
+kable(arrange(subset(models_selgrads,sig=="*"),desc(adj.rsquare)))
+```
+
+Only precipitation in March is significant. 
+
+Plot of the best model
+
+```{r Plots of best models, echo=FALSE, fig.height=3, fig.width=3.5}
+  ggplot(data_sel_agg,aes(precipitation_3,selgradFFD))+geom_point()+geom_smooth(method="lm")+
+  xlab("Sum of precipitation in March")+ylab("Selection gradient for FFD")
+```
+
+The model without interaction explains 18% of variance in selection gradients for FFD. Selection for early flowering (i.e. a more negative selection gradient) is stronger with lower precipitation in March. This means that when March is dry, there is more advantage of flowering early. Why?? The effect of precipitation in March might be related to the amount of snow and vegetative development? If March is dry (i.e. there is not a lot of snow), it is an advantage to start vegetative development earlier (which also would mean flowering earlier).
+
+## How are yearly selection gradients linked to mean of FFD?
+
+```{r Effects of FFD_mean on selection gradients}
+kable(prettify(summary(lm(selgradFFD~FFD_mean,data=data_sel_agg)))) #No effect of FFD_mean
+```
+
+## How are yearly selection gradients linked to variance of FFD?
+
+```{r Effects of FFD_var on selection gradients}
+kable(prettify(summary(lm(selgradFFD~FFD_var,data=data_sel_agg)))) #No effect of FFD_var
+```
+
+## How are yearly selection gradients linked to range of FFD?
+
+```{r Effects of FFD_dur on selection gradients}
+kable(prettify(summary(lm(selgradFFD~FFD_dur,data=data_sel_agg)))) #No effect of FFD_dur
+```
+
+## How are yearly selection gradients linked to skewness of FFD?
+
+```{r Effects of FFD_skew on selection gradients}
+kable(prettify(summary(lm(selgradFFD~FFD_skew,data=data_sel_agg)))) #No effect of FFD_skew
+```
+
+## How are yearly selection gradients linked to kurtosis of FFD?
+
+```{r Effects of FFD_kurt on selection gradients}
+kable(prettify(summary(lm(selgradFFD~FFD_kurt,data=data_sel_agg)))) #No effect of FFD_kurt
+```
+
+## How are yearly selection gradients linked to intensity of grazing?
+
+```{r Effects of grazing on selection gradients}
+data_sel_agg<-merge(data_sel_agg,aggregate(grazing~year,data_sel,FUN=mean))
+
+#Added mean grazing per year
+kable(prettify(summary(lm(selgradFFD~grazing,data=data_sel_agg))))
+      #p=0.0691 
+kable(prettify(summary(lm(selgradFFD~grazing,data=subset(data_sel_agg,year<2017)))))
+      #Removing 2017, worse p=0.0948 
+#No effect of grazing (or very low effect?)
+```
+
+```{r Plots grazing and selection gradients, echo=FALSE, fig.height=3, fig.width=7}
+grid.arrange(
+  ggplot(data_sel_agg,aes(grazing,selgradFFD))+geom_point()+geom_smooth(method="lm")+
+  xlab("Mean grazing")+ylab("Selection gradient for FFD")+ggtitle("With all years"),
+ggplot(subset(data_sel_agg,year<2017),aes(grazing,selgradFFD))+geom_point()+geom_smooth(method="lm")+
+  xlab("Mean grazing")+ylab("Selection gradient for FFD")+ggtitle("Without 2017"),ncol=2)
+```
+
+Although the effects are not significant, a higher grazing pressure seems to favor selection for later flowering.
+
+## How are yearly selection gradients linked to seed predation?
+
+```{r Effects of seed predation on selection gradients}
+data_sel$n_pred_seeds<-with(data_sel,n_seeds-n_intact_seeds)
+data_sel$prop_pred_seeds<-with(data_sel,
+        ifelse(n_seeds==n_intact_seeds,0,
+               (data_sel$n_seeds-data_sel$n_intact_seeds)/data_sel$n_seeds))
+data_sel_agg<-merge(data_sel_agg,aggregate(prop_pred_seeds~year,data_sel,FUN=mean))
+data_sel_agg<-merge(data_sel_agg,aggregate(n_pred_seeds~year,data_sel,FUN=mean))
+data_sel_agg<-merge(data_sel_agg,aggregate(n_seeds~year,data_sel,FUN=mean))
+
+#Added mean seed predation (proportion and n of predated seeds) per year
+kable(prettify(summary(lm(selgradFFD~prop_pred_seeds,data=data_sel_agg)))) #NS
+kable(prettify(summary(lm(selgradFFD~n_pred_seeds,data=data_sel_agg)))) #NS
+```
+
+No effect of seed predation on selection gradients.
+
+## How are yearly selection gradients linked to fruit and seed set?
+
+```{r Effects of fruit and seed set on selection gradients, fig.height=4, fig.width=8}
+data_sel$fr_set<-with(data_sel,n_fr/n_fl)           #Calculate fruit set
+data_sel$seed_set<-with(data_sel,n_seeds/n_ovules)  #Calculate seed set
+nrow(subset(data_sel,n_fr>n_fl)) #0 cases where n_fruits>n_flowers
+par(mfrow=c(1,2))
+hist(data_sel$fr_set,main=NULL)
+hist(data_sel$seed_set,main=NULL)
+data_sel_agg<-merge(data_sel_agg,aggregate(fr_set~year,data_sel,FUN=mean))
+data_sel_agg<-merge(data_sel_agg,aggregate(seed_set~year,data_sel,FUN=mean))
+
+kable(prettify(summary(lm(selgradFFD~fr_set,data=data_sel_agg)))) #NS
+kable(prettify(summary(lm(selgradFFD~seed_set,data=data_sel_agg)))) #NS
+```
+
+No effect of fruit and seed set on selection gradients.
+
+## How are yearly selection gradients linked to grazing, seed predation, fruit and seed set? (alltogether)
+
+```{r Effects of 4 predictors on selection gradients}
+summary(lm(selgradFFD~grazing+prop_pred_seeds+fr_set+seed_set,data=data_sel_agg)) # 
+```
+Grazing is significant: there is increased selection for late flowering in years of more intense grazing (as expected because grazers attack more the early-flowering ones).
+
+# Models to explain variation in grazing and seed predation among years
+
+```{r Variation in grazing and seed pred among years, echo=FALSE, fig.height=3, fig.width=9}
+grid.arrange(
+  ggplot(data_sel_agg,aes(year,grazing))+geom_point(),
+  ggplot(data_sel_agg,aes(year,prop_pred_seeds))+geom_point(),
+ncol=2)
+```
+
+## Grazing
+
+### How is grazing linked to climatic variables?
+
+```{r Effects of climatic variables on grazing}
+#Fit univariate linear models of grazing against each predictor (climatic variables)
+models_grazing<-lapply(varlist, function(x) {
+  summary(lm(substitute(log(grazing) ~ scale(i), list(i = as.name(x))),data=data_sel_agg))})
+
+#Build a table with estimate, p and r square for all fitted models
+models_grazing<-cbind(varlist,
+              plyr::ldply(models_grazing, function(x) coef(x)[2]),
+              plyr::ldply(models_grazing, function(x) coef(x)[8]),
+              plyr::ldply(models_grazing, function(x) x$adj.r.squared)
+              )
+
+names(models_grazing)<-c("variable","estimate","p","rsquare")
+models_grazing$sig<-ifelse(models_grazing$p<0.05,"*","") # *=p<0.05
+
+#Order models with significant variables by R square
+kable(arrange(subset(models_grazing,sig=="*"),desc(rsquare)))
+```
+
+It seems that grazing is higher when there is more precipitation in March and April-May are less warm. 
+
+Model with two of the best variables: precipitation in March and GDD10 April+May
+
+```{r Model grazing with the two best variables}
+summary(lm(log(grazing)~scale(precipitation_3)+scale(GDD10_45),data=data_sel_agg))
+```
+
+This model explains 46% of the variation in grazing.
+
+### How is grazing linked to mean of FFD?
+
+```{r Effects of FFD_mean on grazing}
+kable(prettify(summary(lm(log(grazing) ~ FFD_mean,data=data_sel_agg))))
+      #No effect of FFD_mean 
+kable(prettify(summary(lm(log(grazing) ~ FFD_mean,data=subset(data_sel_agg,!year=="2017")))))
+#Removing 2017, No effect of FFD_mean 
+```
+
+### How is grazing linked to variance of FFD?
+
+```{r Effects of FFD_var on grazing}
+kable(prettify(summary(lm(log(grazing) ~ FFD_var,data=data_sel_agg))))
+      #FFD_var*
+summary(lm(log(grazing) ~ FFD_var,data=data_sel_agg))$adj.r.squared
+kable(prettify(summary(lm(log(grazing) ~ FFD_var,data=subset(data_sel_agg,!year=="2017")))))
+#Removing 2017, FFD_var*
+summary(lm(log(grazing) ~ FFD_var,data=subset(data_sel_agg,!year=="2017")))$adj.r.squared
+```
+
+Grazing increases with variance of FFD.
+
+### How is grazing linked to range of FFD?
+
+```{r Effects of FFD_dur on grazing}
+kable(prettify(summary(lm(log(grazing) ~ FFD_dur,data=data_sel_agg)))) #FFD_dur*
+summary(lm(log(grazing) ~ FFD_dur,data=data_sel_agg))$adj.r.squared
+kable(prettify(summary(lm(log(grazing) ~ FFD_dur,data=subset(data_sel_agg,!year=="2017"))))) 
+summary(lm(log(grazing) ~ FFD_dur,data=data_sel_agg))$adj.r.squared
+#Removing 2017, FFD_dur*
+```
+
+Grazing increases with range of FFD.
+
+### How is grazing linked to skewness of FFD?
+
+```{r Effects of FFD_skew on grazing}
+kable(prettify(summary(lm(log(grazing) ~ FFD_skew,data=data_sel_agg))))
+      #No effect of FFD_skew 
+kable(prettify(summary(lm(log(grazing) ~ FFD_skew,data=subset(data_sel_agg,!year=="2017")))))
+#Removing 2017, No effect of FFD_skew 
+```
+
+### How is grazing linked to kurtosis of FFD?
+
+```{r Effects of FFD_kurt on grazing}
+kable(prettify(summary(lm(log(grazing) ~ FFD_kurt,data=data_sel_agg))))
+      #No effect of FFD_kurt 
+kable(prettify(summary(lm(log(grazing) ~ FFD_kurt,data=subset(data_sel_agg,!year=="2017")))))
+      #Removing 2017, No effect of FFD_kurt 
+```
+
+### Plots of best models grazing
+
+```{r Plots of best models grazing, echo=FALSE, fig.height=6, fig.width=7}
+grid.arrange(
+  ggplot(data_sel_agg,aes(x=precipitation_3,y=log(grazing)))+geom_point()+geom_smooth(method="lm")+
+  xlab("Sum of precipitation in March")+ylab("Grazing (log)"),
+ggplot(data_sel_agg,aes(x=GDD10_45,y=log(grazing)))+geom_point()+geom_smooth(method="lm")+
+  xlab("Sum of GDD10 in April and May")+ylab("Grazing (log)"),
+ggplot(data_sel_agg,aes(x=FFD_var,y=log(grazing)))+geom_point()+geom_smooth(method="lm")+
+  xlab("Variance of FFD")+ylab("Grazing (log)"),
+ggplot(data_sel_agg,aes(x=FFD_dur,y=log(grazing)))+geom_point()+geom_smooth(method="lm")+
+  xlab("Range of FFD")+ylab("Grazing (log)"),
+ncol=2)
+```
+
+## Seed predation
+
+### How is seed predation linked to climatic variables?
+
+```{r Effects of climatic variables on seed predation}
+#Fit univariate linear models of grazing against each predictor (climatic variables)
+models_spred<-lapply(varlist, function(x) {
+  summary(lm(substitute(asin(sqrt(prop_pred_seeds)) ~ scale(i), 
+            list(i = as.name(x))),data=data_sel_agg))})
+
+#Build a table with estimate, p and r square for all fitted models
+models_spred<-cbind(varlist,
+              plyr::ldply(models_spred, function(x) coef(x)[2]),
+              plyr::ldply(models_spred, function(x) coef(x)[8]),
+              plyr::ldply(models_spred, function(x) x$adj.r.squared)
+              )
+
+names(models_spred)<-c("variable","estimate","p","rsquare")
+models_spred$sig<-ifelse(models_spred$p<0.05,"*","") # *=p<0.05
+
+#Order models with significant variables by R square
+kable(arrange(subset(models_spred,sig=="*"),desc(rsquare)))
+```
+
+It seems that seed predation increases with temperature/GDD/GDH from May to June. 
+
+Model with one of the best variables: 
+
+```{r Model seed predation with one of the best variables}
+summary(lm(asin(sqrt(prop_pred_seeds))~scale(max456),data=data_sel_agg))
+```
+
+This model explains 24% of the variation in seed predation
+
+```{r Plots of best model seed predation, echo=FALSE, fig.height=3, fig.width=4}
+ggplot(data_sel_agg,aes(x=max456,y=asin(sqrt(prop_pred_seeds))))+geom_point()+
+  geom_smooth(method="lm")+xlab("Average maximum temperature April-June")+
+  ylab("Proportion of predated seeds \n (arcsin-transformed)")
+```
+
+### How is seed predation linked to mean of FFD?
+
+```{r Effects of FFD_mean on seed predation}
+kable(prettify(summary(lm(sqrt(prop_pred_seeds) ~ FFD_mean,data=data_sel_agg)))) #No effect of FFD_mean
+```
+
+### How is seed predation linked to variance of FFD?
+
+```{r Effects of FFD_var on seed predation}
+kable(prettify(summary(lm(sqrt(prop_pred_seeds) ~ FFD_var,data=data_sel_agg)))) #No effect of FFD_var
+```
+
+### How is seed predation linked to range of FFD?
+
+```{r Effects of FFD_dur on seed predation}
+kable(prettify(summary(lm(sqrt(prop_pred_seeds) ~ FFD_dur,data=data_sel_agg)))) #No effect of FFD_dur
+```
+
+### How is seed predation linked to skewness of FFD?
+
+```{r Effects of FFD_skew on seed predation}
+kable(prettify(summary(lm(sqrt(prop_pred_seeds) ~ FFD_skew,data=data_sel_agg)))) #No effect of FFD_skew
+```
+
+### How is seed predation linked to kurtosis of FFD?
+
+```{r Effects of FFD_kurt on seed predation}
+kable(prettify(summary(lm(sqrt(prop_pred_seeds) ~ FFD_kurt,data=data_sel_agg)))) #No effect of FFD_kurt
+```
+
+# Models to explain variation in fruit and seed set among years
+
+```{r Variation in fruit and seed set among years, echo=FALSE, fig.height=3, fig.width=9}
+grid.arrange(
+  ggplot(data_sel_agg,aes(year,fr_set))+geom_point(),
+  ggplot(data_sel_agg,aes(year,seed_set))+geom_point(),
+ncol=2)
+```
+
+## Fruit set
+
+### How is fruit set linked to climatic variables?
+
+```{r Effects of climatic variables on fruit set}
+#Fit univariate linear models of fruit set against each predictor (climatic variables)
+models_frset<-lapply(varlist, function(x) {
+  summary(lm(substitute(fr_set ~ scale(i), list(i = as.name(x))),data=data_sel_agg))})
+
+#Build a table with estimate, p and r square for all fitted models
+models_frset<-cbind(varlist,
+              plyr::ldply(models_frset, function(x) coef(x)[2]),
+              plyr::ldply(models_frset, function(x) coef(x)[8]),
+              plyr::ldply(models_frset, function(x) x$adj.r.squared)
+              )
+
+names(models_frset)<-c("variable","estimate","p","rsquare")
+models_frset$sig<-ifelse(models_frset$p<0.05,"*","") # *=p<0.05
+
+#Order models with significant variables by R square
+kable(arrange(subset(models_frset,sig=="*"),desc(rsquare)))
+```
+
+No significant relationships.
+
+### How is fruit set linked to mean of FFD?
+
+```{r Effects of FFD_mean on fruit set}
+kable(prettify(summary(lm(fr_set ~ FFD_mean,data=data_sel_agg)))) #No effect of FFD_mean FFD 
+```
+
+### How is fruit set linked to variance of FFD?
+
+```{r Effects of FFD_var on fruit set}
+kable(prettify(summary(lm(fr_set ~ FFD_var,data=data_sel_agg)))) #FFD_var*
+summary(lm(fr_set ~ FFD_var,data=data_sel_agg))$adj.r.square
+```
+
+Fruit set increases with variance of FFD.
+
+```{r Plot effects of FFD_var on fruit set, echo=FALSE, fig.height=3, fig.width=3.5}
+ggplot(data_sel_agg,aes(x=FFD_var,y=fr_set))+geom_point()+geom_smooth(method="lm")+
+  xlab("Variance of FFD")+ylab("Fruit set")
+```
+
+### How is fruit set linked to range of FFD?
+
+```{r Effects of FFD_dur on fruit set}
+kable(prettify(summary(lm(fr_set ~ FFD_dur,data=data_sel_agg)))) #No effect of FFD_dur 
+```
+
+### How is fruit set linked to skewness of FFD?
+
+```{r Effects of FFD_skew on fruit set}
+kable(prettify(summary(lm(fr_set ~ FFD_skew,data=data_sel_agg)))) #No effect of FFD_skew  
+```
+
+### How is fruit set linked to kurtosis of FFD?
+
+```{r Effects of FFD_kurt on fruit set}
+kable(prettify(summary(lm(fr_set ~ FFD_kurt,data=data_sel_agg)))) #No effect of FFD_kurt  
+```
+
+##Seed set
+
+### How is seed set linked to climatic variables?
+
+```{r Effects of climatic variables on seed set}
+#Fit univariate linear models of fruit set against each predictor (climatic variables)
+models_seedset<-lapply(varlist, function(x) {
+  summary(lm(substitute(seed_set ~ scale(i), list(i = as.name(x))),data=data_sel_agg))})
+
+#Build a table with estimate, p and r square for all fitted models
+models_seedset<-cbind(varlist,
+              plyr::ldply(models_seedset, function(x) coef(x)[2]),
+              plyr::ldply(models_seedset, function(x) coef(x)[8]),
+              plyr::ldply(models_seedset, function(x) x$adj.r.squared)
+              )
+
+names(models_seedset)<-c("variable","estimate","p","rsquare")
+models_seedset$sig<-ifelse(models_seedset$p<0.05,"*","") # *=p<0.05
+
+#Order models with significant variables by R square
+kable(arrange(subset(models_seedset,sig=="*"),desc(rsquare)))
+```
+
+Model with one of the best variables: precipitation in June
+
+```{r Model seed set with one of the best variables}
+summary(lm(seed_set~scale(precipitation_6),data=data_sel_agg))
+```
+
+This model explains 28% of the variation in seed set
+
+```{r Plots of best model seed set, echo=FALSE, fig.height=3, fig.width=4}
+ggplot(data_sel_agg,aes(x=precipitation_6,y=seed_set))+geom_point()+
+  geom_smooth(method="lm")+xlab("Sum of precipitation in June")+
+  ylab("Seed set (n seeds/n ovules)")
+```
+
+
+### How is seed set linked to mean of FFD
+
+```{r Effects of FFD_mean on seed set}
+kable(prettify(summary(lm(seed_set ~ FFD_mean,data=data_sel_agg)))) #No effect of FFD_mean 
+```
+
+### How is seed set linked to variance of FFD
+
+```{r Effects of FFD_var on seed set}
+kable(prettify(summary(lm(seed_set ~ FFD_var,data=data_sel_agg)))) #No effect of FFD_var 
+```
+
+### How is seed set linked to range of FFD
+
+```{r Effects of FFD_dur on seed set}
+kable(prettify(summary(lm(seed_set ~ FFD_dur,data=data_sel_agg)))) #No effect of FFD_dur 
+```
+
+### How is seed set linked to skewness of FFD
+
+```{r Effects of FFD_skew on seed set}
+kable(prettify(summary(lm(seed_set ~ FFD_skew,data=data_sel_agg)))) #No effect of FFD_skew 
+```
+
+### How is seed set linked to kurtosis of FFD
+
+```{r Effects of FFD_kurt on seed set}
+kable(prettify(summary(lm(seed_set ~ FFD_kurt,data=data_sel_agg)))) #No effect of FFD_kurt 
+```
+
+
+
+
+
+
+

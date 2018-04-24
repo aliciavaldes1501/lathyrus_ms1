@@ -32,7 +32,7 @@ Outliers
 par(mfrow=c(2,4)) 
 boxplot(alldata$grazing,main="grazing")
 boxplot(alldata$shoot_vol,main="shoot_volume")
-boxplot(alldata$n_fl,main="n_fl")
+boxplot(alldata$cum_n_fl,main="n_fl")
 boxplot(alldata$n_fr,main="n_fr")
 boxplot(alldata$n_ovules,main="n_ovules")
 boxplot(alldata$n_seeds,main="n_seeds")
@@ -40,7 +40,7 @@ boxplot(alldata$n_intact_seeds,main="n_intact_seeds")
 boxplot(alldata$FFD,main="FFD")
 
 Z <- cbind(alldata$grazing, alldata$shoot_vol,  
-    alldata$n_fl,alldata$n_fr,
+    alldata$cum_n_fl,alldata$n_fr,
     alldata$n_ovules,alldata$n_seeds,
     alldata$n_intact_seeds,alldata$FFD)
 
@@ -75,22 +75,22 @@ lineplot.CI(alldata$period,alldata$n_intact_seeds,xlab="period",ylab="n_intact_s
 
 Distributions
 
-```{r echo=FALSE, fig.height=12, fig.width=8}
+```{r echo=FALSE, fig.height=12, fig.width=8,message=FALSE,warning=FALSE}
 grid.arrange(ggplot(alldata,aes(x=FFD))+geom_density(alpha=.2, fill="#FF6666"),
 ggplot(alldata,aes(x=grazing))+geom_density(alpha=.2, fill="#FF6666"),
 ggplot(alldata,aes(x=shoot_vol))+geom_density(alpha=.2, fill="#FF6666"),
-ggplot(alldata,aes(x=n_fl))+geom_density(alpha=.2, fill="#FF6666"),
+ggplot(alldata,aes(x=cum_n_fl))+geom_density(alpha=.2, fill="#FF6666"),
 ggplot(alldata,aes(x=n_fr))+geom_density(alpha=.2, fill="#FF6666"),
 ggplot(alldata,aes(x=n_ovules))+geom_density(alpha=.2, fill="#FF6666"),
 ggplot(alldata,aes(x=n_seeds))+geom_density(alpha=.2, fill="#FF6666"),
 ggplot(alldata,aes(x=n_intact_seeds))+geom_density(alpha=.2, fill="#FF6666"),ncol=2)
 
 ```
-```{r echo=FALSE, fig.height=12, fig.width=8}
+```{r echo=FALSE, fig.height=12, fig.width=8,message=FALSE,warning=FALSE}
 ggplot(alldata,aes(x=FFD))+geom_density(alpha=.2, fill="#FF6666")+facet_wrap(~year, ncol=4)
 ```
 
-```{r echo=FALSE, fig.height=12, fig.width=8}
+```{r echo=FALSE, fig.height=12, fig.width=8,message=FALSE,warning=FALSE}
 ggplot(alldata,aes(x=n_intact_seeds))+geom_density(alpha=.2, fill="#FF6666")+facet_wrap(~year, ncol=4)
 ```
 
@@ -112,29 +112,29 @@ Collinearity
 
 Correlation among FFD and number of flowers is not so important
 ```{r echo=FALSE}
-with(alldata,cor(FFD,n_fl,use="complete.obs"))
+with(alldata,cor(FFD,cum_n_fl,use="complete.obs"))
 ```
 
 Relationships between variables
 
-```{r echo=FALSE, fig.height=8, fig.width=15}
+```{r echo=FALSE, fig.height=8, fig.width=15,message=FALSE,warning=FALSE}
 grid.arrange(ggplot(alldata,aes(x=FFD,y=n_fr))+geom_point()+geom_smooth(method=lm),
 ggplot(alldata,aes(x=FFD,y=n_seeds))+geom_point()+geom_smooth(method=lm),
 ggplot(alldata,aes(x=FFD,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm),
-ggplot(alldata,aes(x=n_fl,y=n_fr))+geom_point()+geom_smooth(method=lm),
-ggplot(alldata,aes(x=n_fl,y=n_seeds))+geom_point()+geom_smooth(method=lm),
-ggplot(alldata,aes(x=n_fl,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm),ncol=3)
+ggplot(alldata,aes(x=cum_n_fl,y=n_fr))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=cum_n_fl,y=n_seeds))+geom_point()+geom_smooth(method=lm),
+ggplot(alldata,aes(x=cum_n_fl,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm),ncol=3)
 ```
 
 N intact seeds and FFD for all years
 
-```{r echo=FALSE, fig.height=12, fig.width=12}
+```{r echo=FALSE, fig.height=12, fig.width=12,message=FALSE,warning=FALSE}
 ggplot(alldata,aes(x=FFD,y=n_intact_seeds))+geom_point()+geom_smooth(method=lm)+facet_wrap(~year,ncol=4,scales="free_y")
 ```
 
 Grazing and FFD
 
-```{r echo=FALSE, fig.height=4, fig.width=5}
+```{r echo=FALSE, fig.height=4, fig.width=5,message=FALSE,warning=FALSE}
 ggplot(alldata,aes(x=FFD,y=grazing))+geom_point()+geom_smooth(method=glm,method.args=c(family="binomial"))
 ```
 

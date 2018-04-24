@@ -27,6 +27,10 @@ data_imput$FFD_corr<-as.Date(as.character(data_imput$FFD_corr),format="%d/%m/%Y"
 data_imput$vernal<-as.POSIXct(data_imput$vernal,format="%d/%m/%y %H:%M")
 data_imput$FFD<-as.numeric(with(data_imput,as.POSIXct(FFD_corr)-vernal))
 
+subset(data_imput,n_fr>cum_n_fl) #4 cases where n_fruits>n_flowers --> fix
+#Equal n_fl to n_fr
+data_imput$cum_n_fl<-with(data_imput,ifelse(n_fr>cum_n_fl,n_fr,cum_n_fl))
+
 head(bud_sizes)
 
 bud_sizes[sapply(bud_sizes, function(x) all(is.na(x)))] <- NULL #remove columns with all NAs
