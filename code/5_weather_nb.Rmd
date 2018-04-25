@@ -892,6 +892,21 @@ kable(arrange(subset(models10_summary,P<0.05),desc(Rsquare)))
 
 No sigificant relationships for FFD_kurt.
 
+## Plots of the best models
+
+```{r Plots FFD against winter variables,echo=FALSE, fig.height=8, fig.width=10}
+grid.arrange(
+  ggplot(mean_weather4,aes(x=precipitation_w,y=FFD_mean))+geom_point(size=1)+
+    geom_smooth(method="lm")+xlab("Sum of precipitation in winter")+ylab("Mean FFD"),
+  ggplot(mean_weather4,aes(x=mean_w,y=FFD_mean))+geom_point(size=1)+
+    geom_smooth(method="lm")+xlab("Mean temperature in winter")+ylab("Mean FFD"),
+  ggplot(mean_weather4,aes(x=precipitation_w,y=FFD_var))+geom_point(size=1)+
+    geom_smooth(method="lm")+xlab("Sum of precipitation in winter")+ylab("Variance FFD"),
+  ggplot(mean_weather4,aes(x=min_w,y=FFD_mean))+geom_point(size=1)+
+    geom_smooth(method="lm")+xlab("Min temperature in winter")+ylab("Variance FFD")
+,ncol=2)
+```
+
 # Influence of winter temperature / precipitation in response to spring temperature
 Does winter temperature/precipitation influence the response of plants to spring temperature?  
 Do fewer days with freezing temperatures/warmer temperatures in winter mean lower sensitivity to increasing spring temperatures?  
@@ -947,4 +962,16 @@ Test this within years instead of among years?
 ```{r Save image, include=FALSE}
 save.image(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/code/image1.RData")
 ```
+
+# SUMMARY
+* The mean FFD decreases (earlier flowering) with temperature in April-May and with precipitation in January-March. It also decreases with winter temperature and precipitation.
+* The variance in FFD increases with temperature in April and with precipitation in January-March. It also increases with winter precipitation and decreases with winter temperature. 
+* The range of FFD increases with temperature in April and decreases with temperature in April
+* The skewness of FFD decreases with temperature in March (i.e. higher temperatures in March lead to more left-tailed FFD distributions)
+* The proportion of plants having started flowering at a particular date is related to the cumulated number of GDD3/GDH from the vernal equinox
+* 1990 shows very high values of GDD/GDH because there were many "warm" days in February and March
+* The response of plants to increasing spring temperatures is less strong with higher winter precipitation (but no effect of winter temperature)
+
+
+
 

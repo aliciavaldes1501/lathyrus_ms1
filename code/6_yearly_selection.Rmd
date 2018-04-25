@@ -52,15 +52,15 @@ data_sel<-data.frame(
 ```{r Phenotypic selection models all data}
 Anova(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:year, data = data_sel),type="II") 
 #Not sure about type - II for interactions?
-Anova(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:year+n_fl_std+n_fl_std:year, 
+Anova(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:year+n_fl_std, 
          data = data_sel),type="II")
-#Selection for early flowering differs among years when considering only FFD, but
-#does not differ among years when including also number of flowers as a covariate
+#Selection for early flowering differs among years when considering only FFD
+#and also when including number of flowers as a covariate
 
 Anova(update(lm(n_intact_seeds_rel ~ (FFD_std+I(FFD_std^2))*year,
                 data = data_sel),.~.-year),type="II") 
-Anova(update(lm(n_intact_seeds_rel~(FFD_std+I(FFD_std^2)+n_fl_std+I(n_fl_std^2)+
-      FFD_std:n_fl_std)*year, data = data_sel),.~.-year),type="II") 
+Anova(update(lm(n_intact_seeds_rel~(FFD_std+I(FFD_std^2))*year+
+                  FFD_std:n_fl_std+n_fl_std+I(n_fl_std^2), data = data_sel),.~.-year),type="II") 
 #No evidence of non-linear selection for FFD (but quadratic selection for n_fl)
 ```
 
@@ -306,10 +306,23 @@ kable(prettify(summary(lm(selgradFFD~seed_set,data=data_sel_agg)))) #NS
 
 No effect of fruit and seed set on selection gradients.
 
+## How are yearly selection gradients linked to number of seeds per flower?
+
+```{r Effects of number of seeds per flower on selection gradients, fig.height=4, fig.width=8}
+data_sel$seeds_per_fl<-with(data_sel,n_seeds/n_fl)  #Calculate n seeds per fl
+hist(data_sel$seeds_per_fl,main=NULL)
+data_sel_agg<-merge(data_sel_agg,aggregate(seeds_per_fl~year,data_sel,FUN=mean))
+
+kable(prettify(summary(lm(selgradFFD~seeds_per_fl,data=data_sel_agg)))) #NS
+```
+
+No effect of number of seeds per flower on selection gradients.
+
 ## How are yearly selection gradients linked to grazing, seed predation, fruit and seed set? (alltogether)
 
 ```{r Effects of 4 predictors on selection gradients}
-summary(lm(selgradFFD~grazing+prop_pred_seeds+fr_set+seed_set,data=data_sel_agg)) # 
+summary(lm(selgradFFD~grazing+prop_pred_seeds+fr_set+seed_set,data=data_sel_agg)) #Grazing*
+summary(lm(selgradFFD~grazing+prop_pred_seeds+seeds_per_fl,data=data_sel_agg)) #NS
 ```
 Grazing is significant: there is increased selection for late flowering in years of more intense grazing (as expected because grazers attack more the early-flowering ones).
 
@@ -632,9 +645,80 @@ kable(prettify(summary(lm(seed_set ~ FFD_skew,data=data_sel_agg)))) #No effect o
 kable(prettify(summary(lm(seed_set ~ FFD_kurt,data=data_sel_agg)))) #No effect of FFD_kurt 
 ```
 
+# Models to explain variation in number of seeds per flower among years
 
+## How is number of seeds per flower linked to climatic variables?
 
+```{r Effects of climatic variables on seeds_per_fl, fig.height=3, fig.width=4}
+hist(data_sel_agg$seeds_per_fl)
+#Fit univariate linear models of fruit set against each predictor (climatic variables)
+models_seeds_per_fl<-lapply(varlist, function(x) {
+  summary(lm(substitute(seeds_per_fl ~ scale(i), list(i = as.name(x))),data=data_sel_agg))})
 
+#Build a table with estimate, p and r square for all fitted models
+models_seeds_per_fl<-cbind(varlist,
+              plyr::ldply(models_seeds_per_fl, function(x) coef(x)[2]),
+              plyr::ldply(models_seeds_per_fl, function(x) coef(x)[8]),
+              plyr::ldply(models_seeds_per_fl, function(x) x$adj.r.squared)
+              )
+
+names(models_seeds_per_fl)<-c("variable","estimate","p","rsquare")
+models_seeds_per_fl$sig<-ifelse(models_seeds_per_fl$p<0.05,"*","") # *=p<0.05
+
+#Order models with significant variables by R square
+kable(arrange(subset(models_seeds_per_fl,sig=="*"),desc(rsquare)))
+```
+
+No significant relationships.
+
+## How is number of seeds per flower linked to mean of FFD
+
+```{r Effects of FFD_mean on seeds_per_fl}
+kable(prettify(summary(lm(seeds_per_fl ~ FFD_mean,data=data_sel_agg)))) #No effect of FFD_mean 
+```
+
+## How is number of seeds per flower linked to variance of FFD
+
+```{r Effects of FFD_var on seeds_per_fl}
+kable(prettify(summary(lm(seeds_per_fl ~ FFD_var,data=data_sel_agg)))) #FFD_var* 
+summary(lm(seeds_per_fl ~ FFD_var,data=data_sel_agg))$adj.r.square
+```
+
+Number of seeds per flower increases with FFD_var (as did fruit set).
+
+```{r Plot effects of FFD_var on seeds_per_fl, echo=FALSE, fig.height=3, fig.width=3.5}
+ggplot(data_sel_agg,aes(x=FFD_var,y=seeds_per_fl))+geom_point()+geom_smooth(method="lm")+
+  xlab("Variance of FFD")+ylab("Number of seeds per flower")
+```
+
+## How is number of seeds per flower linked to range of FFD
+
+```{r Effects of FFD_dur on seeds_per_fl}
+kable(prettify(summary(lm(seeds_per_fl ~ FFD_dur,data=data_sel_agg)))) #No effect of FFD_dur 
+```
+
+## How is number of seeds per flower linked to skewness of FFD
+
+```{r Effects of FFD_skew on seeds_per_fl}
+kable(prettify(summary(lm(seeds_per_fl ~ FFD_skew,data=data_sel_agg)))) #No effect of FFD_skew 
+```
+
+## How is number of seeds per flower linked to kurtosis of FFD
+
+```{r Effects of FFD_kurt on seeds_per_fl}
+kable(prettify(summary(lm(seeds_per_fl ~ FFD_kurt,data=data_sel_agg)))) #No effect of FFD_kurt 
+```
+
+# SUMMARY
+* Phenotypic selection on flowering phenology differs among years (also when including number of flowers in the model)
+* There is significant selection for early flowering on 7 out of 22 years studied
+* Quadratic selection on flowering phenology is not important (only found in one year)
+* Selection for early flowering decreases with precipitation in March and with grazing (although grazing is only significant when included as predictor in a model together with seed predation, fruit set and seed set)
+* Grazing increases with precipitation in March and with variance and duration of flowering, and decreases with temperature in April-May
+* Seed predation increases with temperature in April-June
+* Fruit set increases with variance of flowering
+* Seed set increases with precipitation in (April-May-)June
+* The number of seeds per flower increases with variance of flowering
 
 
 
