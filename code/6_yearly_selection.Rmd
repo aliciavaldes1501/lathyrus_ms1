@@ -292,7 +292,7 @@ No effect of seed predation on selection gradients.
 
 ```{r Effects of fruit and seed set on selection gradients, fig.height=4, fig.width=8}
 data_sel$fr_set<-with(data_sel,n_fr/n_fl)           #Calculate fruit set
-data_sel$seed_set<-with(data_sel,n_seeds/n_ovules)  #Calculate seed set
+data_sel$seed_set<-with(data_sel,ifelse(fr_set==0,0,n_seeds/n_ovules))  #Calculate seed set
 nrow(subset(data_sel,n_fr>n_fl)) #0 cases where n_fruits>n_flowers
 par(mfrow=c(1,2))
 hist(data_sel$fr_set,main=NULL)
@@ -600,7 +600,8 @@ models_seedset$sig<-ifelse(models_seedset$p<0.05,"*","") # *=p<0.05
 kable(arrange(subset(models_seedset,sig=="*"),desc(rsquare)))
 ```
 
-Model with one of the best variables: precipitation in June
+None * after changing seed set!
+BEFORE: Model with one of the best variables: precipitation in June
 
 ```{r Model seed set with one of the best variables}
 summary(lm(seed_set~scale(precipitation_6),data=data_sel_agg))
