@@ -321,10 +321,9 @@ No effect of number of seeds per flower on selection gradients.
 ## How are yearly selection gradients linked to grazing, seed predation, fruit and seed set? (alltogether)
 
 ```{r Effects of 4 predictors on selection gradients}
-summary(lm(selgradFFD~grazing+prop_pred_seeds+fr_set+seed_set,data=data_sel_agg)) #Grazing*
+summary(lm(selgradFFD~grazing+prop_pred_seeds+fr_set+seed_set,data=data_sel_agg)) #NS
 summary(lm(selgradFFD~grazing+prop_pred_seeds+seeds_per_fl,data=data_sel_agg)) #NS
 ```
-Grazing is significant: there is increased selection for late flowering in years of more intense grazing (as expected because grazers attack more the early-flowering ones).
 
 # Models to explain variation in grazing and seed predation among years
 
@@ -600,21 +599,7 @@ models_seedset$sig<-ifelse(models_seedset$p<0.05,"*","") # *=p<0.05
 kable(arrange(subset(models_seedset,sig=="*"),desc(rsquare)))
 ```
 
-None * after changing seed set!
-BEFORE: Model with one of the best variables: precipitation in June
-
-```{r Model seed set with one of the best variables}
-summary(lm(seed_set~scale(precipitation_6),data=data_sel_agg))
-```
-
-This model explains 28% of the variation in seed set
-
-```{r Plots of best model seed set, echo=FALSE, fig.height=3, fig.width=4}
-ggplot(data_sel_agg,aes(x=precipitation_6,y=seed_set))+geom_point()+
-  geom_smooth(method="lm")+xlab("Sum of precipitation in June")+
-  ylab("Seed set (n seeds/n ovules)")
-```
-
+No significant effects.
 
 ### How is seed set linked to mean of FFD
 
@@ -714,11 +699,10 @@ kable(prettify(summary(lm(seeds_per_fl ~ FFD_kurt,data=data_sel_agg)))) #No effe
 * Phenotypic selection on flowering phenology differs among years (also when including number of flowers in the model)
 * There is significant selection for early flowering on 7 out of 22 years studied
 * Quadratic selection on flowering phenology is not important (only found in one year)
-* Selection for early flowering decreases with precipitation in March and with grazing (although grazing is only significant when included as predictor in a model together with seed predation, fruit set and seed set)
+* Selection for early flowering decreases with precipitation in March. There are hints for an effect of grazing (p>0.01)
 * Grazing increases with precipitation in March and with variance and duration of flowering, and decreases with temperature in April-May
 * Seed predation increases with temperature in April-June
 * Fruit set increases with variance of flowering
-* Seed set increases with precipitation in (April-May-)June
 * The number of seeds per flower increases with variance of flowering
 
 
