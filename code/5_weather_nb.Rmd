@@ -200,91 +200,101 @@ Calculate temperature, precipitation and GDD/GDH for different periods considere
 - January-March  
 - March-April
 
-```{r Calculate temp, prec, GDD for different periods}
-#Precipitation
-mean_weather2$prec456<-with(mean_weather2,precipitation_4+precipitation_5+precipitation_6)
-mean_weather2$prec45<-with(mean_weather2,precipitation_4+precipitation_5)
-mean_weather2$prec123456<-with(mean_weather2,precipitation_1+precipitation_2+precipitation_3+
-                          precipitation_4+precipitation_5+precipitation_6)
-mean_weather2$prec123<-with(mean_weather2,precipitation_1+precipitation_2+precipitation_3)
-mean_weather2$prec34<-with(mean_weather2,precipitation_3+precipitation_4)
+```{r Calculate temp, prec, GDD for different periods, message=FALSE}
+weather_46<-subset(weather,month==4|month==5|month==6)                            # April-June
+weather_45<-subset(weather,month==4|month==5)                                     # April-May
+weather_16<-subset(weather,month==1|month==2|month==3|month==4|month==5|month==6) # January-June
+weather_13<-subset(weather,month==1|month==2|month==3)                            # January-March
+weather_34<-subset(weather,month==3|month==4)                                     # March-April
 
-#Mean temperature
-mean_weather2$mean456<-with(mean_weather2,mean_4+mean_5+mean_6)
-mean_weather2$mean45<-with(mean_weather2,mean_4+mean_5)
-mean_weather2$mean123456<-with(mean_weather2,mean_1+mean_2+mean_3+mean_4+mean_5+mean_6)
-mean_weather2$mean123<-with(mean_weather2,mean_1+mean_2+mean_3)
-mean_weather2$mean34<-with(mean_weather2,mean_3+mean_4)
+#April-June
+mean_weather_46<-plyr::join_all(list(
+    aggregate(mean ~ year,data=weather_46, FUN=mean),          #Mean daily temperature
+    aggregate(min ~ year, data=weather_46, FUN=mean),          #Min daily temperature
+    aggregate(max ~ year, data=weather_46, FUN=mean),          #Max daily temperature
+    aggregate(precipitation ~ year, data= weather_46, FUN=sum),#Precipitation
+    aggregate(GDD3 ~ year,data= weather_46, FUN=sum),          #GDD3
+    aggregate(GDD5 ~ year,data= weather_46, FUN=sum),          #GDD5
+    aggregate(GDD7 ~ year,data= weather_46, FUN=sum),          #GDD7
+    aggregate(GDD10 ~ year,data= weather_46, FUN=sum),         #GDD10
+    aggregate(GDH3 ~ year,data= weather_46, FUN=sum),          #GDH3
+    aggregate(GDH5 ~ year,data= weather_46, FUN=sum),          #GDH5
+    aggregate(GDH7 ~ year,data= weather_46, FUN=sum),          #GDH7
+    aggregate(GDH10 ~ year,data= weather_46, FUN=sum)),        #GDH10       
+    by = NULL, type = "left", match = "all")
+colnames(mean_weather_46)[2:13]<-paste(colnames(mean_weather_46)[2:13],"46",sep = "_")
 
-#Max temperature
-mean_weather2$max456<-with(mean_weather2,max_4+max_5+max_6)
-mean_weather2$max45<-with(mean_weather2,max_4+max_5)
-mean_weather2$max123456<-with(mean_weather2,max_1+max_2+max_3+max_4+max_5+max_6)
-mean_weather2$max123<-with(mean_weather2,max_1+max_2+max_3)
-mean_weather2$max34<-with(mean_weather2,max_3+max_4)
+#April-May
+mean_weather_45<-plyr::join_all(list(
+    aggregate(mean ~ year,data=weather_45, FUN=mean),          #Mean daily temperature
+    aggregate(min ~ year, data=weather_45, FUN=mean),          #Min daily temperature
+    aggregate(max ~ year, data=weather_45, FUN=mean),          #Max daily temperature
+    aggregate(precipitation ~ year, data= weather_45, FUN=sum),#Precipitation
+    aggregate(GDD3 ~ year,data= weather_45, FUN=sum),          #GDD3
+    aggregate(GDD5 ~ year,data= weather_45, FUN=sum),          #GDD5
+    aggregate(GDD7 ~ year,data= weather_45, FUN=sum),          #GDD7
+    aggregate(GDD10 ~ year,data= weather_45, FUN=sum),         #GDD10
+    aggregate(GDH3 ~ year,data= weather_45, FUN=sum),          #GDH3
+    aggregate(GDH5 ~ year,data= weather_45, FUN=sum),          #GDH5
+    aggregate(GDH7 ~ year,data= weather_45, FUN=sum),          #GDH7
+    aggregate(GDH10 ~ year,data= weather_45, FUN=sum)),        #GDH10       
+    by = NULL, type = "left", match = "all")
+colnames(mean_weather_45)[2:13]<-paste(colnames(mean_weather_45)[2:13],"45",sep = "_")
 
-#Min temperature
-mean_weather2$min456<-with(mean_weather2,min_4+min_5+min_6)
-mean_weather2$min45<-with(mean_weather2,min_4+min_5)
-mean_weather2$min123456<-with(mean_weather2,min_1+min_2+min_3+min_4+min_5+min_6)
-mean_weather2$min123<-with(mean_weather2,min_1+min_2+min_3)
-mean_weather2$min34<-with(mean_weather2,min_3+min_4)
+#January-June
+mean_weather_16<-plyr::join_all(list(
+    aggregate(mean ~ year,data=weather_16, FUN=mean),          #Mean daily temperature
+    aggregate(min ~ year, data=weather_16, FUN=mean),          #Min daily temperature
+    aggregate(max ~ year, data=weather_16, FUN=mean),          #Max daily temperature
+    aggregate(precipitation ~ year, data= weather_16, FUN=sum),#Precipitation
+    aggregate(GDD3 ~ year,data= weather_16, FUN=sum),          #GDD3
+    aggregate(GDD5 ~ year,data= weather_16, FUN=sum),          #GDD5
+    aggregate(GDD7 ~ year,data= weather_16, FUN=sum),          #GDD7
+    aggregate(GDD10 ~ year,data= weather_16, FUN=sum),         #GDD10
+    aggregate(GDH3 ~ year,data= weather_16, FUN=sum),          #GDH3
+    aggregate(GDH5 ~ year,data= weather_16, FUN=sum),          #GDH5
+    aggregate(GDH7 ~ year,data= weather_16, FUN=sum),          #GDH7
+    aggregate(GDH10 ~ year,data= weather_16, FUN=sum)),        #GDH10       
+    by = NULL, type = "left", match = "all")
+colnames(mean_weather_16)[2:13]<-paste(colnames(mean_weather_16)[2:13],"16",sep = "_")
 
-#GDD3
-mean_weather2$GDD3_456<-with(mean_weather2,GDD3_4+GDD3_5+GDD3_6)
-mean_weather2$GDD3_45<-with(mean_weather2,GDD3_4+GDD3_5)
-mean_weather2$GDD3_123456<-with(mean_weather2,GDD3_1+GDD3_2+GDD3_3+GDD3_4+GDD3_5+GDD3_6)
-mean_weather2$GDD3_123<-with(mean_weather2,GDD3_1+GDD3_2+GDD3_3)
-mean_weather2$GDD3_34<-with(mean_weather2,GDD3_3+GDD3_4)
+#January-March
+mean_weather_13<-plyr::join_all(list(
+    aggregate(mean ~ year,data=weather_13, FUN=mean),          #Mean daily temperature
+    aggregate(min ~ year, data=weather_13, FUN=mean),          #Min daily temperature
+    aggregate(max ~ year, data=weather_13, FUN=mean),          #Max daily temperature
+    aggregate(precipitation ~ year, data= weather_13, FUN=sum),#Precipitation
+    aggregate(GDD3 ~ year,data= weather_13, FUN=sum),          #GDD3
+    aggregate(GDD5 ~ year,data= weather_13, FUN=sum),          #GDD5
+    aggregate(GDD7 ~ year,data= weather_13, FUN=sum),          #GDD7
+    aggregate(GDD10 ~ year,data= weather_13, FUN=sum),         #GDD10
+    aggregate(GDH3 ~ year,data= weather_13, FUN=sum),          #GDH3
+    aggregate(GDH5 ~ year,data= weather_13, FUN=sum),          #GDH5
+    aggregate(GDH7 ~ year,data= weather_13, FUN=sum),          #GDH7
+    aggregate(GDH10 ~ year,data= weather_13, FUN=sum)),        #GDH10       
+    by = NULL, type = "left", match = "all")
+colnames(mean_weather_13)[2:13]<-paste(colnames(mean_weather_13)[2:13],"13",sep = "_")
 
-#GDD5
-mean_weather2$GDD5_456<-with(mean_weather2,GDD5_4+GDD5_5+GDD5_6)
-mean_weather2$GDD5_45<-with(mean_weather2,GDD5_4+GDD5_5)
-mean_weather2$GDD5_123456<-with(mean_weather2,GDD5_1+GDD5_2+GDD5_3+GDD5_4+GDD5_5+GDD5_6)
-mean_weather2$GDD5_123<-with(mean_weather2,GDD5_1+GDD5_2+GDD5_3)
-mean_weather2$GDD5_34<-with(mean_weather2,GDD5_3+GDD5_4)
+#March-April
+mean_weather_34<-plyr::join_all(list(
+    aggregate(mean ~ year,data=weather_34, FUN=mean),          #Mean daily temperature
+    aggregate(min ~ year, data=weather_34, FUN=mean),          #Min daily temperature
+    aggregate(max ~ year, data=weather_34, FUN=mean),          #Max daily temperature
+    aggregate(precipitation ~ year, data= weather_34, FUN=sum),#Precipitation
+    aggregate(GDD3 ~ year,data= weather_34, FUN=sum),          #GDD3
+    aggregate(GDD5 ~ year,data= weather_34, FUN=sum),          #GDD5
+    aggregate(GDD7 ~ year,data= weather_34, FUN=sum),          #GDD7
+    aggregate(GDD10 ~ year,data= weather_34, FUN=sum),         #GDD10
+    aggregate(GDH3 ~ year,data= weather_34, FUN=sum),          #GDH3
+    aggregate(GDH5 ~ year,data= weather_34, FUN=sum),          #GDH5
+    aggregate(GDH7 ~ year,data= weather_34, FUN=sum),          #GDH7
+    aggregate(GDH10 ~ year,data= weather_34, FUN=sum)),        #GDH10       
+    by = NULL, type = "left", match = "all")
+colnames(mean_weather_34)[2:13]<-paste(colnames(mean_weather_34)[2:13],"34",sep = "_")
 
-#GDD7
-mean_weather2$GDD7_456<-with(mean_weather2,GDD7_4+GDD7_5+GDD7_6)
-mean_weather2$GDD7_45<-with(mean_weather2,GDD7_4+GDD7_5)
-mean_weather2$GDD7_123456<-with(mean_weather2,GDD7_1+GDD7_2+GDD7_3+GDD7_4+GDD7_5+GDD7_6)
-mean_weather2$GDD7_123<-with(mean_weather2,GDD7_1+GDD7_2+GDD7_3)
-mean_weather2$GDD7_34<-with(mean_weather2,GDD7_3+GDD7_4)
-
-#GDD10
-mean_weather2$GDD10_456<-with(mean_weather2,GDD10_4+GDD10_5+GDD10_6)
-mean_weather2$GDD10_45<-with(mean_weather2,GDD10_4+GDD10_5)
-mean_weather2$GDD10_123456<-with(mean_weather2,GDD10_1+GDD10_2+GDD10_3+GDD10_4+GDD10_5+GDD10_6)
-mean_weather2$GDD10_123<-with(mean_weather2,GDD10_1+GDD10_2+GDD10_3)
-mean_weather2$GDD10_34<-with(mean_weather2,GDD10_3+GDD10_4)
-
-#GDH3
-mean_weather2$GDH3_456<-with(mean_weather2,GDH3_4+GDH3_5+GDH3_6)
-mean_weather2$GDH3_45<-with(mean_weather2,GDH3_4+GDH3_5)
-mean_weather2$GDH3_123456<-with(mean_weather2,GDH3_1+GDH3_2+GDH3_3+GDH3_4+GDH3_5+GDH3_6)
-mean_weather2$GDH3_123<-with(mean_weather2,GDH3_1+GDH3_2+GDH3_3)
-mean_weather2$GDH3_34<-with(mean_weather2,GDH3_3+GDH3_4)
-
-#GDH5
-mean_weather2$GDH5_456<-with(mean_weather2,GDH5_4+GDH5_5+GDH5_6)
-mean_weather2$GDH5_45<-with(mean_weather2,GDH5_4+GDH5_5)
-mean_weather2$GDH5_123456<-with(mean_weather2,GDH5_1+GDH5_2+GDH5_3+GDH5_4+GDH5_5+GDH5_6)
-mean_weather2$GDH5_123<-with(mean_weather2,GDH5_1+GDH5_2+GDH5_3)
-mean_weather2$GDH5_34<-with(mean_weather2,GDH5_3+GDH5_4)
-
-#GDH7
-mean_weather2$GDH7_456<-with(mean_weather2,GDH7_4+GDH7_5+GDH7_6)
-mean_weather2$GDH7_45<-with(mean_weather2,GDH7_4+GDH7_5)
-mean_weather2$GDH7_123456<-with(mean_weather2,GDH7_1+GDH7_2+GDH7_3+GDH7_4+GDH7_5+GDH7_6)
-mean_weather2$GDH7_123<-with(mean_weather2,GDH7_1+GDH7_2+GDH7_3)
-mean_weather2$GDH7_34<-with(mean_weather2,GDH7_3+GDH7_4)
-
-#GDH10
-mean_weather2$GDH10_456<-with(mean_weather2,GDH10_4+GDH10_5+GDH10_6)
-mean_weather2$GDH10_45<-with(mean_weather2,GDH10_4+GDH10_5)
-mean_weather2$GDH10_123456<-with(mean_weather2,GDH10_1+GDH10_2+GDH10_3+GDH10_4+GDH10_5+GDH10_6)
-mean_weather2$GDH10_123<-with(mean_weather2,GDH10_1+GDH10_2+GDH10_3)
-mean_weather2$GDH10_34<-with(mean_weather2,GDH10_3+GDH10_4)
+mean_weather3<-plyr::join_all(
+  list(mean_weather2,mean_weather_46,mean_weather_45,mean_weather_16,mean_weather_13,mean_weather_34),        
+    by = NULL, type = "left", match = "all")
 ```
 
 ## Calculations weather for period "b"
@@ -317,7 +327,7 @@ colnames(mean_weather2_b)[2:13]<-paste(colnames(mean_weather2_b)[2:13],"b", sep 
 Calculate mean, variance, duration, skewness and kurtosis of FFD and merge with previous data
 
 ```{r Calculate mean, variance, duration, skewness and kurtosis of FFD and merge with previous data}
-mean_weather3<-merge(merge(mean_weather2,mean_weather2_b),
+mean_weather4<-merge(merge(mean_weather3,mean_weather2_b),
                as.data.frame(alldata %>% filter(!is.na(alldata$FFD)) %>% 
                                          dplyr::select(year,FFD)  %>%
                                          dplyr::group_by(year) %>% 
@@ -325,7 +335,7 @@ mean_weather3<-merge(merge(mean_weather2,mean_weather2_b),
                                          FFD_dur=range(FFD)[2]-range(FFD)[1],
                                          FFD_skew=skewness(FFD),FFD_kurt=kurtosis(FFD))
                                          )) 
-names(mean_weather3)
+names(mean_weather4)
 ```
 
 # Models of FFD against weather variables
@@ -333,17 +343,17 @@ names(mean_weather3)
 ## With mean of FFD
 
 ```{r Models FFD_mean against temperature, precipitation and GDD/GDH,warning=FALSE,message=FALSE}
-models<-lapply(names(mean_weather3)[c(7:9,19:21,31:33,43:45,
+models<-lapply(names(mean_weather4)[c(7:9,19:21,31:33,43:45,
         55:57,67:69,79:81,91:93,103:105,115:117,127:129,139:141,146:217)], 
          function(x) {lm(substitute(FFD_mean ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather3)})
+                          data = mean_weather4)})
 models_summary<-lapply(X = models, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models_summary<-models_summary[c(1:2,5,6)]
 names(models_summary)<-c("variable","Estimate","P","sig")
 models_summary<-subset(models_summary,!variable=="(Intercept)")
 models_summary<-cbind(models_summary,sapply(lapply(X = models, FUN = summary), "[[", 9))
 names(models_summary)[5]<-"Rsquare"
-kable(arrange(subset(models_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 The model explaining the most variance is still the one with mean daily temperature for April and May,
@@ -353,17 +363,17 @@ April and May seems to be the most important period.
 ## With variance of FFD
 
 ```{r Models FFD_var against temperature, precipitation and GDD/GDH,warning=FALSE,message=FALSE}
-models1<-lapply(names(mean_weather3)[c(7:9,19:21,31:33,43:45,
+models1<-lapply(names(mean_weather4)[c(7:9,19:21,31:33,43:45,
         55:57,67:69,79:81,91:93,103:105,115:117,127:129,139:141,146:217)], 
          function(x) {lm(substitute(FFD_var ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather3)})
+                          data = mean_weather4)})
 models1_summary<-lapply(X = models1, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models1_summary<-models1_summary[c(1:2,5,6)]
 names(models1_summary)<-c("variable","Estimate","P","sig")
 models1_summary<-subset(models1_summary,!variable=="(Intercept)")
 models1_summary<-cbind(models1_summary,sapply(lapply(X = models1, FUN = summary), "[[", 9))
 names(models1_summary)[5]<-"Rsquare"
-kable(arrange(subset(models1_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models1_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 The models explaining the most variance are those with temperatures in April. Also precipitation January-March explains quite a lot. Variance in phenology increases when April is warm and January-March are rainy.
@@ -372,17 +382,17 @@ The models explaining the most variance are those with temperatures in April. Al
 *Not including the time that last flowers are open
 
 ```{r Models FFD_dur against temperature, precipitation and GDD/GDH,warning=FALSE,message=FALSE}
-models2<-lapply(names(mean_weather3)[c(7:9,19:21,31:33,43:45,
+models2<-lapply(names(mean_weather4)[c(7:9,19:21,31:33,43:45,
         55:57,67:69,79:81,91:93,103:105,115:117,127:129,139:141,146:217)], 
          function(x) {lm(substitute(FFD_dur ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather3)})
+                          data = mean_weather4)})
 models2_summary<-lapply(X = models2, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models2_summary<-models2_summary[c(1:2,5,6)]
 names(models2_summary)<-c("variable","Estimate","P","sig")
 models2_summary<-subset(models2_summary,!variable=="(Intercept)")
 models2_summary<-cbind(models2_summary,sapply(lapply(X = models2, FUN = summary), "[[", 9))
 names(models2_summary)[5]<-"Rsquare"
-kable(arrange(subset(models2_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models2_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 The models explaining the most variance are those with temperatures in April. Duration of flowering increases when April is warm. Also precipitation in April explains quite a lot, with duration decreasing when April is rainy.
@@ -390,17 +400,17 @@ The models explaining the most variance are those with temperatures in April. Du
 ## With skewness of FFD
 
 ```{r Models FFD_skew against temperature, precipitation and GDD/GDH,warning=FALSE,message=FALSE}
-models3<-lapply(names(mean_weather3)[c(7:9,19:21,31:33,43:45,
+models3<-lapply(names(mean_weather4)[c(7:9,19:21,31:33,43:45,
         55:57,67:69,79:81,91:93,103:105,115:117,127:129,139:141,146:217)], 
          function(x) {lm(substitute(FFD_skew ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather3)})
+                          data = mean_weather4)})
 models3_summary<-lapply(X = models3, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models3_summary<-models3_summary[c(1:2,5,6)]
 names(models3_summary)<-c("variable","Estimate","P","sig")
 models3_summary<-subset(models3_summary,!variable=="(Intercept)")
 models3_summary<-cbind(models3_summary,sapply(lapply(X = models3, FUN = summary), "[[", 9))
 names(models3_summary)[5]<-"Rsquare"
-kable(arrange(subset(models3_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models3_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 The models explaining the most variance are those with temperatures in March. The positive skewness of the FFD curve increases when March is cold. This could mean that when March is cold, there is a faster response to warming temperatures, and more plants start flowering in the beginning of the season?
@@ -408,17 +418,17 @@ The models explaining the most variance are those with temperatures in March. Th
 ## With kurtosis of FFD
 
 ```{r Models FFD_kurt against temperature, precipitation and GDD/GDH,warning=FALSE,message=FALSE}
-models4<-lapply(names(mean_weather3)[c(7:9,19:21,31:33,43:45,
+models4<-lapply(names(mean_weather4)[c(7:9,19:21,31:33,43:45,
         55:57,67:69,79:81,91:93,103:105,115:117,127:129,139:141,146:217)], 
          function(x) {lm(substitute(FFD_kurt ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather3)})
+                          data = mean_weather4)})
 models4_summary<-lapply(X = models4, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models4_summary<-models4_summary[c(1:2,5,6)]
 names(models4_summary)<-c("variable","Estimate","P","sig")
 models4_summary<-subset(models4_summary,!variable=="(Intercept)")
 models4_summary<-cbind(models4_summary,sapply(lapply(X = models4, FUN = summary), "[[", 9))
 names(models4_summary)[5]<-"Rsquare"
-kable(arrange(subset(models4_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models4_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 No sigificant relationships for FFD_kurt.
@@ -427,19 +437,19 @@ No sigificant relationships for FFD_kurt.
 
 ```{r Plots of best models FFD, echo=FALSE, fig.height=12, fig.width=8}
 grid.arrange(
-  ggplot(mean_weather3,aes(x=mean45,y=FFD_mean))+geom_point(size=1)+geom_smooth(method="lm")+
-  xlab("Mean daily temperature April and May")+ylab("Mean FFD")+geom_text(x=18,y=70,label="R2=0.76"),
-ggplot(mean_weather3,aes(x=prec123,y=FFD_mean))+geom_point(size=1)+geom_smooth(method="lm")+
+  ggplot(mean_weather4,aes(x=mean_45,y=FFD_mean))+geom_point(size=1)+geom_smooth(method="lm")+
+  xlab("Mean daily temperature April and May")+ylab("Mean FFD")+geom_text(x=9,y=70,label="R2=0.76"),
+ggplot(mean_weather4,aes(x=precipitation_13,y=FFD_mean))+geom_point(size=1)+geom_smooth(method="lm")+
   xlab("Sum of precipitation January-March")+ylab("Mean FFD")+geom_text(x=200,y=70,label="R2=0.17"),
-ggplot(mean_weather3,aes(x=min_4,y=FFD_var))+geom_point(size=1)+geom_smooth(method="lm")+
+ggplot(mean_weather4,aes(x=min_4,y=FFD_var))+geom_point(size=1)+geom_smooth(method="lm")+
   xlab("Min daily temperature April")+ylab("Variance FFD")+geom_text(x=2.5,y=50,label="R2=0.47"),
-ggplot(mean_weather3,aes(x=prec123,y=FFD_var))+geom_point(size=1)+geom_smooth(method="lm")+
+ggplot(mean_weather4,aes(x=precipitation_13,y=FFD_var))+geom_point(size=1)+geom_smooth(method="lm")+
   xlab("Sum of precipitation January-March")+ylab("Variance FFD")+geom_text(x=150,y=50,label="R2=0.39"),
-ggplot(mean_weather3,aes(x=mean_4,y=FFD_dur))+geom_point(size=1)+geom_smooth(method="lm")+
+ggplot(mean_weather4,aes(x=mean_4,y=FFD_dur))+geom_point(size=1)+geom_smooth(method="lm")+
   xlab("Mean daily temperature April")+ylab("Range FFD")+geom_text(x=6,y=33,label="R2=0.33"),
-ggplot(mean_weather3,aes(x=precipitation_4,y=FFD_dur))+geom_point(size=1)+geom_smooth(method="lm")+
+ggplot(mean_weather4,aes(x=precipitation_4,y=FFD_dur))+geom_point(size=1)+geom_smooth(method="lm")+
   xlab("Sum of precipitation April")+ylab("Range FFD")+geom_text(x=60,y=30,label="R2=0.24"),
-ggplot(mean_weather3,aes(x=max_3,y=FFD_skew))+geom_point(size=1)+geom_smooth(method="lm")+
+ggplot(mean_weather4,aes(x=max_3,y=FFD_skew))+geom_point(size=1)+geom_smooth(method="lm")+
   xlab("Max daily temperature March")+ylab("Skewness FFD")+geom_text(x=7.5,y=1.45,label="R2=0.22"),
 ncol=2)
 ```
@@ -449,9 +459,9 @@ ncol=2)
 Adding precipitation does not increase much the R2 
 
 ```{r temperature and precipitation}
-summary(lm(FFD_mean~mean45+prec123,mean_weather3)) #Increase from 0.76 to 0.77
-summary(lm(FFD_var~min_4+prec123,mean_weather3))  #Increase from 0.47 to 0.54
-summary(lm(FFD_dur~mean_4+precipitation_4,mean_weather3))  #Increase from 0.33 to 0.37
+summary(lm(FFD_mean~mean_45+precipitation_13,mean_weather4)) #Increase from 0.76 to 0.78
+summary(lm(FFD_var~min_4+precipitation_13,mean_weather4))  #Increase from 0.47 to 0.54
+summary(lm(FFD_dur~mean_4+precipitation_4,mean_weather4))  #Increase from 0.33 to 0.37
 ```
 
 # Calculations cumulated GDD/GDH
@@ -676,7 +686,7 @@ names(models5_summary)<-c("variable","Estimate","P","sig")
 models5_summary<-subset(models5_summary,!variable=="(Intercept)")
 models5_summary<-cbind(models5_summary,sapply(lapply(X = models5, FUN = NagelkerkeR2), "[[", 2))
 names(models5_summary)[5]<-"Rsquare"
-kable(arrange(subset(models5_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models5_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 The cumulated number of GDH3 and GDD3 (computed from the vernal equinox) are the variables explaining more variation in the proportion of plants that have started flowering 
@@ -726,41 +736,41 @@ weather$year<-as.factor(weather$year)
 ggplot(weather,aes(date_julian,GDD3,color=year))+geom_smooth(method="loess",se=F,size=0.5)+xlab("Date (number of days since vernal equinox)")+
   ylab("GDD3")+ggtitle("GDD3 against julian date")+geom_point(size=0.1)
 
-with(mean_weather3,plot(GDD3_123456~as.factor(year),ylab="GDD3 January-June",xlab="year"))
+with(mean_weather4,plot(GDD3_16~as.factor(year),ylab="GDD3 January-June",xlab="year"))
 
-grid.arrange(ggplot(mean_weather3,aes(year,GDD3_1))+
+grid.arrange(ggplot(mean_weather4,aes(year,GDD3_1))+
   geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD January")+
   scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_2))+
+ggplot(mean_weather4,aes(year,GDD3_2))+
   geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD February")+
   scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_3))+
+ggplot(mean_weather4,aes(year,GDD3_3))+
   geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD March")+
   scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_4))+
+ggplot(mean_weather4,aes(year,GDD3_4))+
   geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD April")+
   scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_5))+
+ggplot(mean_weather4,aes(year,GDD3_5))+
   geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD May")+
   scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_6))+
+ggplot(mean_weather4,aes(year,GDD3_6))+
   geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD June")+
   scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
 ncol=2,top="GDD for different months for each year, 1990 in red")
 
-grid.arrange(ggplot(mean_weather3,aes(year,GDD3_123456))+
+grid.arrange(ggplot(mean_weather4,aes(year,GDD3_16))+
 geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD January-June")+
 scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_123))+
+ggplot(mean_weather4,aes(year,GDD3_13))+
 geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD January-March")+
 scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_34))+
+ggplot(mean_weather4,aes(year,GDD3_34))+
 geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD March-April")+
 scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_45))+
+ggplot(mean_weather4,aes(year,GDD3_45))+
 geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD April-May")+
 scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
-ggplot(mean_weather3,aes(year,GDD3_456))+
+ggplot(mean_weather4,aes(year,GDD3_46))+
 geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD April-June")+
 scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
 ncol=2,top="GDD for different periods for each year, 1990 in red")
@@ -785,7 +795,7 @@ weather$mean_below_minus5<-with(weather,ifelse(mean<(-5),1,0))
 weather$min_below_minus5<-with(weather,ifelse(min<(-5),1,0))
 weather$max_below_minus5<-with(weather,ifelse(max<(-5),1,0))
 
-mean_weather3_w<-plyr::join_all(list(
+mean_weather4_w<-plyr::join_all(list(
     aggregate(mean ~ year, data=subset(weather,winter==1), FUN=mean),   #Mean of mean daily temperature
     aggregate(min ~ year, data=subset(weather,winter==1), FUN=mean),    #Mean of min daily temperature
     aggregate(max ~ year, data=subset(weather,winter==1), FUN=mean),    #Mean of max daily temperature
@@ -798,9 +808,9 @@ mean_weather3_w<-plyr::join_all(list(
     aggregate(max_below_minus5 ~ year,data= subset(weather,winter==1), FUN=sum)), #N days with max<-5
     by = NULL, type = "left", match = "all")
 
-colnames(mean_weather3_w)[2:11]<-paste(colnames(mean_weather3_w)[2:11],"w", sep = "_")
+colnames(mean_weather4_w)[2:11]<-paste(colnames(mean_weather4_w)[2:11],"w", sep = "_")
 
-mean_weather4<-merge(mean_weather3,mean_weather3_w) #Merge with previous data
+mean_weather5<-merge(mean_weather4,mean_weather4_w) #Merge with previous data
 ```
 
 # Models FFD against winter variables
@@ -808,16 +818,16 @@ mean_weather4<-merge(mean_weather3,mean_weather3_w) #Merge with previous data
 ## With mean of FFD
 
 ```{r Models FFD_mean against winter variables,warning=FALSE,message=FALSE}
-models6<-lapply(names(mean_weather4)[c(223:232)], 
+models6<-lapply(names(mean_weather5)[c(223:232)], 
          function(x) {lm(substitute(FFD_mean ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather4)})
+                          data = mean_weather5)})
 models6_summary<-lapply(X = models6, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models6_summary<-models6_summary[c(1:2,5,6)]
 names(models6_summary)<-c("variable","Estimate","P","sig")
 models6_summary<-subset(models6_summary,!variable=="(Intercept)")
 models6_summary<-cbind(models6_summary,sapply(lapply(X = models6, FUN = summary), "[[", 9))
 names(models6_summary)[5]<-"Rsquare"
-kable(arrange(subset(models6_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models6_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 More precipitation and higher temperatures in winter are correlated with earlier flowering.  
@@ -826,16 +836,16 @@ More cold days in winter is correlated with later flowering.
 ## With variance of FFD
 
 ```{r Models FFD_var against winter variables,warning=FALSE,message=FALSE}
-models7<-lapply(names(mean_weather4)[c(223:232)], 
+models7<-lapply(names(mean_weather5)[c(223:232)], 
          function(x) {lm(substitute(FFD_var ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather4)})
+                          data = mean_weather5)})
 models7_summary<-lapply(X = models7, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models7_summary<-models7_summary[c(1:2,5,6)]
 names(models7_summary)<-c("variable","Estimate","P","sig")
 models7_summary<-subset(models7_summary,!variable=="(Intercept)")
 models7_summary<-cbind(models7_summary,sapply(lapply(X = models7, FUN = summary), "[[", 9))
 names(models7_summary)[5]<-"Rsquare"
-kable(arrange(subset(models7_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models7_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 More precipitation and higher temperatures in winter are correlated with higher variance in FFD.  
@@ -844,16 +854,16 @@ More cold days in winter is correlated with lower variance in FFD.
 ## With range of FFD
 
 ```{r Models FFD_dur against winter variables,warning=FALSE,message=FALSE}
-models8<-lapply(names(mean_weather4)[c(223:232)], 
+models8<-lapply(names(mean_weather5)[c(223:232)], 
          function(x) {lm(substitute(FFD_dur ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather4)})
+                          data = mean_weather5)})
 models8_summary<-lapply(X = models8, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models8_summary<-models8_summary[c(1:2,5,6)]
 names(models8_summary)<-c("variable","Estimate","P","sig")
 models8_summary<-subset(models8_summary,!variable=="(Intercept)")
 models8_summary<-cbind(models8_summary,sapply(lapply(X = models8, FUN = summary), "[[", 9))
 names(models8_summary)[5]<-"Rsquare"
-kable(arrange(subset(models8_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models8_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 No sigificant relationships for FFD_dur.
@@ -861,16 +871,16 @@ No sigificant relationships for FFD_dur.
 ## With skewness of FFD
 
 ```{r Models FFD_skew against winter variables,warning=FALSE,message=FALSE}
-models9<-lapply(names(mean_weather4)[c(223:232)], 
+models9<-lapply(names(mean_weather5)[c(223:232)], 
          function(x) {lm(substitute(FFD_skew ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather4)})
+                          data = mean_weather5)})
 models9_summary<-lapply(X = models9, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models9_summary<-models9_summary[c(1:2,5,6)]
 names(models9_summary)<-c("variable","Estimate","P","sig")
 models9_summary<-subset(models9_summary,!variable=="(Intercept)")
 models9_summary<-cbind(models9_summary,sapply(lapply(X = models9, FUN = summary), "[[", 9))
 names(models9_summary)[5]<-"Rsquare"
-kable(arrange(subset(models9_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models9_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 No sigificant relationships for FFD_skew.
@@ -878,16 +888,16 @@ No sigificant relationships for FFD_skew.
 ## With kurtosis of FFD
 
 ```{r Models FFD_kurt against winter variables,warning=FALSE,message=FALSE}
-models10<-lapply(names(mean_weather4)[c(223:232)], 
+models10<-lapply(names(mean_weather5)[c(223:232)], 
          function(x) {lm(substitute(FFD_kurt ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather4)})
+                          data = mean_weather5)})
 models10_summary<-lapply(X = models10, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models10_summary<-models10_summary[c(1:2,5,6)]
 names(models10_summary)<-c("variable","Estimate","P","sig")
 models10_summary<-subset(models10_summary,!variable=="(Intercept)")
 models10_summary<-cbind(models10_summary,sapply(lapply(X = models10, FUN = summary), "[[", 9))
 names(models10_summary)[5]<-"Rsquare"
-kable(arrange(subset(models10_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models10_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 No sigificant relationships for FFD_kurt.
@@ -896,13 +906,13 @@ No sigificant relationships for FFD_kurt.
 
 ```{r Plots FFD against winter variables,echo=FALSE, fig.height=8, fig.width=10}
 grid.arrange(
-  ggplot(mean_weather4,aes(x=precipitation_w,y=FFD_mean))+geom_point(size=1)+
+  ggplot(mean_weather5,aes(x=precipitation_w,y=FFD_mean))+geom_point(size=1)+
     geom_smooth(method="lm")+xlab("Sum of precipitation in winter")+ylab("Mean FFD"),
-  ggplot(mean_weather4,aes(x=mean_w,y=FFD_mean))+geom_point(size=1)+
+  ggplot(mean_weather5,aes(x=mean_w,y=FFD_mean))+geom_point(size=1)+
     geom_smooth(method="lm")+xlab("Mean temperature in winter")+ylab("Mean FFD"),
-  ggplot(mean_weather4,aes(x=precipitation_w,y=FFD_var))+geom_point(size=1)+
+  ggplot(mean_weather5,aes(x=precipitation_w,y=FFD_var))+geom_point(size=1)+
     geom_smooth(method="lm")+xlab("Sum of precipitation in winter")+ylab("Variance FFD"),
-  ggplot(mean_weather4,aes(x=min_w,y=FFD_mean))+geom_point(size=1)+
+  ggplot(mean_weather5,aes(x=min_w,y=FFD_mean))+geom_point(size=1)+
     geom_smooth(method="lm")+xlab("Min temperature in winter")+ylab("Variance FFD")
 ,ncol=2)
 ```
@@ -921,19 +931,19 @@ coefs_models11<-as.data.frame(sapply(models11, coef)[2,])
 coefs_models11$year<-row.names(coefs_models11)
 names(coefs_models11)<-c("resp_cumGDH3v","year")
 
-mean_weather5<-merge(mean_weather4,coefs_models11)
+mean_weather6<-merge(mean_weather5,coefs_models11)
 
 #Fit univariate linear models of resp_cumGDH3v against each winter predictor
-models12<-lapply(names(mean_weather5)[c(223:232)], 
+models12<-lapply(names(mean_weather6)[c(223:232)], 
          function(x) {lm(substitute(resp_cumGDH3v ~ scale(i), list(i = as.name(x))),
-                          data = mean_weather5)})
+                          data = mean_weather6)})
 models12_summary<-lapply(X = models12, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models12_summary<-models12_summary[c(1:2,5,6)]
 names(models12_summary)<-c("variable","Estimate","P","sig")
 models12_summary<-subset(models12_summary,!variable=="(Intercept)")
 models12_summary<-cbind(models12_summary,sapply(lapply(X = models12, FUN = summary), "[[", 9))
 names(models12_summary)[5]<-"Rsquare"
-kable(arrange(subset(models12_summary,P<0.05),desc(Rsquare)))
+kable(arrange(subset(models12_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
 It seems that only winter precipitation influences the response of plants to increasing spring temperatures (with higher winter precipitation, plants are less responsive to increasing spring temperatures), and the effect is not very strong.  
@@ -944,9 +954,9 @@ Another way of testing the relation among winter conditions and response to spri
 
 ```{r influence winter temperature on response to spring temperature,warning=FALSE,message=FALSE}
 #Fit linear models of FFD against mean45*chilling measure
-models13<-lapply(names(mean_weather5)[c(223:232)], 
-         function(x) {lm(substitute(FFD_mean ~ scale(mean45)*scale(i), list(i = as.name(x))),
-                          data = mean_weather5)})
+models13<-lapply(names(mean_weather6)[c(223:232)], 
+         function(x) {lm(substitute(FFD_mean ~ scale(mean_45)*scale(i), list(i = as.name(x))),
+                          data = mean_weather6)})
 models13_summary<-lapply(X = models13, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
 models13_summary<-models13_summary[c(1:2,5,6)]
 names(models13_summary)<-c("variable","Estimate","P","sig")
@@ -966,7 +976,7 @@ save.image(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/code/image1.RData"
 # SUMMARY
 * The mean FFD decreases (earlier flowering) with temperature in April-May and with precipitation in January-March. It also decreases with winter temperature and precipitation.
 * The variance in FFD increases with temperature in April and with precipitation in January-March. It also increases with winter precipitation and decreases with winter temperature. 
-* The range of FFD increases with temperature in April and decreases with temperature in April
+* The range of FFD increases with temperature in April and decreases with precipitation in April
 * The skewness of FFD decreases with temperature in March (i.e. higher temperatures in March lead to more left-tailed FFD distributions)
 * The proportion of plants having started flowering at a particular date is related to the cumulated number of GDD3/GDH from the vernal equinox
 * 1990 shows very high values of GDD/GDH because there were many "warm" days in February and March

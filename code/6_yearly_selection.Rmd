@@ -18,6 +18,7 @@ library(ggplot2)
 library(fmsb)
 library(gridExtra)
 library(papeR)
+library(lme4)
 ```
 \newpage
 # Select data and look at variables
@@ -66,7 +67,7 @@ Anova(update(lm(n_intact_seeds_rel~(FFD_std+I(FFD_std^2))*year+
 
 # Phenotypic selection models for each year
 
-## With only FFD
+## With only FFD - SELECTION DIFFERENTIALS FOR FFD
 
 ```{r Selection models with FFD}
 sel_models1<-data_sel %>% 
@@ -81,7 +82,7 @@ sel_models1_anova<-cbind(
   variable=rep(c("FFD_std"),22),
    plyr::ldply(lapply(as.list(sel_models1)$model,FUN=Anova), function(x) data.frame(x)[1,3:4]))
 sel_models1_anova$sig<-ifelse(sel_models1_anova$Pr..F.<0.05,"*","")
-kable(sel_models1_coefs)  #Selection gradients
+kable(sel_models1_coefs)  #Selection differentials
 #FFD * (selection for early flowering) in all years but 1995,2009,2013,2015,2017
 kable(sel_models1_rsq) #R squares
 kable(sel_models1_anova) #Anova results
@@ -104,6 +105,9 @@ ggplot(data_sel,aes(FFD_std,n_intact_seeds_rel,colour=year))+
 ```
 
 There is one outlier in 2017 with a very high relative number of intact seeds. This is a correct value (the plant had 9 intact seeds but the relative value is so high because only 7 plants produced seeds in 2017, so the mean for that year is very low). I think this value is driving the pattern for 2017 (year with the most positive slope in the previous graph).
+
+## With only n_fl - SELECTION DIFFERENTIALS FOR NUMBER OF FLOWERS
+
 
 ## With FFD & number of flowers
 
@@ -186,7 +190,7 @@ ggplot(sel_grads_FFD,aes(estimate,year,colour=sig))+geom_point()+ylab("Selection
 sel_grads_FFD$signif<-as.factor(with(sel_grads_FFD,ifelse(sig=="*","1","0")))
 sel_grads_FFD$sig<-NULL
 names(sel_grads_FFD)<-c("year","selgradFFD","sig_selgradFFD")
-data_sel_agg<-merge(mean_weather5,sel_grads_FFD)
+data_sel_agg<-merge(mean_weather6,sel_grads_FFD)
 
 #Fit univariate linear models of selgradFFD against each predictor (climatic variables)
 varlist<-names(data_sel_agg)[c(8:10,20:22,32:34,42:46,56:58,68:70,80:82,
@@ -463,13 +467,13 @@ It seems that seed predation increases with temperature/GDD/GDH from May to June
 Model with one of the best variables: 
 
 ```{r Model seed predation with one of the best variables}
-summary(lm(asin(sqrt(prop_pred_seeds))~scale(max456),data=data_sel_agg))
+summary(lm(asin(sqrt(prop_pred_seeds))~scale(max_46),data=data_sel_agg))
 ```
 
 This model explains 24% of the variation in seed predation
 
 ```{r Plots of best model seed predation, echo=FALSE, fig.height=3, fig.width=4}
-ggplot(data_sel_agg,aes(x=max456,y=asin(sqrt(prop_pred_seeds))))+geom_point()+
+ggplot(data_sel_agg,aes(x=max_46,y=asin(sqrt(prop_pred_seeds))))+geom_point()+
   geom_smooth(method="lm")+xlab("Average maximum temperature April-June")+
   ylab("Proportion of predated seeds \n (arcsin-transformed)")
 ```
@@ -705,5 +709,16 @@ kable(prettify(summary(lm(seeds_per_fl ~ FFD_kurt,data=data_sel_agg)))) #No effe
 * Fruit set increases with variance of flowering
 * The number of seeds per flower increases with variance of flowering
 
+# ADDED
 
+## MIXED MODELS: Does mean FFD / mean spring temp influence selection on FFD?
+
+```{r MIXED MODELS}
+data_sel<-merge(data_sel,data_sel_agg[c(1,218)])
+data_sel<-merge(data_sel,data_sel_agg[c(1,158)])
+summary(lmer(n_intact_seeds_rel ~ FFD_std*FFD_mean+n_fl_std+(1|year), data = data_sel))
+summary(lmer(n_intact_seeds_rel ~ FFD_std*mean_45+n_fl_std+(1|year), data = data_sel))
+# No influences of mean FFD / mean spring temp on selection on FFD
+# Not sure if these models are correct
+```
 
