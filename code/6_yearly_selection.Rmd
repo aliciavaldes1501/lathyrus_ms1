@@ -191,7 +191,6 @@ sel_grads_FFD$signif<-as.factor(with(sel_grads_FFD,ifelse(sig=="*","1","0")))
 sel_grads_FFD$sig<-NULL
 names(sel_grads_FFD)<-c("year","selgradFFD","sig_selgradFFD")
 data_sel_agg<-merge(mean_weather6,sel_grads_FFD)
-
 #Fit univariate linear models of selgradFFD against each predictor (climatic variables)
 varlist<-names(data_sel_agg)[c(8:10,20:22,32:34,42:46,56:58,68:70,80:82,
                  92:94,104:106,116:118,128:130,134,138:142,146:217,217,223:232)]
@@ -716,9 +715,15 @@ kable(prettify(summary(lm(seeds_per_fl ~ FFD_kurt,data=data_sel_agg)))) #No effe
 ```{r MIXED MODELS}
 data_sel<-merge(data_sel,data_sel_agg[c(1,218)])
 data_sel<-merge(data_sel,data_sel_agg[c(1,158)])
+data_sel<-merge(data_sel,data_sel_agg[c(1,116)])
+data_sel<-merge(data_sel,data_sel_agg[c(1,117)])
 summary(lmer(n_intact_seeds_rel ~ FFD_std*FFD_mean+n_fl_std+(1|year), data = data_sel))
 summary(lmer(n_intact_seeds_rel ~ FFD_std*mean_45+n_fl_std+(1|year), data = data_sel))
 # No influences of mean FFD / mean spring temp on selection on FFD
 # Not sure if these models are correct
+```
+
+```{r save data_sel_agg, include=FALSE}
+save(data_sel_agg, file="data_sel_agg.RData")
 ```
 

@@ -68,11 +68,6 @@ par(mfrow=c(2,2))
 plot(model_FFD)
 
 ```
-```{r echo=TRUE, fig.height=4, fig.width=5}
-sjp.int(model_FFD, type = "eff",mdrt.values = "quart",swap.pred=T) #Plot of interaction effect
-
-```
-
 
 Then I fitted a different model for each year
 
