@@ -1,0 +1,1608 @@
+---
+title: "Results Lathyrus paper 1"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: 4
+editor_options:
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r Read data created with previous scripts, include=FALSE}
+alldata<-read.csv("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata.csv",
+                       header=T,sep="\t",dec=".") #Read field data
+temperature<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/temperature.csv",
+                        header=T,sep="\t",dec=".") 
+precipitation<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/precipitation.csv",
+                          header=T,sep="\t",dec=",")
+temperature<-subset(temperature,year<1997|year>2005)
+precipitation<-subset(precipitation,year<1997|year>2005)
+temperature$date<-as.Date(temperature$date)
+precipitation$date<-as.Date(precipitation$date)
+```
+
+```{r load packages, include=FALSE}
+library(broom)
+library(knitr)
+library(car)
+library(ggplot2)
+library(fmsb)
+library(gridExtra)
+library(papeR)
+library(agricolae)
+library(ggthemes)
+library(ggpubr)
+library(lemon)
+library(grid)
+library(lme4)
+library(lmerTest)
+library(Rmisc)
+library(dplyr)
+library(MuMIn)
+library(effects)
+library(parallel)
+library(beepr)
+library(RColorBrewer)
+library(ggridges)
+library(tidyverse)
+library(sciplot)
+library(tidyr)
+library(lubridate)
+library(knitr)
+library(reshape)
+library(pander)
+library(moments)
+library(papeR)
+```
+
+```{r Define ggplot themes, include=FALSE}
+my_theme <- function(){
+  theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+
+  theme(legend.position="none")+theme(text=element_text(family="serif"))+
+  theme(plot.title = element_text(hjust =-0.06))
+}
+my_theme_legend <- function(){
+  theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+
+  theme(text=element_text(family="serif"))+
+  theme(plot.title = element_text(hjust =-0.06))
+}
+```
+
+```{r Function to extract legend, include=FALSE}
+g_legend<-function(a.gplot){
+  tmp <- ggplot_gtable(ggplot_build(a.gplot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)}
+```
+
+```{r pander options, include=FALSE}
+panderOptions('table.continues', '')
+```
+
+# Temperature and precipitation data manipulation
+
+Temperature (daily mean, minimum and maximum) from two stations: Oxelösund and Södertalje  
+Precipitation from one station: Åda
+
+```{r Temperature and precipitation data, echo=FALSE}
+kable(head(temperature[c(1:5,7:12)]))
+kable(head(precipitation[c(1:5,7:8)]))
+```
+
+## Distributions
+
+```{r Distributions, echo=FALSE, fig.height=4, fig.width=24}
+par(mfrow=c(1,4))
+hist(temperature$mean,main=NULL,cex.axis=2,cex.lab=2)
+hist(temperature$min,main=NULL,cex.axis=2,cex.lab=2)
+hist(temperature$max,main=NULL,cex.axis=2,cex.lab=2)
+hist(precipitation$precipitation,breaks=100,main=NULL,cex.axis=2,cex.lab=2)
+```
+
+## Boxplots per month
+
+```{r Boxplots per month, echo=FALSE, fig.height=4, fig.width=24}
+par(mfrow=c(1,4))
+with(temperature,plot(mean~as.factor(month),cex.axis=2,cex.lab=2))
+with(temperature,plot(min~as.factor(month),cex.axis=2,cex.lab=2))
+with(temperature,plot(max~as.factor(month),cex.axis=2,cex.lab=2))
+with(precipitation,plot(precipitation~as.factor(month),cex.axis=2,cex.lab=2))
+```
+
+## Comparisons of mean temperatures for each year for both stations
+
+```{r Mean temperatures for each year for both stations, warning=FALSE, include=FALSE}
+data_summary <- function(data, varname, groupnames){
+  summary_func <- function(x, col){
+    c(mean = mean(x[[col]], na.rm=TRUE),
+      sd = sd(x[[col]], na.rm=TRUE))
+  }
+  data_sum<-plyr::ddply(data, groupnames, .fun=summary_func,
+                  varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+  return(data_sum)
+}
+temp_sum <- data_summary(temperature, varname="mean", groupnames=c("year", "month","station"))
+```
+
+```{r Graph mean temperatures for each year for both stations, echo=FALSE, fig.height=12, fig.width=18}
+ggplot(temp_sum,aes(x=month,y=mean,colour=station))+facet_wrap(~year,ncol=6)+geom_point()+
+  geom_line()+  geom_errorbar(aes(ymin=mean-sd,ymax=mean+sd),width=.2,position=position_dodge(0.05))+ 
+  my_theme()+theme(legend.position = "bottom")
+```
+
+## Average mean, min and max temperature of the two stations for further use + join with precipitation data
+```{r Temperature: average mean, min and max for the two stations, include=FALSE}
+temperature_av<-merge(
+  merge(
+  aggregate(mean ~ date+year+month+day+date_ok, data=temperature, FUN=mean),
+  aggregate(min ~ date+year+month+day+date_ok, data=temperature, FUN=mean),
+  all.x=T,all.y=T),
+  aggregate(max ~ date+year+month+day+date_ok, data=temperature, FUN=mean),
+  all.x=T,all.y=T)
+```
+
+```{r Merge temperature and precipitation data, echo=FALSE}
+weather<-merge(temperature_av,precipitation[2:7],all.x=T,all.y=T)
+kable(head(weather))
+```
+
+```{r Missing precipitation values, echo=TRUE}
+nrow(subset(weather,is.na(precipitation))) #154 dates with missing precipitation
+unique(subset(weather,is.na(precipitation))[2:3]) #See which years/months
+#February 1988, June 1991, February 1992, October 1992 all missing
+#Substitute with mean of all years for each specific date
+weather$precipitation[is.na(weather$precipitation)&weather$year==1988&weather$month==2]<-
+  with(subset(aggregate(precipitation ~ year+month+day, data= weather, FUN=sum),month==2),
+  aggregate(precipitation~day,FUN=mean)$precipitation) 
+weather$precipitation[is.na(weather$precipitation)&weather$year==1991&weather$month==6]<-
+  with(subset(aggregate(precipitation ~ year+month+day, data= weather, FUN=sum),month==6),
+  aggregate(precipitation~day,FUN=mean)$precipitation) 
+weather$precipitation[is.na(weather$precipitation)&weather$year==1992&weather$month==2]<-
+  with(subset(aggregate(precipitation ~ year+month+day, data= weather, FUN=sum),month==2),
+  aggregate(precipitation~day,FUN=mean)$precipitation) 
+weather$precipitation[is.na(weather$precipitation)&weather$year==1992&weather$month==10]<-
+  with(subset(aggregate(precipitation ~ year+month+day, data= weather, FUN=sum),month==10),
+  aggregate(precipitation~day,FUN=mean)$precipitation) 
+#October-November 2017 leave as NAs, will be available later
+```
+
+## Calculation of GDD and GDH
+
+Bases considered: 3/5/7/10 ºC
+
+GDD:  
+![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/code/GDD.png)  
+
+GDH:  
+![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/code/GDH.png)  
+```{r Calculation of GDD and GDH}
+weather$GDD3<-ifelse(with(weather,((max+min)/2)-3)<0,0,with(weather,((max+min)/2)-3))
+weather$GDD5<-ifelse(with(weather,((max+min)/2)-5)<0,0,with(weather,((max+min)/2)-5))
+weather$GDD7<-ifelse(with(weather,((max+min)/2)-7)<0,0,with(weather,((max+min)/2)-7))
+weather$GDD10<-ifelse(with(weather,((max+min)/2)-10)<0,0,with(weather,((max+min)/2)-10))
+weather$GDH3<-ifelse(with(weather,max<=3),0,
+                     ifelse(with(weather,max>3&min>3),with(weather,24*(min-3)+12*(max-min)),
+                            with(weather,12*(max-3)^2/(max-min))))
+weather$GDH5<-ifelse(with(weather,max<=5),0,
+                     ifelse(with(weather,max>5&min>5),with(weather,24*(min-5)+12*(max-min)),
+                            with(weather,12*(max-5)^2/(max-min))))
+weather$GDH7<-ifelse(with(weather,max<=7),0,
+                     ifelse(with(weather,max>7&min>7),with(weather,24*(min-7)+12*(max-min)),
+                            with(weather,12*(max-7)^2/(max-min))))
+weather$GDH10<-ifelse(with(weather,max<=10),0,
+                     ifelse(with(weather,max>10&min>10),with(weather,24*(min-10)+12*(max-min)),
+                            with(weather,12*(max-10)^2/(max-min))))
+pander(head(weather), split.table = 100, style = 'rmarkdown')
+```
+
+## Calculate julian date as day with respect to vernal equinox
+
+```{r Calculate day with respect to vernal equinox}
+weather<-merge(weather,unique(alldata[c(1,6)])) #Add column with date of vernal equinox
+weather$vernal_time<-as.POSIXct(weather$vernal,format="%Y-%m-%d %H:%M:%S")
+weather$vernal<-as.Date(substring(weather$vernal,1,10),format="%Y-%m-%d")
+weather$date_julian<-as.numeric(with(weather,as.POSIXct(date)-vernal_time)/60/24)
+```
+
+## Calculations weather by month
+Calculate monthly means of temperature and montly sums of precipitation, GDD and GDH
+```{r Montly data, warning=FALSE,message=FALSE}
+mean_weather1<-plyr::join_all(list(
+    aggregate(mean ~ year+month, data=weather, FUN=mean), #Monthly means of mean daily temperature
+    aggregate(min ~ year+month, data=weather, FUN=mean), #Monthly means of min daily temperature
+    aggregate(max ~ year+month, data=weather, FUN=mean), #Monthly means of max daily temperature
+    aggregate(precipitation ~ year+month, data= weather, FUN=sum),#Monthly sums of precipitation
+    aggregate(GDD3 ~ year+month,data= weather, FUN=sum),          #Monthly sums of GDD3
+    aggregate(GDD5 ~ year+month,data= weather, FUN=sum),          #Monthly sums of GDD5
+    aggregate(GDD7 ~ year+month,data= weather, FUN=sum),          #Monthly sums of GDD7
+    aggregate(GDD10 ~ year+month,data= weather, FUN=sum),         #Monthly sums of GDD10
+    aggregate(GDH3 ~ year+month,data= weather, FUN=sum),          #Monthly sums of GDH3
+    aggregate(GDH5 ~ year+month,data= weather, FUN=sum),          #Monthly sums of GDH5
+    aggregate(GDH7 ~ year+month,data= weather, FUN=sum),          #Monthly sums of GDH7
+    aggregate(GDH10 ~ year+month,data= weather, FUN=sum)),        #Monthly sums of GDH10       
+    by = NULL, type = "left", match = "all")
+mean_weather2<-gather(mean_weather1, variable, value,mean,min,max,precipitation,
+               GDD3,GDD5,GDD7,GDD10,GDH3,GDH5,GDH7,GDH10) %>%
+               unite(var, variable, month) %>% 
+               spread(var, value) #Convert to wide format with monthly variables
+pander(head(mean_weather1), split.table = 100, style = 'rmarkdown')
+```
+
+# Calculations FFD stats
+Calculate mean, variance, duration, skewness and kurtosis of FFD and merge with previous data
+
+```{r Calculate mean, variance, duration, skewness and kurtosis of FFD and merge with previous data}
+mean_weather3<-merge(mean_weather2,
+               as.data.frame(alldata %>% filter(!is.na(alldata$FFD)) %>% 
+                                         dplyr::select(year,FFD)  %>%
+                                         dplyr::group_by(year) %>% 
+                                         dplyr::summarise(FFD_mean=mean(FFD),FFD_var=var(FFD),
+                                         FFD_dur=range(FFD)[2]-range(FFD)[1],
+                                         FFD_skew=skewness(FFD),FFD_kurt=kurtosis(FFD))
+                                         )) 
+names(mean_weather3)
+```
+
+# Calculations cumulated GDD/GDH
+Sum of GDD/GDH until each date, starting from the start of the year
+
+```{r Calculate cumulated GDD/GDH}
+#From the start of the year
+weather<-as.data.frame(weather %>% 
+         dplyr::group_by(year) %>%
+         dplyr::mutate(cumGDD3=cumsum(x = GDD3),cumGDD5=cumsum(x = GDD5),
+                cumGDD7=cumsum(x = GDD7),cumGDD10=cumsum(x = GDD10),
+                cumGDH3=cumsum(x = GDH3),cumGDH5=cumsum(x = GDH5),
+                cumGDH7=cumsum(x = GDH7),cumGDH10=cumsum(x = GDH10)))
+```
+
+Merge with previous data
+```{r Merge with other data}
+weather$FFD<-weather$date_julian
+alldata_weather<-merge(alldata, weather[c(1,6:17,21:29)], all.x=T,all.y=F)
+```
+
+```{r Fix cases where merge by FFD did not work, include=FALSE}
+subset(alldata_weather,is.na(mean)&!is.na(FFD))[1:2] #Merge by FFD did not work in those
+tomerge<-rbind(
+  subset(weather,FFD>65&FFD<66&year==1992)[c(1,6:17,21:29)],
+  subset(weather,FFD>51&FFD<52&year==2006)[c(1,6:17,21:29)],
+  subset(weather,FFD>55&FFD<56&year==2006)[c(1,6:17,21:29)],
+  subset(weather,FFD>60&FFD<61&year==2006)[c(1,6:17,21:29)],
+  subset(weather,FFD>43&FFD<44&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>47&FFD<48&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>48&FFD<49&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>51&FFD<51.3&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>51.3&FFD<53&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>53&FFD<54&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>56&FFD<56.3&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>56.3&FFD<58&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>59&FFD<60&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>60&FFD<61&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>61&FFD<62&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>62&FFD<63&year==2007)[c(1,6:17,21:29)],
+  subset(weather,FFD>54&FFD<55&year==2009)[c(1,6:17,21:29)],
+  subset(weather,FFD>56&FFD<57&year==2010)[c(1,6:17,21:29)],
+  subset(weather,FFD>48&FFD<49&year==2011)[c(1,6:17,21:29)],
+  subset(weather,FFD>50&FFD<51&year==2011)[c(1,6:17,21:29)],
+  subset(weather,FFD>54&FFD<55&year==2011)[c(1,6:17,21:29)],
+  subset(weather,FFD>61&FFD<62&year==2011)[c(1,6:17,21:29)],
+  subset(weather,FFD>52&FFD<53&year==2012)[c(1,6:17,21:29)],
+  subset(weather,FFD>53&FFD<54&year==2012)[c(1,6:17,21:29)],
+  subset(weather,FFD>56&FFD<57&year==2012)[c(1,6:17,21:29)],
+  subset(weather,FFD>63&FFD<64&year==2012)[c(1,6:17,21:29)],
+  subset(weather,FFD>49&FFD<50&year==2014)[c(1,6:17,21:29)],
+  subset(weather,FFD>55&FFD<55.8&year==2014)[c(1,6:17,21:29)],
+  subset(weather,FFD>55.8&FFD<57&year==2014)[c(1,6:17,21:29)],
+  subset(weather,FFD>42&FFD<43&year==2015)[c(1,6:17,21:29)],
+  subset(weather,FFD>47&FFD<48&year==2015)[c(1,6:17,21:29)],
+  subset(weather,FFD>52&FFD<53&year==2015)[c(1,6:17,21:29)],
+  subset(weather,FFD>59&FFD<60&year==2015)[c(1,6:17,21:29)],
+  subset(weather,FFD>62&FFD<63&year==2015)[c(1,6:17,21:29)],
+  subset(weather,FFD>64&FFD<65&year==2017)[c(1,6:17,21:29)],
+  subset(weather,FFD>65&FFD<66&year==2017)[c(1,6:17,21:29)],
+  subset(weather,FFD>66&FFD<67&year==2017)[c(1,6:17,21:29)],
+  subset(weather,FFD>67&FFD<68&year==2017)[c(1,6:17,21:29)])
+
+tomerge$FFD_r<-round(tomerge$FFD,2)
+alldata_weather$FFD_r<-round(alldata_weather$FFD,2)
+
+head(tomerge)
+head(subset(alldata_weather,is.na(mean)&!is.na(FFD)))
+
+#Substitute by hand in OpenOffice Calc NA values in weather columns of alldata_weather by values in tomerge, matching by closest FFD_r value
+write.table(alldata_weather,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_weather.csv",sep="\t",dec=",",col.names=T,row.names=F)
+write.table(tomerge,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/tomerge.csv",sep="\t",dec=",",col.names=T,row.names=F)
+```
+
+Load new data with some missing values for weather manually substituted in OpenOffice Calc  
+(merging by date of FFD did not work in cases where FFD was imputed, because that FFD did not correspond exactly to a "real" date - I merged it manually with the closest value)
+
+```{r Load new data with some missing values for weather manually substituted in OpenOffice Calc}
+alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=",") 
+nrow(subset(alldata_weather_subs,is.na(mean)&!is.na(FFD))) #No rows with missing weather data
+nrow(subset(alldata_weather_subs,n_fr>cum_n_fl)) #No cases where n_fruits>n_flowers --> fix again
+```
+
+# Calculations proportion of plants that have started flowering at each FFD
+
+```{r Calculate proportion of plants flowering at each FFD}
+#Number of plants flowering per year at each FFD
+alldata_weather_subs$year<-as.factor(alldata_weather_subs$year)
+alldata_agg<- aggregate(FFD~cumGDD3+cumGDD5+cumGDD7+cumGDD10+cumGDH3+cumGDH5+cumGDH7+cumGDH10+year,
+                        data=alldata_weather_subs[c(1:3,35:42)],FUN=length)
+
+#Cumulated number of plants flowering per year at each FFD
+alldata_agg<-as.data.frame(alldata_agg %>% 
+                dplyr::group_by(year) %>%
+                dplyr::mutate(n_cum_FFD = cumsum(x = FFD)))
+
+#Calculate proportion of plants flowering per year at each FFD
+max_nflowering<-aggregate(n_cum_FFD ~year, data=alldata_agg,FUN=max)
+max_nflowering$max_nflowering<-max_nflowering$n_cum_FFD
+max_nflowering$n_cum_FFD<-NULL
+
+alldata_agg<-merge(alldata_agg,max_nflowering)
+alldata_agg$prop_fl<-alldata_agg$n_cum_FFD/alldata_agg$max_nflowering
+```
+
+# Models of proportion of plants that have started flowering against cumulated GDD/GDH
+
+```{r Models prop_fl against cumulated GDD/GDH, warning=FALSE}
+#Fit univariate binomial GLMs of prop_fl against each predictor
+models1<-lapply(names(alldata_agg)[2:9], 
+         function(x) {glm(substitute(prop_fl ~ scale(i), list(i = as.name(x))),
+                          family=binomial, data = alldata_agg)})
+
+models1_summary<-lapply(X = models1, FUN = summary)%>% lapply(prettify) %>% bind_rows() 
+models1_summary<-models1_summary[c(1:2,5,7)]
+names(models1_summary)<-c("variable","Estimate","P","sig")
+models1_summary<-subset(models1_summary,!variable=="(Intercept)")
+models1_summary<-cbind(models1_summary,sapply(lapply(X = models1, FUN = NagelkerkeR2), "[[", 2))
+names(models1_summary)[5]<-"Rsquare"
+kable(arrange(subset(models1_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
+```
+
+##Plots of the best models
+Some plots of the best models of proportion of plants that have started flowering against cumulated GDD/GDH
+
+```{r Plots of proportion of plants starting flowering against cumulated GDD/GDH 1, echo=FALSE, fig.height=4, fig.width=12}
+grid.arrange(ggplot(alldata_agg, aes(x=cumGDH7, y=n_cum_FFD/max_nflowering,group=year,colour=year))+
+  geom_smooth(aes(weight=max_nflowering),method=glm,method.args=c(family="binomial"),se=F)+
+  ylab("Proportion of plants that have started flowering")+
+  xlab("Cumulated GDH7"),
+ggplot(alldata_agg, aes(x=cumGDH5, y=n_cum_FFD/max_nflowering,group=year,colour=year))+
+  geom_smooth(aes(weight=max_nflowering),method=glm,method.args=c(family="binomial"),se=F)+
+  ylab("Proportion of plants that have started flowering")+
+  xlab("Cumulated GDH5"),ncol=2)
+```
+
+```{r Plots of proportion of plants starting flowering against cumulated GDD/GDH 2, echo=FALSE, fig.height=4, fig.width=12}
+grid.arrange(ggplot(alldata_agg, aes(x=cumGDD7, y=n_cum_FFD/max_nflowering,group=year,colour=year))+
+  geom_smooth(aes(weight=max_nflowering),method=glm,method.args=c(family="binomial"),se=F)+
+  ylab("Proportion of plants that have started flowering")+
+  xlab("Cumulated GDD7"),
+ggplot(alldata_agg, aes(x=cumGDD5, y=n_cum_FFD/max_nflowering,group=year,colour=year))+
+  geom_smooth(aes(weight=max_nflowering),method=glm,method.args=c(family="binomial"),se=F)+
+  ylab("Proportion of plants that have started flowering")+
+  xlab("Cumulated GDD5"),ncol=2)
+```
+
+# Plots for year 1990
+
+Year 1990 shows high values of GDD/GDH  
+Some plots to look at these high values
+
+```{r 1990, echo=FALSE}
+ggplot(weather,aes(date_julian,mean))+geom_line(size=0.5)+facet_wrap(~year,ncol=6)+
+  ggtitle("Mean temperatures for all years")+xlab("Date (number of days since vernal equinox)")+
+  ylab("Mean temperature")+geom_hline(yintercept=5,color="blue")
+
+ggplot(subset(weather,year==1990),aes(date_julian,mean))+geom_line()+ggtitle("1990 temperatures")+
+  xlab("Date (number of days since vernal equinox)")+ylab("Mean temperature")+
+  geom_hline(yintercept=5,color="blue")
+
+ggplot(weather,aes(date_julian,cumGDD3))+geom_line()+facet_wrap(~year)+
+  ggtitle("Cumulated GDD3 against julian date")+
+  xlab("Date (number of days since vernal equinox)")+ylab("Cumulated GDD3")
+
+weather$year<-as.factor(weather$year)
+
+ggplot(weather,aes(date_julian,GDD3,color=year))+geom_smooth(method="loess",se=F,size=0.5)+
+  xlab("Date (number of days since vernal equinox)")+ylab("GDD3")+
+  ggtitle("GDD3 against julian date")+geom_point(size=0.1)
+
+grid.arrange(ggplot(mean_weather3,aes(year,GDD3_1))+
+  geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD January")+
+  scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
+ggplot(mean_weather3,aes(year,GDD3_2))+
+  geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD February")+
+  scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
+ggplot(mean_weather3,aes(year,GDD3_3))+
+  geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD March")+
+  scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
+ggplot(mean_weather3,aes(year,GDD3_4))+
+  geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD April")+
+  scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
+ggplot(mean_weather3,aes(year,GDD3_5))+
+  geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD May")+
+  scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
+ggplot(mean_weather3,aes(year,GDD3_6))+
+  geom_bar(stat="identity",aes(fill = year==1990))+ylab("GDD June")+
+  scale_fill_manual(values=c("#999999","#D55E00"))+theme(legend.position="none"),
+ncol=2,top="GDD for different months for each year, 1990 in red")
+```
+
+GDD are very high in February and March 1990 - many days above the base temperature in these months.
+
+# Select data for analyses paper
+
+```{r Select data and look at variables, echo=TRUE}
+alldata_weather_subs$n_fl<-alldata_weather_subs$cum_n_fl
+alldata_weather_subs$cum_n_fl<-NULL
+alldata_weather_subs$n_fl_action<-alldata_weather_subs$cum_n_fl_action
+alldata_weather_subs$cum_n_fl_action<-NULL
+data_sel<-subset(alldata_weather_subs,!is.na(n_fl)&!is.na(FFD)) 
+#Select data where both FFD and n_fl are available
+nrow(subset(data_sel,is.na(n_intact_seeds))) #No NAs for seed data
+```
+
+# Calculation of relative fitness and standardized traits  
+Relativization and standardization was done within each year.
+
+```{r Relative fitness and standardized traits}
+data_sel<-data.frame(
+  data_sel %>% 
+  group_by(year) %>% 
+  mutate(n_intact_seeds_rel=n_intact_seeds/mean(n_intact_seeds)) %>% #Relative fitness
+  mutate(FFD_std=(FFD-mean(FFD))/sd(FFD)) %>%                        #Standardized FFD
+  mutate(n_fl_std=(n_fl-mean(n_fl))/sd(n_fl)))                       #Standardized n_fl
+```
+
+# Calculation of position and duration of flowering season
+
+## Calculate proportion of plants flowering per year at each date
+
+```{r Calculate proportion of plants flowering per year at each date}
+propfl<-as.data.frame(aggregate(id~FFD+year,data=alldata_weather_subs[c(1:3)],FUN=length) %>% 
+        group_by(year) %>%
+        mutate(n_cum_FFD = cumsum(x = id))) #Cumulated n plants fl per yr at each FFD
+
+max_flowering<-aggregate(n_cum_FFD ~year, data=propfl,FUN=max)
+max_flowering$max_flowering<-max_flowering$n_cum_FFD
+max_flowering$n_cum_FFD<-NULL
+
+propfl<-merge(propfl,max_flowering)
+propfl$prop_fl<-propfl$n_cum_FFD/propfl$max_flowering
+```
+
+## Models proportion of plants flowering per year against date
+
+```{r}
+models_propfl<-propfl %>% 
+  group_by(year) %>% 
+  do(model = glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD, data = .,family=binomial))%>%
+  tidy(model)
+models_propfl
+```
+
+```{r Plot proportion of plants flowering per year at each date, echo=FALSE, fig.height=4, fig.width=8}
+ggplot(propfl, aes(x=FFD, y=n_cum_FFD/max_flowering,group=year,colour=year))+
+  geom_smooth(aes(weight=max_flowering),method=glm,method.args=c(family="binomial"),se=F)+
+  geom_point()+
+  ylab("Proportion of plants that have started flowering")+
+  xlab("Date from vernal equinox")
+```
+
+## Calculate dates when 10%, 20%, 80% and 90% of plants have started flowering in each year
+
+Dates are calculated using the binomial models (calculations not shown).
+
+```{r Calculate date when %s of plants have started flowering, include=FALSE}
+findInt <- function(model, value) {
+    function(x) {
+        predict(model, data.frame(FFD=x), type="response") - value
+     }
+} # Function to predict x from y in binomial GLM
+#Calculate date when 10% of plants have started flowering
+date_10<-c(uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1987),family=binomial), .1), range(subset(propfl,year==1987)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1988),family=binomial), .1), range(subset(propfl,year==1988)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1989),family=binomial), .1), range(subset(propfl,year==1989)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1990),family=binomial), .1), range(subset(propfl,year==1990)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1991),family=binomial), .1), range(subset(propfl,year==1991)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1992),family=binomial), .3), range(subset(propfl,year==1992)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1993),family=binomial), .1), range(subset(propfl,year==1993)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1994),family=binomial), .309), range(subset(propfl,year==1994)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1995),family=binomial), .227), range(subset(propfl,year==1995)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1996),family=binomial), .1), range(subset(propfl,year==1996)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2006),family=binomial), .1), range(subset(propfl,year==2006)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2007),family=binomial), .1), range(subset(propfl,year==2007)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2008),family=binomial), .109), range(subset(propfl,year==2008)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2009),family=binomial), .1), range(subset(propfl,year==2009)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2010),family=binomial), .151), range(subset(propfl,year==2010)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2011),family=binomial), .1), range(subset(propfl,year==2011)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2012),family=binomial), .1), range(subset(propfl,year==2012)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2013),family=binomial), .177), range(subset(propfl,year==2013)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2014),family=binomial), .1), range(subset(propfl,year==2014)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2015),family=binomial), .1), range(subset(propfl,year==2015)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2016),family=binomial), .1), range(subset(propfl,year==2016)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2017),family=binomial), .1), range(subset(propfl,year==2017)$FFD))$root)
+
+#Calculate date when 90% of plants have started flowering
+date_90<-c(uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1987),family=binomial), .9), range(subset(propfl,year==1987)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1988),family=binomial), .9), range(subset(propfl,year==1988)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1989),family=binomial), .9), range(subset(propfl,year==1989)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1990),family=binomial), .9), range(subset(propfl,year==1990)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1991),family=binomial), .9), range(subset(propfl,year==1991)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1992),family=binomial), .9), range(subset(propfl,year==1992)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1993),family=binomial), .9), range(subset(propfl,year==1993)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1994),family=binomial), .9), range(subset(propfl,year==1994)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1995),family=binomial), .9), range(subset(propfl,year==1995)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==1996),family=binomial), .9), range(subset(propfl,year==1996)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2006),family=binomial), .9), range(subset(propfl,year==2006)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2007),family=binomial), .9), range(subset(propfl,year==2007)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2008),family=binomial), .9), range(subset(propfl,year==2008)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2009),family=binomial), .9), range(subset(propfl,year==2009)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2010),family=binomial), .9), range(subset(propfl,year==2010)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2011),family=binomial), .9), range(subset(propfl,year==2011)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2012),family=binomial), .9), range(subset(propfl,year==2012)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2013),family=binomial), .9), range(subset(propfl,year==2013)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2014),family=binomial), .9), range(subset(propfl,year==2014)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2015),family=binomial), .9), range(subset(propfl,year==2015)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2016),family=binomial), .9), range(subset(propfl,year==2016)$FFD))$root,
+uniroot(findInt(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD,data = subset(propfl,year==2017),family=binomial), .9), range(subset(propfl,year==2017)$FFD))$root)
+```
+
+```{r Dates when 10% and 90% of plants have started flowering}
+dates_fl<-data.frame(year=c(1987:1996,2006:2017),date_10,date_90)
+head(dates_fl)
+```
+
+## Calculate other metrics of the flowering season and merge
+
+```{r Calculation of position and duration of flowering season}
+fl_pos_dur<-merge(as.data.frame(alldata %>% filter(!is.na(alldata$FFD)) %>% 
+            dplyr::select(year,FFD)  %>%
+            dplyr::group_by(year) %>% 
+            dplyr::summarise(FFD_mean=mean(FFD),FFD_first=min(FFD), FFD_last=max(FFD),
+                             FFD_var=var(FFD),FFD_dur=range(FFD)[2]-range(FFD)[1],
+                             FFD_skew=skewness(FFD),FFD_kurt=kurtosis(FFD))),dates_fl)
+fl_pos_dur$days_90_10<-with(fl_pos_dur,date_90-date_10) # Another measure of duration
+head(fl_pos_dur)
+mean_weather4<-merge(mean_weather3,fl_pos_dur[c(1,3:4,9:11)])
+data_sel<-merge(data_sel,fl_pos_dur)
+```
+
+# Selection differentials for each year
+
+## FFD, linear
+
+```{r Selection differentials FFD linear}
+seldiffs_FFD<-data.frame(data_sel %>% group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std, data = .)) %>% tidy(model))
+seldiffs_FFD_nobs<-data.frame(data_sel %>% group_by(year) %>% 
+  do(nobs = nobs(lm(n_intact_seeds_rel ~ FFD_std, data = .)))) #N observations for each year
+seldiffs_FFD_nobs
+seldiffs_FFD$sig<-ifelse(seldiffs_FFD$p.value<0.05,"*","") 
+kable(subset(seldiffs_FFD,term=="FFD_std"),digits=3)  #Linear selection differentials for FFD
+#FFD * (selection for early flowering) in all years but 2009,2013,2015,2017
+```
+
+## FFD, quadratic
+
+```{r Selection differentials FFD quadratic}
+seldiffs_FFD_q<-data.frame(data_sel %>% group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2), data = .)) %>% tidy(model))
+seldiffs_FFD_q$sig<-ifelse(seldiffs_FFD_q$p.value<0.05,"*","") 
+seldiffs_FFD_q$estimate<-ifelse(seldiffs_FFD_q$term=="I(FFD_std^2)",2*(seldiffs_FFD_q$estimate),
+                                seldiffs_FFD_q$estimate)
+seldiffs_FFD_q$std.error<-ifelse(seldiffs_FFD_q$term=="I(FFD_std^2)",2*(seldiffs_FFD_q$std.error),
+                                seldiffs_FFD_q$std.error)
+#Double Quadratic regression coefficients and standard errors
+kable(subset(seldiffs_FFD_q,term=="I(FFD_std^2)"),digits=3)  #Quadratic selection differentials for FFD
+#I(FFD_std^2) * (disruptive selection - increases variance) in 2008 and 2012
+```
+
+## Number of flowers, linear
+
+```{r Selection differentials nfl linear}
+seldiffs_nfl<-data.frame(data_sel %>% group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ n_fl_std, data = .)) %>% tidy(model))
+seldiffs_nfl$sig<-ifelse(seldiffs_nfl$p.value<0.05,"*","") 
+kable(subset(seldiffs_nfl,term=="n_fl_std"),digits=3)  #Linear selection differentials for nfl
+#nfl * (selection for high number of flowers) in all years but 1992,1995,2009,2010,2013,2014,2015,2017
+```
+
+## Number of flowers, quadratic
+
+```{r Selection differentials nfl quadratic}
+seldiffs_nfl_q<-data.frame(data_sel %>% group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ n_fl_std+I(n_fl_std^2), data = .)) %>% tidy(model))
+seldiffs_nfl_q$sig<-ifelse(seldiffs_nfl_q$p.value<0.05,"*","") 
+seldiffs_nfl_q$estimate<-ifelse(seldiffs_nfl_q$term=="I(nfl_std^2)",2*(seldiffs_nfl_q$estimate),
+                                seldiffs_nfl_q$estimate)
+seldiffs_nfl_q$std.error<-ifelse(seldiffs_nfl_q$term=="I(nflD_std^2)",2*(seldiffs_nfl_q$std.error),
+                                seldiffs_nfl_q$std.error)
+#Double Quadratic regression coefficients and standard errors
+kable(subset(seldiffs_nfl_q,term=="I(n_fl_std^2)"),digits=3)  #Quadratic selection differentials for nfl
+#I(n_fl_std^2) * (stabilizing selection - decreases variance) in 1990,1992,2006,2007,2010,2014
+```
+
+All selection differentials
+
+```{r All selection differentials}
+seldiffs<-rbind(subset(seldiffs_FFD,term=="FFD_std")[c(1:4,7)],
+                subset(seldiffs_FFD_q,term=="I(FFD_std^2)")[c(1:4,7)],
+                subset(seldiffs_nfl,term=="n_fl_std")[c(1:4,7)],
+                subset(seldiffs_nfl_q,term=="I(n_fl_std^2)")[c(1:4,7)])
+seldiffs$estimate<-round(seldiffs$estimate,3)
+seldiffs$std.error<-round(seldiffs$std.error,3)
+kable(seldiffs,digits=3) # Table S1
+write.table(seldiffs,file="seldiffs.txt",sep="\t")
+```
+
+
+## Plots
+
+```{r Plots selection differentials 1, echo=FALSE, message=FALSE,fig.height=10, fig.width=12}
+plot_seldiffs1<-grid.arrange(
+  ggplot(subset(seldiffs,term=="FFD_std"|term=="n_fl_std"), aes(x=year, y=estimate,colour=term,shape=sig))+ 
+    geom_errorbar(aes(ymin=estimate-std.error, ymax=estimate+std.error), width=.3,position=position_dodge(0.5))+
+    geom_line(position=position_dodge(0.5))+geom_point(size=3,position=position_dodge(0.5))+
+    scale_colour_manual(values = c("Black", "#999999"))+scale_shape_manual(values=c(1,19))+
+    xlab(NULL)+ylab("Linear selection differential")+ggtitle("A)")+
+    geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme(),
+ggplot(subset(seldiffs,term=="I(FFD_std^2)"|term=="I(n_fl_std^2)"), aes(x=year, y=estimate*2,colour=term,shape=sig))+ 
+    geom_errorbar(aes(ymin=estimate*2-std.error, ymax=estimate*2+std.error), width=.3,position=position_dodge(0.5))+
+    geom_line(position=position_dodge(0.5))+geom_point(size=3,position=position_dodge(0.5))+
+    scale_colour_manual(values = c("Black", "#999999"))+scale_shape_manual(values=c(1,19))+
+    xlab("Year")+ylab("Quadratic selection differential")+ggtitle("B)")+
+    geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme(),
+ncol=1)
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs1.tiff",
+       plot=plot_seldiffs1,device="tiff",width=25,height=25,units="cm",dpi=600)
+
+```
+
+```{r Plots selection differentials 2, echo=FALSE, message=FALSE,fig.height=8, fig.width=11}
+plot_seldiffs2<-grid_arrange_shared_legend(
+ggplot(data_sel,aes(x=FFD_std,y=n_intact_seeds_rel,color=year))+geom_smooth(method="lm",se=F)+
+  xlab(NULL)+ylab("Relative number of intact seeds")+
+  theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+my_theme()+
+  ggtitle("A)")+theme(plot.title = element_text(hjust =-0.15)),
+ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel,color=year))+geom_smooth(method="lm",se=F)+
+  xlab(NULL)+ylab(NULL)+
+  theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+my_theme()+
+  ggtitle("A)")+theme(plot.title = element_text(hjust =-0.15,color="white")),
+ggplot(data_sel,aes(x=FFD_std,y=n_intact_seeds_rel,color=year))+
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se=F)+
+  xlab("Standardized first flowering date")+ylab("Relative number of intact seeds")+
+  theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+my_theme()+
+  ggtitle("B)")+theme(plot.title = element_text(hjust =-0.15)),
+ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel,color=year))+
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se=F)+
+  xlab("Standardized number of flowers")+ylab(NULL)+
+  theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+my_theme()+
+  ggtitle("B)")+theme(plot.title = element_text(hjust =-0.15,color="white")),
+ncol=2,nrow=2,position="right")
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs2.tiff",
+       plot=plot_seldiffs2,device="tiff",width=25,height=20,units="cm",dpi=600)
+```
+
+```{r Plots selection differentials 3, echo=FALSE, message=FALSE,fig.height=20, fig.width=12}
+plot_seldiffs3<-ggplot(data_sel,aes(x=FFD_std,y=n_intact_seeds_rel))+facet_wrap(~year,ncol=4)+
+  geom_smooth(method="lm",se=T,color="black",fill="#999999",size=0.6)+
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se=T,fill="#99CCFF",size=0.6)+
+  xlab("Standardized first flowering date")+ylab("Relative number of intact seeds")+
+  my_theme()
+plot_seldiffs3
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs3.tiff",
+       plot=plot_seldiffs3,device="tiff",width=14,height=22,units="cm",dpi=600)
+```
+
+```{r Plots selection differentials 4, echo=FALSE, message=FALSE,fig.height=20, fig.width=12}
+plot_seldiffs4<-ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel))+facet_wrap(~year,ncol=4)+
+  geom_smooth(method="lm",se=T,color="black",fill="#999999",size=0.6)+
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), se=T,fill="#99CCFF",size=0.6)+
+  xlab("Standardized number of flowers")+ylab("Relative number of intact seeds")+
+  my_theme()
+plot_seldiffs4
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs4.tiff",
+       plot=plot_seldiffs4,device="tiff",width=14,height=22,units="cm",dpi=600)
+```
+
+# Selection gradients for each year
+
+## FFD, linear
+
+```{r Selection gradients FFD linear}
+selgrads_FFD<-data.frame(data_sel %>% group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std+n_fl_std, data = .)) %>% tidy(model))
+selgrads_FFD$sig<-ifelse(selgrads_FFD$p.value<0.05,"*","") 
+kable(subset(selgrads_FFD,term=="FFD_std"),digits=3)  #Linear selection gradients for FFD
+#FFD * (selection for early flowering) in 1991,1992,1993,1994,2007,2010,2012,2014
+```
+
+## FFD, quadratic and correlational
+
+```{r Selection gradients FFD quadratic}
+selgrads_FFD_q<-data.frame(data_sel %>% group_by(year) %>% 
+  do(model = lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2)+n_fl_std+I(n_fl_std^2)+FFD_std:n_fl_std, data = .)) %>% tidy(model))
+selgrads_FFD_q$sig<-ifelse(selgrads_FFD_q$p.value<0.05,"*","") 
+kable(subset(selgrads_FFD_q,term=="I(FFD_std^2)"),digits=3)  
+#Quadratic selection gradients for FFD 
+#I(FFD_std^2) * (stabilizing selection - decreases variance) in 2015
+kable(subset(selgrads_FFD_q,term=="FFD_std:n_fl_std"),digits=3)  
+#Correlational selection gradients
+#FFD_std:n_fl_std* (correlational selection) in 1988,2009 and 2016
+```
+
+All selection gradients
+
+```{r All selection gradients}
+selgrads<-rbind(subset(selgrads_FFD,term=="FFD_std")[c(1:4,7)],
+                subset(selgrads_FFD_q,term=="I(FFD_std^2)")[c(1:4,7)],
+                subset(selgrads_FFD_q,term=="FFD_std:n_fl_std")[c(1:4,7)])
+selgrads$estimate<-round(selgrads$estimate,3)
+selgrads$std.error<-round(selgrads$std.error,3)
+kable(selgrads,digits=3) # Table S2
+write.table(selgrads,file="selgrads.txt",sep="\t")
+```
+
+## Plots
+
+```{r Plots selection gradients 1, echo=FALSE, message=FALSE,fig.height=6, fig.width=12}
+plot_selgrads1<-ggplot(subset(selgrads_FFD,term=="FFD_std"), aes(x=year, y=estimate,colour=term,shape=sig))+ 
+    geom_errorbar(aes(ymin=estimate-std.error, ymax=estimate+std.error), width=.3,position=position_dodge(0.5))+
+    geom_line(position=position_dodge(0.5))+geom_point(size=3,position=position_dodge(0.5))+
+    scale_colour_manual(values = c("Black", "#999999"))+scale_shape_manual(values=c(1,19))+
+    xlab("Year")+ylab("Linear selection gradient for first flowering day")+
+    geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme()
+plot_selgrads1
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/selgrads1.tiff",
+       plot=plot_selgrads1,device="tiff",width=25,height=12,units="cm",dpi=600)
+#This will be part of Fig. 1?
+```
+
+Calculate BCa confindence intervals for model estimates? (selection differentials and gradients)
+
+# Merge data 
+
+```{r Merge data}
+selgrads_FFD_values<-subset(selgrads_FFD,term=="FFD_std")[c(1,3)]
+selgrads_FFD_values$selgradFFD<-selgrads_FFD_values$estimate
+selgrads_FFD_values$estimate<-NULL
+data_sel_agg<-merge(mean_weather4,selgrads_FFD_values)
+data_sel_agg$year<-as.factor(data_sel_agg$year)
+data_sel<-merge(data_sel,data_sel_agg[c(1:145,156)],by="year")
+```
+
+
+# Results 1: Among-year variation and trends
+
+## Trends
+
+### Trends in climate
+
+```{r trend temp}
+with(summarySE(data_sel, measurevar="GDD5_3", groupvars=c("year")),tidy(lm(GDD5_3~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="GDD5_4", groupvars=c("year")),tidy(lm(GDD5_4~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="GDD5_5", groupvars=c("year")),tidy(lm(GDD5_5~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="max_3", groupvars=c("year")),tidy(lm(max_3~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="max_4", groupvars=c("year")),tidy(lm(max_4~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="max_5", groupvars=c("year")),tidy(lm(max_5~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="mean_3", groupvars=c("year")),tidy(lm(mean_3~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="mean_4", groupvars=c("year")),tidy(lm(mean_4~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="mean_5", groupvars=c("year")),tidy(lm(mean_5~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="min_3", groupvars=c("year")),tidy(lm(min_3~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="min_4", groupvars=c("year")),tidy(lm(min_4~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="min_5", groupvars=c("year")),tidy(lm(min_5~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="precipitation_1", groupvars=c("year")),tidy(lm(precipitation_1~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="precipitation_2", groupvars=c("year")),tidy(lm(precipitation_2~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="precipitation_3", groupvars=c("year")),tidy(lm(precipitation_3~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="precipitation_4", groupvars=c("year")),tidy(lm(precipitation_4~as.integer(year)))) #NS
+with(summarySE(data_sel, measurevar="precipitation_5", groupvars=c("year")),tidy(lm(precipitation_5~as.integer(year)))) #NS
+```
+
+### Trend in FFD
+
+```{r trend FFD}
+data_sel$year_int<-as.integer(as.character(data_sel$year))
+with(summarySE(data_sel, measurevar="FFD", groupvars=c("year_int")),tidy(lm(FFD~year_int))) #*
+```
+
+### Trend in fitness
+
+```{r trend fitness}
+with(summarySE(data_sel, measurevar="n_intact_seeds",groupvars=c("year_int")),
+     tidy(lm(n_intact_seeds~year_int))) #NS
+```
+
+### Trend in selection gradients for FFD
+
+```{r trend selgrads}
+selgrads_FFD$year_int<-as.integer(as.character(selgrads_FFD$year))
+with(subset(selgrads_FFD,term=="FFD_std"),tidy(lm(estimate~year_int))) #NS
+```
+
+## Proprtion of variation explained by year
+
+### FFD
+
+```{r prop var FFD expl by year}
+with(data_sel,summary(lm(FFD~year))) #* Linear model, year=factor, Adjusted R-squared:  0.5906
+r.squaredGLMM(lmer(FFD~year+(1|id),data_sel))[,1] # with id as a random factor, R2 fixed = 0.58
+```
+
+### Fitness
+
+```{r prop var fitness expl by year}
+with(data_sel,summary(lm(n_intact_seeds~year))) #* Linear model, year=factor, Adjusted R-squared:  0.1709
+r.squaredGLMM(lmer(n_intact_seeds~year+(1|id),data_sel))[,1] # with id as a random factor, R2 fixed = 0.18
+
+```
+
+### Selection
+
+```{r prop var selection expl by year}
+# Indirect selection
+summary(lm(n_intact_seeds_rel ~ FFD_std,data = data_sel))$adj.r.squared
+summary(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:as.factor(year),data = data_sel))$adj.r.squared
+(0.04958467-0.04414804)*100 #Variation in indirect selection explained by year?
+# Direct selection
+summary(lm(n_intact_seeds_rel ~ FFD_std+n_fl_std,data = data_sel))$adj.r.squared
+summary(lm(n_intact_seeds_rel ~ FFD_std+FFD_std:as.factor(year)+n_fl_std,data = data_sel))$adj.r.squared
+(0.07753877-0.071554)*100 #Variation in direct selection explained by year?
+# id as random???
+```
+
+## Ranges and means
+
+Mean daily temperature March
+
+```{r Ranges and means 1}
+round(with(summarySE(subset(weather,month==3),measurevar="mean", groupvars=c("year","month")),range(mean)),1)
+round(with(summarySE(subset(weather,month==3),measurevar="mean", groupvars=c("year","month")),mean(mean)),1)
+```
+
+Mean daily temperature April
+
+```{r Ranges and means 2}
+round(with(summarySE(subset(weather,month==4),measurevar="mean", groupvars=c("year","month")),range(mean)),1)
+round(with(summarySE(subset(weather,month==4),measurevar="mean", groupvars=c("year","month")),mean(mean)),1)
+```
+
+Mean daily temperature May
+
+```{r Ranges and means 3}
+round(with(summarySE(subset(weather,month==5),measurevar="mean", groupvars=c("year","month")),range(mean)),1)
+round(with(summarySE(subset(weather,month==5),measurevar="mean", groupvars=c("year","month")),mean(mean)),1)
+```
+
+Mean FFD
+
+```{r Ranges and means 4}
+round(with(summarySE(data_sel, measurevar="FFD", groupvars=c("year")),range(FFD)),1)
+round(with(summarySE(data_sel, measurevar="FFD", groupvars=c("year")),mean(FFD)),1)
+```
+
+Mean fitness
+
+```{r Ranges and means 5}
+round(with(summarySE(data_sel, measurevar="n_intact_seeds", groupvars=c("year")),range(n_intact_seeds)),1)
+round(with(summarySE(data_sel, measurevar="n_intact_seeds", groupvars=c("year")),mean(n_intact_seeds)),1)
+```
+
+Selection gradients for FFD
+
+```{r Ranges and means 6}
+round(with(subset(selgrads_FFD,term=="FFD_std"),range(estimate)),1)
+round(with(subset(selgrads_FFD,term=="FFD_std"),mean(estimate)),1)
+```
+
+## Fig. 1 - REDO WITH ALL DATA
+
+```{r Fig. 1 Among-year variation, echo=FALSE, fig.height=18, fig.width=12, message=FALSE}
+fig1<-grid.arrange(
+# Spring temperature
+ggplot(summarySE(subset(weather,month==3|month==4|month==5), 
+                 measurevar="mean", groupvars=c("year","month")),
+aes(x=as.integer(as.character(year)),y=mean,color=as.factor(month)))+
+  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=.3)+geom_point(size=3)+
+  xlab(NULL)+ylab("\nMean daily temperature")+ggtitle("A)")+my_theme()+
+  scale_x_continuous(breaks=seq(1987,2017,2))+
+  scale_color_manual(values=c("gray85","gray53","black")),
+# FFD
+ggplot(summarySE(data_sel, measurevar="FFD", groupvars=c("year")),
+       aes(x=as.integer(as.character(year)),y=FFD))+geom_point()+
+  geom_errorbar(aes(ymin=FFD-se, ymax=FFD+se), width=.3)+ geom_point(size=3)+
+  geom_smooth(method="lm",color="black",se=F)+
+  scale_x_continuous(breaks=seq(1987,2017,2))+
+  xlab(NULL)+ylab("\nFirst flowering date")+ggtitle("B)")+my_theme(),
+# Fitness
+ggplot(summarySE(data_sel, measurevar="n_intact_seeds", groupvars=c("year")),
+       aes(x=as.integer(as.character(year)),y=n_intact_seeds))+geom_point()+
+  geom_errorbar(aes(ymin=n_intact_seeds-se, ymax=n_intact_seeds+se), width=.3)+ geom_point(size=3)+
+  scale_x_continuous(breaks=seq(1987,2017,2))+
+  xlab(NULL)+ylab("\nNumber of intact seeds")+ggtitle("C)")+my_theme(),
+# Linear selection gradients for FFD
+ggplot(subset(selgrads_FFD,term=="FFD_std"), 
+       aes(x=as.integer(as.character(year)), y=estimate,colour=term,shape=sig))+ 
+    geom_errorbar(aes(ymin=estimate-std.error, ymax=estimate+std.error), width=.3,position=position_dodge(0.5))+
+    geom_point(size=3,position=position_dodge(0.5))+
+    scale_colour_manual(values = c("Black", "#999999"))+scale_shape_manual(values=c(1,19))+
+    scale_x_continuous(breaks=seq(1987,2017,2))+
+    xlab("Year")+ylab("Selection gradient\nfor first flowering date")+
+    geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+ggtitle("D)")+my_theme(),
+ncol=1)
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig1.tiff",
+       plot=fig1,device="tiff",width=25,height=36,units="cm",dpi=400)
+```
+
+## Fig. S1 - REDO WITH ALL DATA
+
+```{r Fig. S1, echo=FALSE, fig.height=18, fig.width=12, message=FALSE}
+plot_temp<-ggplot(summarySE(subset(weather,month==3|month==4|month==5), 
+                 measurevar="min", groupvars=c("year","month")),
+aes(x=as.integer(as.character(year)),y=min,color=as.factor(month)))+
+  geom_errorbar(aes(ymin=min-se, ymax=min+se), width=.1)+geom_point(size=3)+
+  xlab(NULL)+ylab("Min daily temperature")+ggtitle("A)")+my_theme_legend()+
+  scale_colour_manual(name="Month",values=c("#00BF7D","#00B0F6","#E76BF3"),
+                      labels=c("March","April","May"))+
+  theme(plot.margin = unit(c(-0.5,0.08,-0.5,0.5), "cm"))+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.08,vjust=-5))+
+  scale_x_continuous(breaks=seq(1987,2017,2))
+
+legend_temp<-g_legend(plot_temp+theme(legend.position="top"))
+
+figS1<-grid.arrange(
+  legend_temp,
+  ggplot(summarySE(subset(weather,month==3|month==4|month==5), 
+                 measurevar="min", groupvars=c("year","month")),
+aes(x=as.integer(as.character(year)),y=min,color=as.factor(month)))+
+  geom_errorbar(aes(ymin=min-se, ymax=min+se), width=.1)+geom_point(size=3)+
+  xlab(NULL)+ylab("Min daily temperature")+ggtitle("A)")+my_theme()+
+  scale_colour_manual(values=c("#00BF7D","#00B0F6","#E76BF3"))+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=-5))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+ggplot(summarySE(subset(weather,month==3|month==4|month==5), 
+                 measurevar="max", groupvars=c("year","month")),
+aes(x=as.integer(as.character(year)),y=max,color=as.factor(month)))+
+  geom_errorbar(aes(ymin=max-se, ymax=max+se), width=.1)+geom_point(size=3)+
+  xlab("Year")+ylab("Max daily temperature")+ggtitle("B)")+my_theme()+
+  scale_colour_manual(values=c("#00BF7D","#00B0F6","#E76BF3"))+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=-5))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+ncol=1,heights=c(1,10,10))
+
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS1.tiff",
+       plot=figS1,device="tiff",width=25,height=18,units="cm",dpi=400)
+```
+
+## Fig. S2 - REDO WITH ALL DATA
+
+```{r Fig. S2, echo=FALSE, fig.height=18, fig.width=12, message=FALSE}
+figS2<-grid.arrange(
+  ggplot(aggregate(GDD5 ~ year+month,data= subset(weather,month==3),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=GDD5)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab(NULL)+ylab("Growing degree days March")+ggtitle("A)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+  ggplot(aggregate(GDD5 ~ year+month,data= subset(weather,month==4),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=GDD5)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab(NULL)+ylab("Growing degree days April")+ggtitle("B)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+  ggplot(aggregate(GDD5 ~ year+month,data= subset(weather,month==5),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=GDD5)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab("Year")+ylab("Growing degree days May")+ggtitle("C)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+ncol=1)
+
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS2.tiff",
+       plot=figS2,device="tiff",width=25,height=27,units="cm",dpi=400)
+
+```
+
+## Fig. S3 - REDO WITH ALL DATA
+
+```{r Fig. S3, echo=FALSE, fig.height=18, fig.width=12, message=FALSE}
+figS3<-grid.arrange(
+  ggplot(aggregate(precipitation ~ year+month,data= subset(weather,month==1),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=precipitation)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab(NULL)+ylab("Precipitation January")+ggtitle("A)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+    ggplot(aggregate(precipitation ~ year+month,data= subset(weather,month==2),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=precipitation)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab(NULL)+ylab("Precipitation February")+ggtitle("B)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+    ggplot(aggregate(precipitation ~ year+month,data= subset(weather,month==3),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=precipitation)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab(NULL)+ylab("Precipitation March")+ggtitle("C)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+    ggplot(aggregate(precipitation ~ year+month,data= subset(weather,month==4),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=precipitation)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab(NULL)+ylab("Precipitation April")+ggtitle("D)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+    ggplot(aggregate(precipitation ~ year+month,data= subset(weather,month==5),FUN=sum))+
+    aes(x=as.integer(as.character(year)),y=precipitation)+
+  geom_bar(stat="identity",position = "identity")+
+  xlab("Year")+ylab("Precipitation May")+ggtitle("E)")+my_theme()+
+  scale_y_continuous(labels=function(x) format(x, width=3))+
+  theme(plot.title=element_text(hjust=-0.07,vjust=0))+
+  scale_x_continuous(breaks=seq(1987,2017,2)),
+ncol=1)
+
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS3.tiff",
+       plot=figS3,device="tiff",width=25,height=36,units="cm",dpi=400)
+```
+
+# Results 2: Response of FFD for each plant, mean position and duration of flowering to climate 
+
+## FFD for each plant (Table 1A)
+
+```{r FFD model sel,warning=FALSE,message=FALSE}
+# Variables to use
+subset1<-data_sel[c(2,3,86:88,158:160,170:172,182:184,189,193:196)]
+subset1[,3:19]<-scale(subset1[,3:19])
+globmod_FFD<-lmer(FFD ~ GDD5_3+GDD5_4+GDD5_5+max_3+max_4+max_5+mean_3+mean_4+mean_5+
+                    min_3+min_4+min_5+precipitation_1+precipitation_2+precipitation_3+
+                    precipitation_4+precipitation_5+(1|id),
+                  data = subset1,REML=FALSE,na.action="na.fail")
+
+# Excluding collinear variables with r > 0.5
+smat1 <- abs(cor(subset1[, -c(1,2)])) <= .5 # TRUE: cor<=0.5,FALSE: cor>0.5
+smat1[!lower.tri(smat1)] <- NA
+
+clusterType <- if(length(find.package("snow", quiet = TRUE))) "SOCK" else "PSOCK"
+clust1 <- try(makeCluster(getOption("cl.cores", 3), type = clusterType))
+clusterExport(clust1, "subset1")
+clusterEvalQ(clust1, library(lme4))
+modsel_FFD<-pdredge(globmod_FFD,subset=smat1,cluster=clust1)
+
+summary(model.avg(modsel_FFD,subset=delta<2)) # Summary averaged model
+importance(modsel_FFD) # Variable importance
+r.squaredGLMM(get.models(modsel_FFD,subset=1)$"20640") #R square of best model
+```
+
+## FFD for each plant with year (Table S3)
+
+```{r FFD w year,warning=FALSE,message=FALSE}
+summary(lmer(FFD ~ scale(max_5)+scale(mean_4)+scale(precipitation_1)+scale(precipitation_3)+
+               as.integer(as.character(year))+(1|id),
+             data = data_sel[c(1:33,86:88,158:160,170:172,182:184,189,193:196)],
+             REML=FALSE,na.action="na.fail"))
+r.squaredGLMM(lmer(FFD ~ scale(max_5)+scale(mean_4)+scale(precipitation_1)+scale(precipitation_3)+
+               as.integer(as.character(year))+(1|id),
+             data = data_sel[c(1:3,86:88,158:160,170:172,182:184,189,193:196)],
+             REML=FALSE,na.action="na.fail"))
+```
+
+### Fig. 2: Response of FFD for each plant to climate
+
+```{r Fig 2, echo=FALSE, fig.height=4, fig.width=14}
+fig2<-grid.arrange(
+  ggplot(data_sel,aes(x=mean_4,y=FFD))+ggtitle("A)")+
+    geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Mean daily\ntemperature April")+ylab(NULL)+my_theme()+
+    theme(plot.margin = unit(c(0.07,0.1,0.07,0.1), "cm"))+
+    theme(plot.title=element_text(hjust=-0.18,vjust=1)),
+  ggplot(data_sel,aes(x=max_5,y=FFD))+ggtitle("B)")+
+    geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Maximum daily\ntemperature May")+ylab(NULL)+my_theme()+
+    theme(axis.text.y=element_text(color="white"))+
+    theme(plot.margin = unit(c(0.07,0.1,0.07,0.1), "cm"))+
+    theme(plot.title=element_text(hjust=-0.18,vjust=1)),
+  ggplot(data_sel,aes(x=precipitation_1,y=FFD))+ggtitle("C)")+
+    geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Sum of precipitation\nJanuary")+ylab(NULL)+my_theme()+
+    theme(axis.text.y=element_text(color="white"))+
+    theme(plot.margin = unit(c(0.07,0.1,0.07,0.1), "cm"))+
+    theme(plot.title=element_text(hjust=-0.18,vjust=1)),
+  ggplot(data_sel,aes(x=precipitation_3,y=FFD))+ggtitle("D)")+
+    geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Sum of precipitation\nMarch")+ylab(NULL)+my_theme()+
+    theme(axis.text.y=element_text(color="white"))+
+    theme(plot.margin = unit(c(0.07,0.1,0.07,0.1), "cm"))+
+    theme(plot.title=element_text(hjust=-0.18,vjust=1)),
+  ncol=4,left=textGrob("First flowering date",just="center",hjust=0.38,
+                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig2.tiff",
+       plot=fig2,device="tiff",width=25,height=7,units="cm",dpi=600)
+```
+
+## Position (Table 1B)
+
+Use the same variables as in model selection for FFD for each plant
+
+```{r FFD_mean~temp}
+globmod_FFD_mean<-lm(FFD_mean~scale(mean_4)+scale(max_5)+
+                       scale(precipitation_1)+scale(precipitation_3),
+                     data = mean_weather4,na.action="na.fail")
+modsel_FFD_mean<-dredge(globmod_FFD_mean)
+summary(model.avg(modsel_FFD_mean,subset=delta<2)) # Summary averaged model
+importance(modsel_FFD_mean) # Variable importance
+summary(get.models(modsel_FFD_mean,subset=1)$"8")$adj.r.squared #R square of best model
+
+## FFD_mean also related to temp when including year  (Table S4)
+tidy(lm(FFD_mean~scale(mean_4)+scale(max_5)+year,data=mean_weather4))
+glance(lm(FFD_mean~scale(mean_4)+scale(max_5)+year,data=mean_weather4))$adj.r.squared # Rsquare
+```
+
+```{r date_10~temp}
+globmod_date_10<-lm(date_10~scale(mean_4)+scale(max_5)+
+                      scale(precipitation_1)+scale(precipitation_3),
+                     data = mean_weather4,na.action="na.fail")
+modsel_date_10<-dredge(globmod_date_10)
+#Only one model with delta<2
+summary(get.models(modsel_date_10,subset=1)$"8")
+importance(modsel_date_10) # Variable importance
+
+## date_10 also related to temp when including year  (Table S4)
+tidy(lm(date_10~scale(mean_4)+scale(max_5)+scale(precipitation_1)+year,data=mean_weather4))
+glance(lm(date_10~scale(mean_4)+scale(max_5)+scale(precipitation_1)+year,
+          data=mean_weather4))$adj.r.squared # Rsquare
+```
+
+```{r date_90~temp}
+globmod_date_90<-lm(date_90~scale(mean_4)+scale(max_5)+
+                      scale(precipitation_1)+scale(precipitation_3),
+                     data = mean_weather4,na.action="na.fail")
+modsel_date_90<-dredge(globmod_date_90)
+summary(model.avg(modsel_date_90,subset=delta<2)) # Summary averaged model
+importance(modsel_date_90) # Variable importance
+summary(get.models(modsel_date_90,subset=1)$"4")$adj.r.squared #R square of best model
+
+## date_90 also related to temp when including year  (Table S4)
+tidy(lm(date_90~scale(mean_4)+scale(max_5)+year,data=mean_weather4))
+glance(lm(date_90~scale(mean_4)+scale(max_5)+year,data=mean_weather4))$adj.r.squared # Rsquare
+```
+
+### Fig. 3: Response of position to climate
+
+```{r Fig. 3 Response of position+duration to spring temperature, echo=FALSE, fig.height=4, fig.width=14,message=FALSE,warning=FALSE}
+fig3<-grid.arrange(
+  ggplot(mean_weather4)+ggtitle("A)")+
+    geom_point(aes(x=mean_4,y=date_10),shape=24)+
+    geom_smooth(aes(x=mean_4,y=date_10),method="lm",color="black",lty="dashed",se=F)+
+    geom_point(aes(x=mean_4,y=FFD_mean),shape=19)+
+    geom_smooth(aes(x=mean_4,y=FFD_mean),method="lm",color="black",se=F)+
+    geom_point(aes(x=mean_4,y=date_90),shape=8)+
+    geom_smooth(aes(x=mean_4,y=date_90),method="lm",color="black",lty="dotted",se=F)+
+    xlab("Mean daily temperature April")+ylab(NULL)+my_theme()+
+    scale_y_continuous(limits=c(40,80))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=2)),
+  ggplot(mean_weather4)+ggtitle("B)")+
+    geom_point(aes(x=max_5,y=date_10),shape=24)+
+    geom_smooth(aes(x=max_5,y=date_10),method="lm",color="black",lty="dashed",se=F)+
+    geom_point(aes(x=max_5,y=FFD_mean),shape=19)+
+    geom_smooth(aes(x=max_5,y=FFD_mean),method="lm",color="black",se=F)+
+    geom_point(aes(x=max_5,y=date_90),shape=8)+
+    geom_smooth(aes(x=max_5,y=date_90),method="lm",color="black",lty="dotted",se=F)+
+    xlab("Maximum daily temperature May")+ylab(NULL)+my_theme()+
+    scale_y_continuous(limits=c(40,80))+theme(axis.text.y=element_text(color="white"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=2)),
+  ggplot(mean_weather4)+ggtitle("C)")+
+    geom_point(aes(x=precipitation_1,y=date_10),shape=24)+
+    geom_smooth(aes(x=precipitation_1,y=date_10),method="lm",color="black",lty="dashed",se=F)+
+    xlab("Sum of precipitation January")+ylab(NULL)+my_theme()+
+    scale_y_continuous(limits=c(40,80))+theme(axis.text.y=element_text(color="white"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=2)),
+ncol=3,left=textGrob("Day from vernal equinox",
+                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig3.tiff",
+       plot=fig3,device="tiff",width=28,height=9,units="cm",dpi=600)
+```
+
+## Duration (Table 1C)
+
+```{r days_90_10~temp}
+globmod_days_90_10<-lm(days_90_10~scale(mean_4)+scale(max_5)+
+                         scale(precipitation_1)+scale(precipitation_3),
+                     data = mean_weather4,na.action="na.fail")
+modsel_days_90_10<-dredge(globmod_days_90_10)
+#Only one model with delta<2
+summary(get.models(modsel_days_90_10,subset=1)$"8") 
+importance(modsel_days_90_10) # Variable importance
+
+## days_90_10 also related to temp when including year  (Table S4)
+tidy(lm(days_90_10~scale(mean_4)+scale(max_5)+scale(precipitation_1)+year,data=mean_weather4))
+glance(lm(days_90_10~scale(mean_4)+scale(max_5)+scale(precipitation_1)+year,
+          data=mean_weather4))$adj.r.squared # Rsquare
+```
+
+### Fig. 4: Response of duration of the flowering season to climate
+
+```{r Fig. 4 Response of duration to spring temperature, echo=FALSE, fig.height=4, fig.width=14}
+fig4<-grid.arrange(
+  ggplot(mean_weather4,aes(x=mean_4,y=days_90_10))+ggtitle("A)")+
+    geom_point(shape=19)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Mean daily temperature April")+ylab(NULL)+my_theme()+
+    theme(plot.title=element_text(hjust=-0.13,vjust=1)),
+  ggplot(mean_weather4,aes(x=max_5,y=days_90_10))+ggtitle("B)")+
+    geom_point(shape=19)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Maximum daily temperature May")+ylab(NULL)+my_theme()+
+    theme(axis.text.y=element_text(color="white"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=1)),
+  ggplot(mean_weather4,aes(x=precipitation_1,y=days_90_10))+ggtitle("C)")+
+    geom_point(shape=19)+geom_smooth(method="lm",color="black",se=F)+
+    xlab("Sum of precipitation January")+ylab(NULL)+my_theme()+
+    theme(axis.text.y=element_text(color="white"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=1)),
+ncol=3,left=textGrob("Duration of flowering season",
+                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig4.tiff",
+       plot=fig4,device="tiff",width=28,height=9,units="cm",dpi=600)
+```
+
+# Results 3: Response of fitness to climate, mean position and duration of flowering
+
+## Climate (Table 2A)
+
+```{r Fitness~temp 1}
+# Variables to use
+subset2<-data_sel[c(3,20,42,86:88,158:160,170:172,182:184,189,193:196)]
+
+subset2[,c(3:20)]<-scale(subset2[,c(3:20)])
+globmod_fitness<-lmer(n_intact_seeds ~ GDD5_3+GDD5_4+GDD5_5+max_3+max_4+max_5+
+                        mean_3+mean_4+mean_5+min_3+min_4+min_5+precipitation_1+
+                        precipitation_2+precipitation_3+precipitation_4+precipitation_5+
+                        n_fl+(1|id),data = subset2,REML=FALSE,na.action="na.fail")
+
+# Excluding collinear variables with r > 0.5
+smat2 <- abs(cor(subset2[, -c(1:3)])) <= .5 # TRUE: cor<=0.5,FALSE: cor>0.5
+smat2[!lower.tri(smat2)] <- NA
+
+clusterType <- if(length(find.package("snow", quiet = TRUE))) "SOCK" else "PSOCK"
+clust1 <- try(makeCluster(getOption("cl.cores", 3), type = clusterType))
+clusterExport(clust1, "subset2")
+clusterEvalQ(clust1, library(lme4))
+modsel_fitness<-pdredge(globmod_fitness,subset=smat2,fixed="n_fl",cluster=clust1)
+
+summary(model.avg(modsel_fitness,subset=delta<2)) # Summary averaged model
+importance(modsel_fitness) # Variable importance
+r.squaredGLMM(get.models(modsel_fitness,subset=1)$"51217") #R square of best model
+```
+
+## Position (Table 2B)
+
+```{r Fitness~position 1}
+summary(lmer(n_intact_seeds~FFD_mean+n_fl+(1|id),data=data_sel)) #NS
+r.squaredGLMM(lmer(n_intact_seeds~FFD_mean+n_fl+(1|id),data=data_sel)) #NS
+```
+
+## Duration (Table 2C)
+
+```{r Fitness~duration 1}
+summary(lmer(n_intact_seeds~days_90_10+n_fl+(1|id),data=data_sel)) #*
+r.squaredGLMM(lmer(n_intact_seeds~days_90_10+n_fl+(1|id),data=data_sel)) #*
+```
+
+## Fig. 5: Response of fitness to climate, mean position and duration of flowering
+
+Graphs of the effect of variables taking into account that number of flowers is included in the model
+
+```{r Fig 5, echo=FALSE, fig.height=4, fig.width=14}
+#Using a model with significant variables in model averaging (effect1-3)
+effect1<-data.frame(effect(term="GDD5_3",
+                           mod=lmer(n_intact_seeds ~ GDD5_3+precipitation_3+precipitation_4+
+                                      n_fl+(1|id),data = data_sel,REML=FALSE,na.action="na.fail"),
+                           xlevels=list(GDD5_3=seq(0,55,1))))
+effect2<-data.frame(effect(term="precipitation_4", 
+                           mod=lmer(n_intact_seeds ~ GDD5_3+precipitation_3+precipitation_4+
+                                      n_fl+(1|id),data = data_sel,REML=FALSE,na.action="na.fail"),
+                           xlevels=list(precipitation_4=seq(4,80,1))))
+effect3<-data.frame(effect(term="days_90_10", 
+                           mod=lmer(n_intact_seeds~days_90_10+n_fl+(1|id),data=data_sel),
+                           xlevels=list(days_90_10=seq(5,21,1))))
+
+fig5<-grid.arrange(
+  ggplot(effect1, aes(GDD5_3,fit))+ggtitle("A)")+
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5,fill="grey")+
+    geom_smooth(method="lm",se=T,size=1,color="black",aes(GDD5_3,fit))+
+    xlab("Sum of Growing\nDegree Days March")+ylab(NULL)+my_theme()+
+    theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=-4))+
+    scale_y_continuous(limits=c(1,11),breaks=c(2,4,6,8,10)),
+  ggplot(effect2, aes(precipitation_4,fit))+ggtitle("B)")+
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5,fill="grey")+
+    geom_smooth(method="lm",se=T,size=1,color="black",aes(precipitation_4,fit))+
+    xlab("Sum of precipitation\nApril")+ylab(NULL)+my_theme()+
+    theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=-4))+
+    scale_y_continuous(limits=c(1,11),breaks=c(2,4,6,8,10))+
+    theme(axis.text.y=element_text(color="white")),
+   ggplot(effect3, aes(days_90_10,fit))+ggtitle("C)")+
+    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5,fill="grey")+
+    geom_smooth(method="lm",se=T,size=1,color="black",aes(days_90_10,fit))+
+    xlab("Duration of\nflowering season")+ylab(NULL)+my_theme()+
+    theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm"))+
+    theme(plot.title=element_text(hjust=-0.13,vjust=-4))+
+    scale_y_continuous(limits=c(1,11),breaks=c(2,4,6,8,10))+
+    theme(axis.text.y=element_text(color="white")),
+  ncol=3,left=textGrob("Number of intact seeds",just="center",hjust=0.40,
+                       gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig5.tiff",
+       plot=fig5,device="tiff",width=28,height=9,units="cm",dpi=600)
+```
+
+Graphs with raw data
+
+```{r Fig 5 raw data,echo=FALSE,fig.height=4, fig.width=14}
+# Climate
+grid.arrange(
+ggplot(data_sel,aes(x=GDD5_3,y=n_intact_seeds))+
+  geom_point()+geom_smooth(method="lm",se=F)+my_theme(),
+ggplot(data_sel,aes(x=precipitation_4,y=n_intact_seeds))+
+  geom_point()+geom_smooth(method="lm",se=F)+my_theme(),
+# Duration
+ggplot(data_sel,aes(x=days_90_10,y=n_intact_seeds))+
+  geom_point()+geom_smooth(method="lm",se=F)+my_theme(),
+ncol=3)
+```
+
+# Results 4: Differences in selection among years
+
+## Indirect selection (selection differentials, Table 3A)
+
+```{r Differences in selection differentials among years}
+Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:year+(1|id),data = data_sel),type="II")
+#Indirect selection for early flowering differs among years
+```
+
+## Direct selection (selection gradients, Table 3B)
+
+```{r Differences in selection gradients among years}
+Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:year+n_fl_std+(1|id),data = data_sel),type="II")
+#Direct selection for early flowering differs among years
+```
+
+# Results 5: Are differences in selection among years related to climatic conditions?
+Response of selection to climate, position and duration of flowering season.
+
+```{r merge selgrads & seldiffs}
+mean_weather5<-merge(mean_weather4,subset(selgrads_FFD,term=="FFD_std")[c(1,3)])
+names(mean_weather5)[156]<-"selgrad_FFD"
+mean_weather5<-merge(mean_weather5,subset(seldiffs_FFD,term=="FFD_std")[c(1,3)])
+names(mean_weather5)[157]<-"seldiff_FFD"
+```
+
+## Analysis with selection gradients (not used)
+
+### Spring temperature
+
+```{r Selection gradients vs. spring temperature}
+tidy(lm(selgrad_FFD~mean_4,data=mean_weather5))
+glance(lm(selgrad_FFD~mean_4,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+### Position of the flowering season
+
+```{r Selection gradients vs. date_10}
+tidy(lm(selgrad_FFD~date_10,data=mean_weather5))
+glance(lm(selgrad_FFD~date_10,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+```{r Selection gradients vs. FFD_mean}
+tidy(lm(selgrad_FFD~FFD_mean,data=mean_weather5))
+glance(lm(selgrad_FFD~FFD_mean,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+```{r Selection gradients vs. date_90}
+tidy(lm(selgrad_FFD~date_90,data=mean_weather5))
+glance(lm(selgrad_FFD~date_90,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+### Duration of the flowering season
+
+```{r Selection gradients vs. days_90_10}
+tidy(lm(selgrad_FFD~days_90_10,data=mean_weather5))
+glance(lm(selgrad_FFD~days_90_10,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+## Analysis with selection differentials (not used)
+
+### Spring temperature
+
+```{r Selection differentials vs. spring temperature}
+tidy(lm(seldiff_FFD~mean_4,data=mean_weather5))
+glance(lm(seldiff_FFD~mean_4,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+### Position of the flowering season
+
+```{r Selection differentials vs. date_10}
+tidy(lm(seldiff_FFD~date_10,data=mean_weather5))
+glance(lm(seldiff_FFD~date_10,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+```{r Selection differentials vs. FFD_mean}
+tidy(lm(seldiff_FFD~FFD_mean,data=mean_weather5))
+glance(lm(seldiff_FFD~FFD_mean,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+```{r Selection differentials vs. date_90}
+tidy(lm(seldiff_FFD~date_90,data=mean_weather5))
+glance(lm(seldiff_FFD~date_90,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+### Duration of the flowering season
+
+```{r Selection differentials vs. days_90_10}
+tidy(lm(seldiff_FFD~days_90_10,data=mean_weather5))
+glance(lm(seldiff_FFD~days_90_10,data=mean_weather5))$adj.r.squared # Rsquare
+```
+
+## GLMMs (Table 4)
+
+```{r GLM climate}
+# Variables to use
+subset3<-data_sel[c(3,44:46,86:88,158:160,170:172,182:184,189,193:196)]
+subset3[,c(5:21)]<-scale(subset3[,c(5:21)])
+globmod_selection<-lmer(n_intact_seeds_rel ~ FFD_std+n_fl_std+
+                          FFD_std:GDD5_3+FFD_std:GDD5_4+FFD_std:GDD5_5+
+                          FFD_std:max_3+FFD_std:max_4+FFD_std:max_5+
+                          FFD_std:mean_3+FFD_std:mean_4+FFD_std:mean_5+
+                          FFD_std:min_3+FFD_std:min_4+FFD_std:min_5+
+                          FFD_std:precipitation_1+FFD_std:precipitation_2+
+                          FFD_std:precipitation_3+FFD_std:precipitation_4+
+                          FFD_std:precipitation_5+(1|id),
+                        data = subset3,REML=FALSE,na.action="na.fail")
+
+# Excluding collinear variables with r > 0.5
+smat3 <- abs(cor(subset3[, -c(1:4)])) <= .5 # TRUE: cor<=0.5,FALSE: cor>0.5
+smat3[!lower.tri(smat3)] <- NA
+rownames(smat3)<-paste("FFD_std:", names(smat3[1,1:17]),sep="")
+colnames(smat3)<-paste("FFD_std:", names(smat3[1,1:17]),sep="")
+
+clusterType <- if(length(find.package("snow", quiet = TRUE))) "SOCK" else "PSOCK"
+clust1 <- try(makeCluster(getOption("cl.cores", 3), type = clusterType))
+clusterExport(clust1, "subset3")
+clusterEvalQ(clust1, library(lme4))
+
+modsel_selection<-pdredge(globmod_selection,subset=smat3,fixed=c("FFD_std","n_fl_std"),
+                          cluster=clust1)
+
+summary(model.avg(modsel_selection,subset=delta<2)) # Summary averaged model
+importance(modsel_selection) # Variable importance
+r.squaredGLMM(get.models(modsel_selection,subset=1)$"50180") #R square of best model
+
+# Anova (Table 4A) with model including variables that were significant in the averaged model
+Anova(lmer(n_intact_seeds_rel ~ FFD_std+n_fl_std+FFD_std:min_4+FFD_std:precipitation_3+FFD_std:precipitation_4+
+             (1|id),data = subset3,REML=FALSE,na.action="na.fail"))
+```
+
+```{r GLM FFD_mean}
+Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:FFD_mean+n_fl_std+(1|id),data = data_sel),type="II")
+#No influences of FFD_mean on selection on FFD
+```
+
+```{r GLM days_90_10}
+Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:days_90_10+n_fl_std+(1|id),data = data_sel),type="II")
+#No influences of days_90_10 on selection on FFD
+```
+
+## Fig. 6: Response of selection gradients to climate, position and duration of flowering season
+
+```{r Fig. 6 Response of selection gradients to spring temperature, position and duration of flowering season, fig.height=4, fig.width=14, echo=FALSE,warning=FALSE,message=FALSE}
+fig6<-grid.arrange(
+ggplot(mean_weather5,aes(x=min_4,y=selgrad_FFD))+ggtitle("A)")+
+  geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+  geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+
+  xlab("Minimum daily\ntemperature April")+ylab(NULL)+my_theme()+
+  theme(plot.title=element_text(hjust=-0.12,vjust=-2))+
+  theme(plot.margin = unit(c(0.07,0.05,0.07,0.05), "cm")),
+ggplot(mean_weather5,aes(x=precipitation_3,y=selgrad_FFD))+ggtitle("B)")+
+  geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+  geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+
+  xlab("Sum of precipitation\nMarch")+ylab(NULL)+
+  my_theme()+theme(axis.text.y=element_text(color="white"))+
+  theme(plot.title=element_text(hjust=-0.12,vjust=-2))+
+  theme(plot.margin = unit(c(0.07,0.05,0.07,0.05), "cm"))+
+  scale_x_continuous(limits=c(4.5,80)),
+ggplot(mean_weather5,aes(x=precipitation_4,y=selgrad_FFD))+ggtitle("C)")+
+  geom_point(size=1)+geom_smooth(method="lm",color="black",se=F)+
+  geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+
+  xlab("Sum of precipitation\nApril")+ylab(NULL)+
+  my_theme()+theme(axis.text.y=element_text(color="white"))+
+  theme(plot.title=element_text(hjust=-0.12,vjust=-2))+
+  theme(plot.margin = unit(c(0.07,0.05,0.07,0.05), "cm"))+
+  scale_x_continuous(limits=c(4.5,80)),
+ncol=3,left=textGrob("Selection gradient for\nfirst flowering date",just="center",hjust=0.39,
+                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig6.tiff",
+       plot=fig6,device="tiff",width=28,height=9,units="cm",dpi=600)
+```
+
+## Fig. 6 alternative
+
+```{r Fig. 6 alternative, fig.height=4, fig.width=14, echo=FALSE,warning=FALSE}
+subset4<-data_sel[c(3,44:46,86:88,158:160,170:172,182:184,189,193:196)]
+
+modsel_sig<-lmer(n_intact_seeds_rel ~ FFD_std+n_fl_std+FFD_std:min_4+FFD_std:precipitation_3+
+                   FFD_std:precipitation_4+(1|id),data = subset4,REML=FALSE,na.action="na.fail")
+
+interaction1<-data.frame(effect(term="FFD_std:min_4",mod=modsel_sig,
+                       xlevels=list(FFD_std=seq(-3.9,4.2,0.1),
+                                    min_4=seq(-0.1,3.8,0.1))))
+interaction1$fit_mod<-with(interaction1,ifelse(fit<0,0,fit))
+
+interaction2<-data.frame(effect(term="FFD_std:precipitation_3",mod=modsel_sig,
+                       xlevels=list(FFD_std=seq(-3.9,4.2,0.1),
+                                    precipitation_3=seq(4.8,78.2,1))))
+interaction2$fit_mod<-with(interaction2,ifelse(fit<0,0,fit))
+
+interaction3<-data.frame(effect(term="FFD_std:precipitation_4",mod=modsel_sig,
+                       xlevels=list(FFD_std=seq(-3.9,4.2,0.1),
+                                    precipitation_4=seq(3.7,79.8,2))))
+interaction3$fit_mod<-with(interaction3,ifelse(fit<0,0,fit))
+
+myPalette <- colorRampPalette(brewer.pal(11, "YlOrRd"))
+p1<-ggplot(interaction1, aes(FFD_std,fit_mod, group = as.factor(min_4)))+
+  geom_smooth(method=lm,se=F,size=0.5,aes(FFD_std,fit_mod,color=min_4))+
+  xlab("Standardized first flowering date")+ylab(NULL)+ggtitle("A)")+
+  my_theme()+scale_colour_gradientn(colours = myPalette(100))+
+  theme(legend.position="top")+labs(colour="Minimum daily\ntemperature April")+
+  theme(plot.margin = unit(c(0.1,0.3,0.1,0.3), "cm"))+
+  theme(plot.title=element_text(hjust=-0.10,vjust=-16))+
+  scale_y_continuous(limit=c(0,3.2))
+myPalette <- colorRampPalette(brewer.pal(11, "Blues"))
+p2<-ggplot(interaction2, aes(FFD_std,fit_mod, group = as.factor(precipitation_3)))+
+  geom_smooth(method=lm,se=F,size=0.5,aes(FFD_std,fit_mod,color=precipitation_3))+
+  xlab("Standardized first flowering date")+ylab(NULL)+ggtitle("B)")+
+  my_theme()+scale_colour_gradientn(colours = myPalette(100))+
+  theme(legend.position="top")+labs(colour="Sum of\nprecipitation March")+
+  theme(axis.text.y=element_text(color="white"))+
+  theme(plot.margin = unit(c(0.1,0.3,0.1,0.3), "cm"))+
+  theme(plot.title=element_text(hjust=-0.10,vjust=-16))+
+  scale_y_continuous(limit=c(0,3.2))
+p3<-ggplot(interaction3, aes(FFD_std,fit_mod, group = as.factor(precipitation_4)))+
+  geom_smooth(method=lm,se=F,size=0.5,aes(FFD_std,fit_mod,color=precipitation_4))+
+  xlab("Standardized first flowering date")+ylab(NULL)+ggtitle("C)")+
+  my_theme()+scale_colour_gradientn(colours = myPalette(100))+
+  theme(legend.position="top")+labs(colour="Sum of\nprecipitation April")+
+  theme(axis.text.y=element_text(color="white"))+
+  theme(plot.margin = unit(c(0.1,0.3,0.1,0.3), "cm"))+
+  theme(plot.title=element_text(hjust=-0.10,vjust=-16))+
+  scale_y_continuous(limit=c(0,3.2))
+
+fig6alt<-grid.arrange(p1,p2,p3,ncol=3,
+                      left=textGrob("Relative number of intact seeds",
+                                    just="center",hjust=0.63,
+                                    gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
+
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig6alt.tiff",
+       plot=fig6alt,device="tiff",width=28,height=11,units="cm",dpi=600)
+```
+
+
+
+
