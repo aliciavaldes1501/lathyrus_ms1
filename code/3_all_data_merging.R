@@ -179,14 +179,14 @@ with(alldata,hist(cum_n_fl))
 with(alldata,hist(log(cum_n_fl)))
 
 model_vol1<-lm(log(cum_n_fl)~log(shoot_vol),subset(alldata,data==1&shoot_vol>0&!is.na(cum_n_fl)))
-summary(model_vol1) #R2=0.3427 
+summary(model_vol1) #R2=0.3427 (0.3434 in a later run of this code!)
 plot(model_vol1)
 with(subset(alldata,data==1&shoot_vol>0),plot(log(cum_n_fl)~log(shoot_vol)))
 abline(model_vol1)
 
 model_vol2<-glm.nb(cum_n_fl~shoot_vol,subset(alldata,data==1&shoot_vol>0&!is.na(cum_n_fl)))
 summary(model_vol2)
-NagelkerkeR2(model_vol2) #R20.5709834 --> better, use
+NagelkerkeR2(model_vol2) #R2=0.5709834 --> better, use (0.5714467 in a later run of this code!)
 plot(model_vol2)
 
 ggplot(subset(alldata,data==1&shoot_vol>0),aes(x=shoot_vol,y=cum_n_fl))+geom_point()+geom_smooth(method="lm")
