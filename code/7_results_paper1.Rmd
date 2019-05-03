@@ -77,6 +77,7 @@ library(reshape)
 library(pander)
 library(moments)
 library(papeR)
+library(MCMCglmm)
 ```
 
 ```{r Define ggplot themes, include=FALSE}
@@ -419,7 +420,7 @@ pander(head(weather), split.table = 100, style = 'rmarkdown')
 ## Calculate julian date as day with respect to vernal equinox
 
 ```{r Calculate day with respect to vernal equinox}
-weather_study<-merge(weather,unique(alldata[c(1,6)])) 
+weather_study<-merge(weather,unique(alldata[c(1,8)])) 
 #Keeps only data from 1987-1996 and 2006-2017
 #Add column with date of vernal equinox
 weather_study$vernal_time<-as.POSIXct(weather_study$vernal,format="%Y-%m-%d %H:%M:%S")
@@ -1142,7 +1143,7 @@ with(data_sel,summary(lm(n_intact_seeds~year))) #* Linear model, year=factor, Ad
 r.squaredGLMM(lmer(n_intact_seeds~year+(1|id),data_sel))[,1] # with id as a random factor, R2 fixed = 0.18
 ```
 
-### Selection
+### Selection - Old approach, not used in paper
 
 ```{r prop var selection expl by year}
 # Indirect selection
@@ -1483,7 +1484,19 @@ summary(lm(date_90~scale(mean_4)+scale(mean_5)+
              as.integer(as.character(year)),data=mean_weather4))
 ```
 
-### Fig. 3: Response of position to climate
+## Duration (Table 1C)
+
+```{r days_90_10~temp}
+summary(lm(days_90_10~scale(mean_4)+scale(mean_5)+
+             scale(precipitation_3)+scale(precipitation_4),data=mean_weather4))
+
+## Including year  (Table S2)
+summary(lm(days_90_10~scale(mean_4)+scale(mean_5)+
+             scale(precipitation_3)+scale(precipitation_4)+
+             as.integer(as.character(year)),data=mean_weather4))
+```
+
+### Fig. 3: Response of position and duration to climate
 
 ```{r Fig. 3 Response of position to spring temperature, echo=FALSE, fig.height=4, fig.width=10,message=FALSE,warning=FALSE}
 fig3<-grid.arrange(
@@ -1509,40 +1522,19 @@ fig3<-grid.arrange(
     scale_y_continuous(limits=c(40,80))+theme(axis.text.y=element_text(color="white"))+
     theme(plot.title=element_text(hjust=-0.13,vjust=1))+
     theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm")),
-ncol=2,left=textGrob("Day from vernal equinox",
-                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90,hjust=0.46))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig3.tiff",
-       plot=fig3,device="tiff",width=19,height=9,units="cm",dpi=600)
-```
-
-## Duration (Table 1C)
-
-```{r days_90_10~temp}
-summary(lm(days_90_10~scale(mean_4)+scale(mean_5)+
-             scale(precipitation_3)+scale(precipitation_4),data=mean_weather4))
-
-## Including year  (Table S2)
-summary(lm(days_90_10~scale(mean_4)+scale(mean_5)+
-             scale(precipitation_3)+scale(precipitation_4)+
-             as.integer(as.character(year)),data=mean_weather4))
-```
-
-### Fig. 4: Response of duration to climate
-
-```{r Fig. 4 Response of duration to spring temperature, echo=FALSE, fig.height=4, fig.width=5,message=FALSE,warning=FALSE}
-fig4<-ggplot(mean_weather4)+
+  ggplot(mean_weather4)+ggtitle("C)")+
     geom_point(aes(x=mean_4,y=days_90_10),shape=19)+
     geom_smooth(aes(x=mean_4,y=days_90_10),method="lm",color="black",se=F)+
     xlab("Mean daily temperature April")+ylab("Duration of flowering season")+my_theme()+
-    theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm"))
-fig4
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig4.tiff",
-       plot=fig4,device="tiff",width=9,height=8,units="cm",dpi=600)
+    theme(plot.title=element_text(hjust=-0.13,vjust=1))+
+    theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm")),
+ncol=3,left=textGrob("Day from vernal equinox",
+                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90,hjust=0.46))
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig3.tiff",
+       plot=fig3,device="tiff",width=28,height=9,units="cm",dpi=600)
 ```
 
-# Results 3: Response of fitness to climate, mean position and duration of flowering
-
-## Climate (Table 2A)
+# Results 3: Response of fitness to climate
 
 ```{r Fitness~temp 1}
 # Variables to use
@@ -1561,32 +1553,17 @@ clust1 <- try(makeCluster(getOption("cl.cores", 3), type = clusterType))
 clusterExport(clust1, "subset2")
 clusterEvalQ(clust1, library(lme4))
 modsel_fitness<-pdredge(globmod_fitness,subset=smat2,fixed="n_fl",cluster=clust1)
-
 summary(model.avg(modsel_fitness,subset=delta<2)) # Summary averaged model
 importance(modsel_fitness) # Variable importance
 r.squaredGLMM(get.models(modsel_fitness,subset=1)$"1794") #R square of best model
 ```
 
-## Position (Table 2B)
-
-```{r Fitness~position 1}
-summary(lmer(n_intact_seeds~FFD_mean+n_fl+(1|id),data=data_sel)) #NS
-r.squaredGLMM(lmer(n_intact_seeds~FFD_mean+n_fl+(1|id),data=data_sel)) #NS
-```
-
-## Duration (Table 2C)
-
-```{r Fitness~duration 1}
-summary(lmer(n_intact_seeds~days_90_10+n_fl+(1|id),data=data_sel)) #*
-r.squaredGLMM(lmer(n_intact_seeds~days_90_10+n_fl+(1|id),data=data_sel)) #*
-```
-
-## Fig. 5: Response of fitness to climate, mean position and duration of flowering
+## Fig. S5: Response of fitness to climate
 
 Graphs of the effect of variables taking into account that number of flowers is included in the model
 
-```{r Fig 5, echo=FALSE, fig.height=4, fig.width=19}
-#Using a model with significant variables in model averaging (effect1-3)
+```{r Fig S5, echo=FALSE, fig.height=4, fig.width=19}
+#Using a model with significant variables in model averaging
 effect1<-data.frame(effect(term="max_4",mod=lmer(n_intact_seeds~
          max_4+min_5+precipitation_3+precipitation_4+n_fl+(1|id),
          data=data_sel,REML=FALSE,na.action="na.fail"),
@@ -1602,11 +1579,8 @@ effect4<-data.frame(effect(term="precipitation_4",mod=lmer(n_intact_seeds~
          max_4+min_5+precipitation_3+precipitation_4+
          n_fl+(1|id),data=data_sel,REML=FALSE,na.action="na.fail"),
          xlevels=list(precipitation_4=seq(3.7,79.8,1))))
-effect5<-data.frame(effect(term="days_90_10", 
-                           mod=lmer(n_intact_seeds~days_90_10+n_fl+(1|id),data=data_sel),
-                           xlevels=list(days_90_10=seq(5,21,1))))
 
-fig5<-grid.arrange(
+figS5<-grid.arrange(
   ggplot(effect1, aes(max_4,fit))+ggtitle("A)")+
     geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5,fill="grey")+
     geom_smooth(method="lm",se=T,size=1,color="black",aes(max_4,fit))+
@@ -1638,18 +1612,10 @@ fig5<-grid.arrange(
     theme(plot.title=element_text(hjust=-0.12,vjust=-2))+
     scale_y_continuous(limits=c(1,11),breaks=c(2,4,6,8,10))+
     theme(axis.text.y=element_text(color="white")),
-   ggplot(effect5, aes(days_90_10,fit))+ggtitle("E)")+
-    geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.5,fill="grey")+
-    geom_smooth(method="lm",se=T,size=1,color="black",aes(days_90_10,fit))+
-    xlab("Duration of flowering season")+ylab(NULL)+my_theme()+
-    theme(plot.margin = unit(c(0.07,0.07,0.07,0.07), "cm"))+
-    theme(plot.title=element_text(hjust=-0.12,vjust=-2))+
-    scale_y_continuous(limits=c(1,11),breaks=c(2,4,6,8,10))+
-    theme(axis.text.y=element_text(color="white")),
-  ncol=5,left=textGrob("Number of intact seeds",just="center",hjust=0.48,
+  ncol=4,left=textGrob("Number of intact seeds",just="center",hjust=0.48,
                        gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig5.tiff",
-       plot=fig5,device="tiff",width=43,height=9,units="cm",dpi=600)
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS5.tiff",
+       plot=figS5,device="tiff",width=35,height=9,units="cm",dpi=600)
 ```
 
 # Results 4: Differences in selection among years
@@ -1669,13 +1635,13 @@ Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:year+n_fl_std+(1|id),data = data
 ```
 
 # Results 5: Are differences in selection among years related to climatic conditions?
-Response of selection to climate, position and duration of flowering season.
+Response of selection to climate.
 
-## Table 4
+## Table 2A
 
-## Total selection 
+### Total selection 
 
-```{r GLM climate total}
+```{r GLM total}
 # Variables to use
 subset3<-data_sel[c(3,44:45,158:160,170:172,182:184,194:196)]
 subset3[,c(4:15)]<-scale(subset3[,c(4:15)])
@@ -1709,19 +1675,9 @@ Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:min_4+FFD_std:precipitation_3+FF
              (1|id),data = subset3,REML=FALSE,na.action="na.fail"))
 ```
 
-```{r GLM FFD_mean total}
-Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:FFD_mean+(1|id),data = data_sel),type="II")
-#No influences of FFD_mean on selection on FFD
-```
+### Direct selection 
 
-```{r GLM days_90_10 total}
-Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:days_90_10+(1|id),data = data_sel),type="II")
-#No influences of days_90_10 on selection on FFD
-```
-
-## Direct selection 
-
-```{r GLM climate direct}
+```{r GLM direct}
 # Variables to use
 subset4<-data_sel[c(3,44:46,158:160,170:172,182:184,194:196)]
 subset4[,c(5:16)]<-scale(subset4[,c(5:16)])
@@ -1755,19 +1711,9 @@ Anova(lmer(n_intact_seeds_rel ~ FFD_std+n_fl_std+FFD_std:min_4+FFD_std:precipita
              (1|id),data = subset4,REML=FALSE,na.action="na.fail"))
 ```
 
-```{r GLM FFD_mean direct}
-Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:FFD_mean+n_fl_std+(1|id),data = data_sel),type="II")
-#No influences of FFD_mean on selection on FFD
-```
+## Fig. 4: Response of selection gradients to climate, position and duration of flowering season
 
-```{r GLM days_90_10 direct}
-Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:days_90_10+n_fl_std+(1|id),data = data_sel),type="II")
-#No influences of days_90_10 on selection on FFD
-```
-
-## Fig. 6: Response of selection gradients to climate, position and duration of flowering season
-
-```{r Fig. 6 Response of selection gradients to spring temperature, position and duration of flowering season, fig.height=5, fig.width=10, echo=FALSE,warning=FALSE}
+```{r Fig. 4 Response of selection gradients to spring temperature, position and duration of flowering season, fig.height=5, fig.width=10, echo=FALSE,warning=FALSE}
 subset4<-data_sel[c(3,44:46,158:160,170:172,182:184,194:196)]
 modsel_sig<-lmer(n_intact_seeds_rel ~ FFD_std+n_fl_std+FFD_std:min_4+FFD_std:precipitation_3+
                    FFD_std:precipitation_4+(1|id),
@@ -1803,10 +1749,149 @@ p2<-ggplot(interaction2, aes(FFD_std,fit_mod, group = as.factor(precipitation_3)
   theme(plot.title=element_text(hjust=-0.10,vjust=-16))+
   scale_y_continuous(limit=c(0,3.2))
 
-fig6<-grid.arrange(p1,p2,ncol=2,
+fig4<-grid.arrange(p1,p2,ncol=2,
                       left=textGrob("Relative number of intact seeds",
                                     just="center",hjust=0.63,
                                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig6.tiff",
-       plot=fig6,device="tiff",width=19,height=11,units="cm",dpi=600)
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig4.tiff",
+       plot=fig4,device="tiff",width=19,height=11,units="cm",dpi=600)
 ```
+
+## Proportion of among-year variation in selection explained by climatic factors
+
+New approach, used in paper (as in Hunter et al. 2018, code suggested by M. Morrissey)
+
+### Total selection
+
+```{r prop among-year variation in total selection explained by climatic factors}
+data_seldiff<-subset(seldiffs_FFD,term=="FFD_std")[c(1,3:4)]
+names(data_seldiff)<-c("year","seldiff","SE_seldiff")
+data_seldiff<-merge(data_seldiff,unique(data_sel[c(1,183,194:195)]))
+
+myprior <- list(R = list(V=1, nu=0.002))
+model_seldiff<-MCMCglmm(seldiff~min_4+precipitation_3+precipitation_4,
+                        mev=data_seldiff$SE_seldiff^2,data=data_seldiff,family="gaussian",
+                        nitt=500000,burnin=10000,thin=10,prior=myprior,verbose=F)
+summary(model_seldiff)
+head(model_seldiff$Sol)
+head(model_seldiff$VCV)
+
+nMCMC_seldiff<-dim(model_seldiff$Sol)[1] # Sample size
+
+# To contain posterior distribution of the variance in seldiffs associated with the environment
+post.Var_seldiff<-array(dim=nMCMC_seldiff)
+
+# The posterior samples of the partial regression coefficients of seldiffs on the predictor
+# variables relate to the variance in seldiffs associated with the multivariate environment
+# according to: V(Y) = T(B) %*% V(X) %*% B 
+# (standard expression for a variance of a linear transformation)
+# V(Y) = variance of selection differentials arising from environmental variation
+# V(X) = covariance matrix of the environmental variable
+# B = linear transformation of X onto Y (partial regression coefficients)
+
+# Apply this transformation to each posterior sample to generate a posterior distribution of 
+# the variance in seldiffs associated with environmental variables
+# This is the numerator of equation 12 in Hunter et al. 2018, for calculating
+# the proportion of the total variation in selection attributed to the environmental 
+# component of the model. The denominator is this quantity plus the residual variance.
+
+# Calculate the variance, over all posterior samples
+Sigma_seldiff<-var(as.matrix(model_seldiff$X[,2:4])) # Covariance matrix of environmental vars
+for(i in 1:nMCMC_seldiff){
+  post.Var_seldiff[i]<- t(model_seldiff$Sol[i,2:4]) %*% Sigma_seldiff %*%model_seldiff$Sol[i,2:4] 
+  # Variance of seldiffs arising from environmental variation
+}
+
+# Two flavours of the estimate of the variance associated with the climate variables
+# (Numerator of equation 12)
+mean(post.Var_seldiff)
+posterior.mode(as.mcmc(post.Var_seldiff))
+
+# 95% credible interval of the variance
+HPDinterval(as.mcmc(post.Var_seldiff))
+
+# Visualise
+par(mfrow=c(1,2))
+plot(density(post.Var_seldiff))
+
+# Two flavours of the estimate of the proportion of variance associated with the climate variables
+# (Equation 12 in paper)
+mean(post.Var_seldiff/(post.Var_seldiff+model_seldiff$VCV[,2])) # 0.6964514
+posterior.mode(as.mcmc(post.Var_seldiff/(post.Var_seldiff+model_seldiff$VCV[,2]))) # 0.8768223
+
+# 95% credible interval of the variance
+HPDinterval(as.mcmc(post.Var_seldiff/(post.Var_seldiff+model_seldiff$VCV[,2])))
+
+# visualise
+plot(density(post.Var_seldiff/(post.Var_seldiff+model_seldiff$VCV[,2])))
+```
+
+### Direct selection
+
+```{r prop among-year variation in direct selection explained by climatic factors}
+data_selgrad<-subset(selgrads_FFD,term=="FFD_std")[c(1,3:4)]
+names(data_selgrad)<-c("year","selgrad","SE_selgrad")
+data_selgrad<-merge(data_selgrad,unique(data_sel[c(1,183,194:195)]))
+
+myprior <- list(R = list(V=1, nu=0.002))
+model_selgrad<-MCMCglmm(selgrad~min_4+precipitation_3+precipitation_4,
+                        mev=data_selgrad$SE_selgrad^2,data=data_selgrad,family="gaussian",
+                        nitt=500000,burnin=10000,thin=10,prior=myprior,verbose=F)
+summary(model_selgrad)
+head(model_selgrad$Sol)
+head(model_selgrad$VCV)
+
+nMCMC_selgrad<-dim(model_selgrad$Sol)[1] # Sample size
+
+# To contain posterior distribution of the variance in selgrads associated with the environment
+post.Var_selgrad<-array(dim=nMCMC_selgrad)
+
+# The posterior samples of the partial regression coefficients of selgrads on the predictor
+# variables relate to the variance in selgrads associated with the multivariate environment
+# according to: V(Y) = T(B) %*% V(X) %*% B 
+# (standard expression for a variance of a linear transformation)
+# V(Y) = variance of selection graderentials arising from environmental variation
+# V(X) = covariance matrix of the environmental variable
+# B = linear transformation of X onto Y (partial regression coefficients)
+
+# Apply this transformation to each posterior sample to generate a posterior distribution of 
+# the variance in selgrads associated with environmental variables
+# This is the numerator of equation 12 in Hunter et al. 2018, for calculating
+# the proportion of the total variation in selection attributed to the environmental 
+# component of the model. The denominator is this quantity plus the residual variance.
+
+# Calculate the variance, over all posterior samples
+Sigma_selgrad<-var(as.matrix(model_selgrad$X[,2:4])) # Covariance matrix of environmental vars
+for(i in 1:nMCMC_selgrad){
+  post.Var_selgrad[i]<- t(model_selgrad$Sol[i,2:4]) %*% Sigma_selgrad %*%model_selgrad$Sol[i,2:4] 
+  # Variance of selgrads arising from environmental variation
+}
+
+# Two flavours of the estimate of the variance associated with the climate variables
+# (Numerator of equation 12)
+mean(post.Var_selgrad)
+posterior.mode(as.mcmc(post.Var_selgrad))
+
+# 95% credible interval of the variance
+HPDinterval(as.mcmc(post.Var_selgrad))
+
+# Visualise
+par(mfrow=c(1,2))
+plot(density(post.Var_selgrad))
+
+# Two flavours of the estimate of the proportion of variance associated with the climate variables
+# (Equation 12 in paper)
+mean(post.Var_selgrad/(post.Var_selgrad+model_selgrad$VCV[,2])) # 0.6756869
+posterior.mode(as.mcmc(post.Var_selgrad/(post.Var_selgrad+model_selgrad$VCV[,2]))) # 0.8413189
+
+# 95% credible interval of the variance
+HPDinterval(as.mcmc(post.Var_selgrad/(post.Var_selgrad+model_selgrad$VCV[,2])))
+
+# visualise
+plot(density(post.Var_selgrad/(post.Var_selgrad+model_selgrad$VCV[,2])))
+```
+
+Psterior mean vs posterior mode: This is something that Bayesians will argue about, with strong feelings and no real solution.  I don’t think these are differences that will massively influence your overall interpretation.  The posterior mode is most directly analogous to the maximum likelihood estimate.  In that sense it ought to be preferable.  However, the mean is used more often, I think mostly for practical reasons (there is typically less run-to-run variation in the value of the posterior mean than mode to to MCMC error).  Sorry that is not more helpful.
+
+If you plot the posterior distributions (i.e. as a histogram or using the density() function) of your estimates of the proportions of variation explained by each variable individually, you’ll find that they are very skewed.  The values with the most posterior support are very small.  However, the distributions will indicate very high uncertainty, with quite large values of the proportion explained being compatible with the available data, such that the mean of the posterior distribution is higher.  Such are the frustrations with tackling hard and important questions that are extremely challenging analytically!
+

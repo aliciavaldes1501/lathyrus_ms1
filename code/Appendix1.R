@@ -8,6 +8,10 @@ nrow(subset(temperature_wide,is.na(min_O)|is.na(min_S)))
 nrow(subset(temperature_wide,is.na(mean_O)|is.na(mean_S)))
 nrow(subset(temperature_wide,is.na(max_O)|is.na(max_S)))
 
+nrow(subset(subset(temperature_wide,is.na(min_O)|is.na(min_S)),month==3|month==4|month==5))
+nrow(subset(subset(temperature_wide,is.na(mean_O)|is.na(mean_S)),month==3|month==4|month==5))
+nrow(subset(subset(temperature_wide,is.na(max_O)|is.na(max_S)),month==3|month==4|month==5))
+
 
 unique(as.data.frame(temperature_wide%>%
                        group_by(year, month)%>%
