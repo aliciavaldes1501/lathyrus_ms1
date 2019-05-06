@@ -1895,3 +1895,10 @@ Psterior mean vs posterior mode: This is something that Bayesians will argue abo
 
 If you plot the posterior distributions (i.e. as a histogram or using the density() function) of your estimates of the proportions of variation explained by each variable individually, you’ll find that they are very skewed.  The values with the most posterior support are very small.  However, the distributions will indicate very high uncertainty, with quite large values of the proportion explained being compatible with the available data, such that the mean of the posterior distribution is higher.  Such are the frustrations with tackling hard and important questions that are extremely challenging analytically!
 
+# Write table for further work
+
+```{r write table with selected data (2411 flowering events) for further work}
+write.table(data_sel,
+             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_sel.csv",
+             sep="\t",dec=",",col.names=T,row.names=F)
+```
