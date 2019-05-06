@@ -13,7 +13,7 @@ ggplot(data_imput, aes(x = grazing, y = as.factor(year))) + geom_density_ridges(
   theme(axis.text = element_text(size=20), axis.title = element_text(size=20))
 
 
-data_8796<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/data_19871996_FFD.txt",
+data_8796<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_19871996_FFD.txt",
                        header=T,sep="\t",dec=",")
 head(data_8796)
 str(data_8796)

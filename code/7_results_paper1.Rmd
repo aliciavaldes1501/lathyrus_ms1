@@ -14,19 +14,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r Read data created with previous scripts, include=FALSE}
 alldata<-read.csv(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata.csv",
+  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",
                        header=T,sep="\t",dec=".") #Read field data
 temperature<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/temperature.csv",
+  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/temperature.csv",
                         header=T,sep="\t",dec=".") 
 precipitation<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/precipitation.csv",
+  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation.csv",
                           header=T,sep="\t",dec=".")
 precipitation_extra<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/precipitation_extra.csv",
+  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation_extra.csv",
                           header=T,sep="\t",dec=".")
 dates<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/dates.csv",
+  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/dates.csv",
                         header=T,sep="\t",dec=".") 
 temperature$date<-as.Date(as.character(temperature$date))
 precipitation$date<-as.Date(as.character(precipitation$date))
@@ -393,10 +393,10 @@ nrow(subset(weather,is.na(precipitation)))
 Bases considered: 3/5/7/10 ºC
 
 GDD:  
-![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/code/GDD.png)  
+![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDD.png)  
 
 GDH:  
-![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/code/GDH.png)  
+![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDH.png)  
 ```{r Calculation of GDD and GDH}
 weather$GDD3<-ifelse(with(weather,((max+min)/2)-3)<0,0,with(weather,((max+min)/2)-3))
 weather$GDD5<-ifelse(with(weather,((max+min)/2)-5)<0,0,with(weather,((max+min)/2)-5))
@@ -541,10 +541,10 @@ head(subset(alldata_weather,is.na(mean)&!is.na(FFD)))
 
 #Substitute by hand in OpenOffice Calc NA values in weather columns of alldata_weather by values in #tomerge, matching by closest FFD_r value
 write.table(alldata_weather,
-             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_weather.csv",
+             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 write.table(tomerge,
-             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/tomerge.csv",
+             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 ```
 
@@ -552,7 +552,7 @@ Load new data with some missing values for weather manually substituted in OpenO
 (merging by date of FFD did not work in cases where FFD was imputed, because that FFD did not correspond exactly to a "real" date - I merged it manually with the closest value)
 
 ```{r Load new data with some missing values for weather manually substituted in OpenOffice Calc}
-alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=".")
+alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=".")
 nrow(subset(alldata_weather_subs,is.na(mean)&!is.na(FFD))) #No rows with missing weather data
 nrow(subset(alldata_weather_subs,n_fr>cum_n_fl)) #No cases where n_fruits>n_flowers
 ```
@@ -891,7 +891,7 @@ ggplot(subset(seldiffs,term=="I(FFD_std^2)"|term=="I(n_fl_std^2)"), aes(x=year, 
     xlab("Year")+ylab("Quadratic selection differential")+ggtitle("B)")+
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme(),
 ncol=1)
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs1.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs1.tiff",
        plot=plot_seldiffs1,device="tiff",width=25,height=25,units="cm",dpi=600)
 
 ```
@@ -917,7 +917,7 @@ ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel,color=year))+
   theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+my_theme()+
   ggtitle("B)")+theme(plot.title = element_text(hjust =-0.15,color="white")),
 ncol=2,nrow=2,position="right")
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs2.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs2.tiff",
        plot=plot_seldiffs2,device="tiff",width=25,height=20,units="cm",dpi=600)
 ```
 
@@ -928,7 +928,7 @@ plot_seldiffs3<-ggplot(data_sel,aes(x=FFD_std,y=n_intact_seeds_rel))+facet_wrap(
   xlab("Standardized first flowering date")+ylab("Relative number of intact seeds")+
   my_theme()
 plot_seldiffs3
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs3.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs3.tiff",
        plot=plot_seldiffs3,device="tiff",width=14,height=22,units="cm",dpi=600)
 ```
 
@@ -939,7 +939,7 @@ plot_seldiffs4<-ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel))+facet_wrap
   xlab("Standardized number of flowers")+ylab("Relative number of intact seeds")+
   my_theme()
 plot_seldiffs4
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/seldiffs4.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs4.tiff",
        plot=plot_seldiffs4,device="tiff",width=14,height=22,units="cm",dpi=600)
 ```
 
@@ -991,7 +991,7 @@ plot_selgrads1<-ggplot(subset(selgrads_FFD,term=="FFD_std"), aes(x=year, y=estim
     xlab("Year")+ylab("Linear selection gradient for first flowering day")+
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme()
 plot_selgrads1
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/selgrads1.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/selgrads1.tiff",
        plot=plot_selgrads1,device="tiff",width=25,height=12,units="cm",dpi=600)
 #This will be part of Fig. 1?
 ```
@@ -1236,7 +1236,7 @@ ggplot(subset(selgrads_FFD,term=="FFD_std"),
     xlab("Year")+ylab("Selection gradient\nfor first flowering date")+
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+ggtitle("D)")+my_theme(),
 ncol=1)
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig1.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig1.tiff",
        plot=fig1,device="tiff",width=25,height=36,units="cm",dpi=400)
 ```
 
@@ -1273,7 +1273,7 @@ figS1<-grid.arrange(
   scale_x_continuous(breaks=seq(1961,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS1.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS1.tiff",
        plot=figS1,device="tiff",width=25,height=33,units="cm",dpi=400)
 ```
 
@@ -1310,7 +1310,7 @@ figS2<-grid.arrange(
   scale_x_continuous(breaks=seq(1961,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS2.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS2.tiff",
        plot=figS2,device="tiff",width=25,height=33,units="cm",dpi=400)
 ```
 
@@ -1347,7 +1347,7 @@ figS3<-grid.arrange(
   scale_x_continuous(breaks=seq(1961,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS3.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS3.tiff",
        plot=figS3,device="tiff",width=25,height=33,units="cm",dpi=400)
 ```
 
@@ -1381,7 +1381,7 @@ figS4<-grid.arrange(
   scale_x_continuous(breaks=seq(1945,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS4.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS4.tiff",
        plot=figS4,device="tiff",width=25,height=33,units="cm",dpi=400)
 ```
 
@@ -1448,7 +1448,7 @@ fig2<-grid.arrange(
     theme(plot.title=element_text(hjust=-0.13,vjust=2)),
   ncol=4,left=textGrob("First flowering date",just="center",hjust=0.42,
                      gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig2.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig2.tiff",
        plot=fig2,device="tiff",width=38,height=9,units="cm",dpi=600)
 ```
 
@@ -1530,7 +1530,7 @@ fig3<-grid.arrange(
     theme(plot.margin = unit(c(0.07,0.2,0.07,0.2), "cm")),
 ncol=3,left=textGrob("Day from vernal equinox",
                      gp=gpar(fontsize=16,fontfamily="serif"),rot = 90,hjust=0.46))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig3.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig3.tiff",
        plot=fig3,device="tiff",width=28,height=9,units="cm",dpi=600)
 ```
 
@@ -1614,7 +1614,7 @@ figS5<-grid.arrange(
     theme(axis.text.y=element_text(color="white")),
   ncol=4,left=textGrob("Number of intact seeds",just="center",hjust=0.48,
                        gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/figS5.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS5.tiff",
        plot=figS5,device="tiff",width=35,height=9,units="cm",dpi=600)
 ```
 
@@ -1753,7 +1753,7 @@ fig4<-grid.arrange(p1,p2,ncol=2,
                       left=textGrob("Relative number of intact seeds",
                                     just="center",hjust=0.63,
                                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/results/figures/fig4.tiff",
+ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig4.tiff",
        plot=fig4,device="tiff",width=19,height=11,units="cm",dpi=600)
 ```
 

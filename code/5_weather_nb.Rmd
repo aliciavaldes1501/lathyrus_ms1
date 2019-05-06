@@ -25,9 +25,9 @@ library(moments)
 library(papeR)
 
 panderOptions('table.continues', '')
-load(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/alldata.RData")
-temperature<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/temperature.csv",header=T,sep="\t",dec=".") 
-precipitation<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/precipitation.csv",header=T,sep="\t",dec=",") 
+load(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/alldata.RData")
+temperature<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/temperature.csv",header=T,sep="\t",dec=".") 
+precipitation<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation.csv",header=T,sep="\t",dec=",") 
 temperature<-subset(temperature,year<1997|year>2005)
 precipitation<-subset(precipitation,year<1997|year>2005)
 temperature$date<-as.Date(temperature$date)
@@ -124,10 +124,10 @@ weather$precipitation[is.na(weather$precipitation)&weather$year==1992&weather$mo
 Bases considered: 3/5/7/10 ºC
 
 GDD:  
-![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/code/GDD.png)  
+![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDD.png)  
 
 GDH:  
-![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/code/GDH.png)  
+![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDH.png)  
 ```{r Calculation of GDD and GDH}
 weather$GDD3<-ifelse(with(weather,((max+min)/2)-3)<0,0,with(weather,((max+min)/2)-3))
 weather$GDD5<-ifelse(with(weather,((max+min)/2)-5)<0,0,with(weather,((max+min)/2)-5))
@@ -633,15 +633,15 @@ head(tomerge)
 head(subset(alldata_weather,is.na(mean)&!is.na(FFD))[c(20:39,56)])
 
 #Substitute by hand in OpenOffice Calc NA values in weather columns of alldata_weather by values in tomerge, matching by closest FFD_r value
-write.table(alldata_weather,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_weather.csv",sep="\t",dec=",",col.names=T,row.names=F)
-write.table(tomerge,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/tomerge.csv",sep="\t",dec=",",col.names=T,row.names=F)
+write.table(alldata_weather,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather.csv",sep="\t",dec=",",col.names=T,row.names=F)
+write.table(tomerge,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",sep="\t",dec=",",col.names=T,row.names=F)
 ```
 
 Load new data with some missing values for weather manually substituted in OpenOffice Calc  
 (merging by date of FFD did not work in cases where FFD was imputed, because that FFD did not correspond exactly to a "real" date - I merged it manually with the closest value)
 
 ```{r Load new data with some missing values for weather manually substituted in OpenOffice Calc}
-alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=",") 
+alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=",") 
 nrow(subset(alldata_weather_subs,is.na(mean)&!is.na(FFD))) #No rows with missing weather data
 nrow(subset(alldata_weather_subs,n_fr>n_fl)) #4 cases where n_fruits>n_flowers --> fix again
 #Equal n_fl to n_fr
@@ -970,7 +970,7 @@ Interactions are never significant
 Test this within years instead of among years?
 
 ```{r Save image, include=FALSE}
-save.image(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/code/image1.RData")
+save.image(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/image1.RData")
 ```
 
 # SUMMARY

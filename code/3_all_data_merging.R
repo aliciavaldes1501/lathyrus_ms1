@@ -1,8 +1,8 @@
 library(dplyr)
 
 # #Matching of ids from 88 onwards to ruta+genet in 87
-# data87<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/edited/matching87-88/data87.csv",header=T,sep="\t",dec=",") 
-# data88<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/edited/matching87-88/data88.csv",header=T,sep="\t",dec=",") 
+# data87<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/edited/matching87-88/data87.csv",header=T,sep="\t",dec=",") 
+# data88<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/edited/matching87-88/data88.csv",header=T,sep="\t",dec=",") 
 # head(data87)
 # head(data88)
 # 
@@ -10,14 +10,14 @@ library(dplyr)
 # 
 # head(data8788)
 # 
-# write.table(data8788,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/edited/matching87-88/data8788.csv",sep="\t",dec=".",col.names=T)
+# write.table(data8788,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/edited/matching87-88/data8788.csv",sep="\t",dec=".",col.names=T)
 
 #OK, matched
 
 head(data_imput) #Data 2006-2017
 data_imput$id<-paste("new",data_imput$id,sep="_") #Add "new" to the ids
 
-data_8796<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/data_19871996.csv",header=T,sep="\t",dec=",") 
+data_8796<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_19871996.csv",header=T,sep="\t",dec=",") 
 head(data_8796)
 str(data_8796)
 data_8796$id<-paste("old",data_8796$id,sep="_") #Add "old" to the ids
@@ -234,8 +234,8 @@ alldata<-setdiff(alldata, subset(subset(alldata,status=="missFFD"),period=="old"
 alldata_ok<-subset(alldata,status=="ok")
 plot(alldata_ok$year)  
 
-write.table(alldata,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata.csv",sep="\t",dec=".",col.names=T)
-write.table(alldata_ok,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata_ok.csv",sep="\t",dec=".",col.names=T)
+write.table(alldata,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",sep="\t",dec=".",col.names=T)
+write.table(alldata_ok,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_ok.csv",sep="\t",dec=".",col.names=T)
 
 save(alldata, file="alldata.RData")
 

@@ -10,7 +10,7 @@ library(lattice)
 library(ggplot2)
 library(gridExtra)
 library(sciplot)
-alldata<-read.csv("C:/Users/User/Dropbox/SU/Projects/lathyrus/data/clean/alldata.csv",
+alldata<-read.csv("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",
                        header=T,sep="\t",dec=".") #Read data
 alldata$period<-with(alldata,ifelse(grepl("old", alldata$id), "old", "new"))
 alldata$year<-as.factor(alldata$year)
