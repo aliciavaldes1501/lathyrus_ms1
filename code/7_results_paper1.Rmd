@@ -892,7 +892,7 @@ ggplot(subset(seldiffs,term=="I(FFD_std^2)"|term=="I(n_fl_std^2)"), aes(x=year, 
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme(),
 ncol=1)
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs1.tiff",
-       plot=plot_seldiffs1,device="tiff",width=25,height=25,units="cm",dpi=600)
+       plot=plot_seldiffs1,device="tiff",width=25,height=25,units="cm",dpi=300,compression="lzw")
 
 ```
 
@@ -918,7 +918,7 @@ ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel,color=year))+
   ggtitle("B)")+theme(plot.title = element_text(hjust =-0.15,color="white")),
 ncol=2,nrow=2,position="right")
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs2.tiff",
-       plot=plot_seldiffs2,device="tiff",width=25,height=20,units="cm",dpi=600)
+       plot=plot_seldiffs2,device="tiff",width=25,height=20,units="cm",dpi=300,compression="lzw")
 ```
 
 ```{r Plots selection differentials 3, echo=FALSE, message=FALSE,fig.height=20, fig.width=12}
@@ -929,7 +929,7 @@ plot_seldiffs3<-ggplot(data_sel,aes(x=FFD_std,y=n_intact_seeds_rel))+facet_wrap(
   my_theme()
 plot_seldiffs3
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs3.tiff",
-       plot=plot_seldiffs3,device="tiff",width=14,height=22,units="cm",dpi=600)
+       plot=plot_seldiffs3,device="tiff",width=14,height=22,units="cm",dpi=300,compression="lzw")
 ```
 
 ```{r Plots selection differentials 4, echo=FALSE, message=FALSE,fig.height=20, fig.width=12}
@@ -940,7 +940,7 @@ plot_seldiffs4<-ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel))+facet_wrap
   my_theme()
 plot_seldiffs4
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs4.tiff",
-       plot=plot_seldiffs4,device="tiff",width=14,height=22,units="cm",dpi=600)
+       plot=plot_seldiffs4,device="tiff",width=14,height=22,units="cm",dpi=300,compression="lzw")
 ```
 
 # Selection gradients for each year
@@ -992,7 +992,7 @@ plot_selgrads1<-ggplot(subset(selgrads_FFD,term=="FFD_std"), aes(x=year, y=estim
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme()
 plot_selgrads1
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/selgrads1.tiff",
-       plot=plot_selgrads1,device="tiff",width=25,height=12,units="cm",dpi=600)
+       plot=plot_selgrads1,device="tiff",width=25,height=12,units="cm",dpi=300,compression="lzw")
 #This will be part of Fig. 1?
 ```
 
@@ -1237,7 +1237,7 @@ ggplot(subset(selgrads_FFD,term=="FFD_std"),
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+ggtitle("D)")+my_theme(),
 ncol=1)
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig1.tiff",
-       plot=fig1,device="tiff",width=25,height=36,units="cm",dpi=400)
+       plot=fig1,device="tiff",width=25,height=36,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Fig. S1 
@@ -1274,7 +1274,7 @@ figS1<-grid.arrange(
 ncol=1)
 
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS1.tiff",
-       plot=figS1,device="tiff",width=25,height=33,units="cm",dpi=400)
+       plot=figS1,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Fig. S2
@@ -1311,7 +1311,7 @@ figS2<-grid.arrange(
 ncol=1)
 
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS2.tiff",
-       plot=figS2,device="tiff",width=25,height=33,units="cm",dpi=400)
+       plot=figS2,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Fig. S3
@@ -1348,7 +1348,7 @@ figS3<-grid.arrange(
 ncol=1)
 
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS3.tiff",
-       plot=figS3,device="tiff",width=25,height=33,units="cm",dpi=400)
+       plot=figS3,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Fig. S4
@@ -1382,7 +1382,7 @@ figS4<-grid.arrange(
 ncol=1)
 
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS4.tiff",
-       plot=figS4,device="tiff",width=25,height=33,units="cm",dpi=400)
+       plot=figS4,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
 # Results 2: Response of FFD for each plant, mean position and duration of flowering to climate 
@@ -1449,7 +1449,7 @@ fig2<-grid.arrange(
   ncol=4,left=textGrob("First flowering date",just="center",hjust=0.42,
                      gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig2.tiff",
-       plot=fig2,device="tiff",width=38,height=9,units="cm",dpi=600)
+       plot=fig2,device="tiff",width=38,height=9,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Position (Table 1B)
@@ -1531,7 +1531,7 @@ fig3<-grid.arrange(
 ncol=3,left=textGrob("Day from vernal equinox",
                      gp=gpar(fontsize=16,fontfamily="serif"),rot = 90,hjust=0.46))
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig3.tiff",
-       plot=fig3,device="tiff",width=28,height=9,units="cm",dpi=600)
+       plot=fig3,device="tiff",width=28,height=9,units="cm",dpi=300,compression="lzw")
 ```
 
 # Results 3: Response of fitness to climate
@@ -1754,7 +1754,7 @@ fig4<-grid.arrange(p1,p2,ncol=2,
                                     just="center",hjust=0.63,
                                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig4.tiff",
-       plot=fig4,device="tiff",width=19,height=11,units="cm",dpi=600)
+       plot=fig4,device="tiff",width=19,height=11,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Proportion of among-year variation in selection explained by climatic factors
