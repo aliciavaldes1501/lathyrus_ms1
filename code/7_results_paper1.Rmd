@@ -449,6 +449,18 @@ mean_weather2<-gather(mean_weather1, variable, value,mean,min,max,precipitation,
                GDD3,GDD5,GDD7,GDD10,GDH3,GDH5,GDH7,GDH10) %>%
                unite(var, variable, month) %>% 
                spread(var, value) #Convert to wide format with monthly variables
+mean_weather_aprilmay<-plyr::join_all(list(
+    aggregate(mean~year, #Mean of mean daily temperature
+              data=subset(weather_study,month==4|month==5),FUN=mean), 
+    aggregate(min~year, #Mean of min daily temperature
+              data=subset(weather_study,month==4|month==5),FUN=mean), 
+    aggregate(max~year, #Mean of max daily temperature
+              data=subset(weather_study,month==4|month==5),FUN=mean)), 
+    by = NULL, type = "left", match="all")
+mean_weather_aprilmay<-gather(mean_weather_aprilmay,variable, value,mean,min,max)%>%
+               unite(var, variable) %>% 
+               spread(var, value)
+names(mean_weather_aprilmay)<-c("year","max_45","mean_45","min_45")
 pander(head(mean_weather1), split.table = 100, style = 'rmarkdown')
 ```
 
@@ -1901,4 +1913,8 @@ If you plot the posterior distributions (i.e. as a histogram or using the densit
 write.table(data_sel,
              file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_sel.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
+```
+
+```{r save data, include=FALSE}
+save(mean_weather_aprilmay, file="mean_weather_aprilmay.RData")
 ```
