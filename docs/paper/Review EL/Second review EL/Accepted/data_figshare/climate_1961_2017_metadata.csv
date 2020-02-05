@@ -1,0 +1,13 @@
+year,Year
+max_3,Mean maximum daily temperature for March
+max_4,Mean maximum daily temperature for April
+max_5,Mean maximum daily temperature for May
+mean_3,Mean daily mean temperature for March
+mean_4,Mean daily mean temperature for April
+mean_5,Mean daily mean temperature for May
+min_3,Mean minimum daily temperature for March
+min_4,Mean minimum daily temperature for April
+min_5,Mean minimum daily temperature for May
+precipitation_3,Monthly precipitation for March
+precipitation_4,Monthly precipitation for April
+precipitation_5,Monthly precipitation for May
