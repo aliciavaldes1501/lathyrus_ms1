@@ -9,7 +9,7 @@ editor_options:
 ---
 
 ```{r load image and packages, include=FALSE}
-load(file = "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/image1.RData")
+load(file = "C:/Users/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/image1.RData")
 library(dplyr)
 library(broom)
 library(knitr)

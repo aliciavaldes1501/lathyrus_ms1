@@ -17,7 +17,7 @@ library(dplyr)
 head(data_imput) #Data 2006-2017
 data_imput$id<-paste("new",data_imput$id,sep="_") #Add "new" to the ids
 
-data_8796<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_19871996.csv",header=T,sep="\t",dec=",") 
+data_8796<-read.table("C:/Users/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_19871996.csv",header=T,sep="\t",dec=",") 
 head(data_8796)
 str(data_8796)
 data_8796$id<-paste("old",data_8796$id,sep="_") #Add "old" to the ids
@@ -180,14 +180,14 @@ with(alldata,hist(log(cum_n_fl)))
 
 model_vol1<-lm(log(cum_n_fl)~log(shoot_vol),subset(alldata,data==1&shoot_vol>0&!is.na(cum_n_fl)))
 summary(model_vol1) #R2=0.3427 (0.3434 in a later run of this code!)
-plot(model_vol1)
+#plot(model_vol1)
 with(subset(alldata,data==1&shoot_vol>0),plot(log(cum_n_fl)~log(shoot_vol)))
 abline(model_vol1)
 
 model_vol2<-glm.nb(cum_n_fl~shoot_vol,subset(alldata,data==1&shoot_vol>0&!is.na(cum_n_fl)))
 summary(model_vol2)
 NagelkerkeR2(model_vol2) #R2=0.5709834 --> better, use (0.5714467 in a later run of this code!)
-plot(model_vol2)
+#plot(model_vol2)
 
 ggplot(subset(alldata,data==1&shoot_vol>0),aes(x=shoot_vol,y=cum_n_fl))+geom_point()+geom_smooth(method="lm")
 ggplot(subset(alldata,data==1&shoot_vol>0),aes(x=log(shoot_vol),y=log(cum_n_fl)))+geom_point()+geom_smooth(method="lm")
@@ -234,8 +234,8 @@ alldata<-setdiff(alldata, subset(subset(alldata,status=="missFFD"),period=="old"
 alldata_ok<-subset(alldata,status=="ok")
 plot(alldata_ok$year)  
 
-write.table(alldata,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",sep="\t",dec=".",col.names=T)
-write.table(alldata_ok,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_ok.csv",sep="\t",dec=".",col.names=T)
+write.table(alldata,file="C:/Users/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",sep="\t",dec=".",col.names=T)
+write.table(alldata_ok,file="C:/Users/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_ok.csv",sep="\t",dec=".",col.names=T)
 
 save(alldata, file="alldata.RData")
 

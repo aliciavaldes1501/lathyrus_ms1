@@ -193,7 +193,7 @@ precipitation<-precipitation[order(precipitation$date),]
 
 ## Complete temperature data
 
-```{r Complete temperature data,message=FALSE,warning=FALSE}
+```{r}
 temperature_wide<-gather(temperature[c(1:6,8,10)], variable, value,mean,min,max) %>%
   unite(var, variable, station) %>% 
   spread(var, value) #Convert to wide format with station variables
@@ -205,36 +205,42 @@ nrow(subset(temperature_wide,is.na(mean_O)|is.na(mean_S)))
 nrow(subset(temperature_wide,is.na(max_O)|is.na(max_S)))
 
 # Models mean_S vs mean_O for each month
-models_mean<-gather(
-  as.data.frame(temperature_wide %>% group_by(month) %>%
-                             do(models_mean=lm(mean_S ~ mean_O, data = .))%>%
-                             tidy(models_mean))[1:3],
-  variable,value,estimate)%>%
-  unite(var,variable,term)%>%
-  spread(var,value)
-names(models_mean)<-c("month","intercept","estimate")
+models_mean<-temperature_wide%>%
+  nest(data=-month)%>%
+  mutate(
+    fit=map(data, ~ lm(mean_S ~ mean_O, data = .x)),
+    tidied = map(fit, tidy)
+  ) %>% 
+  unnest(tidied)%>%
+  select(month,term,estimate)%>%
+  pivot_wider(names_from=term,values_from=estimate)%>%
+  dplyr::rename(intercept=`(Intercept)`,estimate=mean_O)
 models_mean
 
 # Models min_S vs mi_O for each month
-models_min<-gather(
-  as.data.frame(temperature_wide %>% group_by(month) %>%
-                             do(models_min=lm(min_S ~ min_O, data = .))%>%
-                             tidy(models_min))[1:3],
-  variable,value,estimate)%>%
-  unite(var,variable,term)%>%
-  spread(var,value)
-names(models_min)<-c("month","intercept","estimate")
+models_min<-temperature_wide%>%
+  nest(data=-month)%>%
+  mutate(
+    fit=map(data, ~ lm(min_S ~ min_O, data = .x)),
+    tidied = map(fit, tidy)
+  ) %>% 
+  unnest(tidied)%>%
+  select(month,term,estimate)%>%
+  pivot_wider(names_from=term,values_from=estimate)%>%
+  dplyr::rename(intercept=`(Intercept)`,estimate=min_O)
 models_min
 
 # Models max_S vs max_O for each month
-models_max<-gather(
-  as.data.frame(temperature_wide %>% group_by(month) %>%
-                             do(models_max=lm(max_S ~ max_O, data = .))%>%
-                             tidy(models_max))[1:3],
-  variable,value,estimate)%>%
-  unite(var,variable,term)%>%
-  spread(var,value)
-names(models_max)<-c("month","intercept","estimate")
+models_max<-temperature_wide%>%
+  nest(data=-month)%>%
+  mutate(
+    fit=map(data, ~ lm(max_S ~ max_O, data = .x)),
+    tidied = map(fit, tidy)
+  ) %>% 
+  unnest(tidied)%>%
+  select(month,term,estimate)%>%
+  pivot_wider(names_from=term,values_from=estimate)%>%
+  dplyr::rename(intercept=`(Intercept)`,estimate=max_O)
 models_max
 
 # See in which months each var is missing
@@ -244,7 +250,10 @@ unique(subset(temperature_wide,is.na(min_S))$month) # min_S
 unique(subset(temperature_wide,is.na(min_O))$month) # min_O 
 unique(subset(temperature_wide,is.na(max_S))$month) # max_S 
 unique(subset(temperature_wide,is.na(max_O))$month) # max_O 
+```
 
+
+```{r message=FALSE,warning=FALSE}
 # Replace missing values by imputed values
 
 # mean_S=estimate*mean_O+intercept
@@ -365,7 +374,7 @@ ggplot(data_summary(temperature_compl, varname="mean", groupnames=c("year", "mon
 ```{r Temperature: average mean, min and max for the two stations}
 temperature_av<-as.data.frame(temperature_compl %>% 
                          group_by(date,year,month,day) %>%
-                         summarize(mean=mean(mean),
+                         dplyr::summarize(mean=mean(mean),
                                    min=mean(min),
                                    max=mean(max)))
 kable(head(temperature_av))
@@ -399,24 +408,44 @@ GDD:
 GDH:  
 ![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDH.png)  
 ```{r Calculation of GDD and GDH}
-weather$GDD3<-ifelse(with(weather,((max+min)/2)-3)<0,0,with(weather,((max+min)/2)-3))
-weather$GDD5<-ifelse(with(weather,((max+min)/2)-5)<0,0,with(weather,((max+min)/2)-5))
-weather$GDD7<-ifelse(with(weather,((max+min)/2)-7)<0,0,with(weather,((max+min)/2)-7))
-weather$GDD10<-ifelse(with(weather,((max+min)/2)-10)<0,0,with(weather,((max+min)/2)-10))
-weather$GDH3<-ifelse(with(weather,max<=3),0,
-                     ifelse(with(weather,max>3&min>3),with(weather,24*(min-3)+12*(max-min)),
-                            with(weather,12*(max-3)^2/(max-min))))
-weather$GDH5<-ifelse(with(weather,max<=5),0,
-                     ifelse(with(weather,max>5&min>5),with(weather,24*(min-5)+12*(max-min)),
-                            with(weather,12*(max-5)^2/(max-min))))
-weather$GDH7<-ifelse(with(weather,max<=7),0,
-                     ifelse(with(weather,max>7&min>7),with(weather,24*(min-7)+12*(max-min)),
-                            with(weather,12*(max-7)^2/(max-min))))
-weather$GDH10<-ifelse(with(weather,max<=10),0,
-                     ifelse(with(weather,max>10&min>10),with(weather,24*(min-10)+12*(max-min)),
-                            with(weather,12*(max-10)^2/(max-min))))
+weather$GDD3<-ifelse(with(weather,((max+min)/2)-3)<0,0,
+                     with(weather,((max+min)/2)-3))
+weather$GDD5<-ifelse(with(weather,((max+min)/2)-5)<0,0,
+                     with(weather,((max+min)/2)-5))
+weather$GDD7<-ifelse(with(weather,((max+min)/2)-7)<0,0,
+                     with(weather,((max+min)/2)-7))
+weather$GDD10<-ifelse(with(weather,((max+min)/2)-10)<0,0,
+                      with(weather,((max+min)/2)-10))
+weather$GDH3<-ifelse(
+  with(weather,max<=3),0,
+  ifelse(with(weather,max>3&min>3),
+         with(weather,24*(min-3)+12*(max-min)),
+         with(weather,12*(max-3)^2/(max-min))))
+weather$GDH5<-ifelse(
+  with(weather,max<=5),0,
+  ifelse(with(weather,max>5&min>5),
+         with(weather,24*(min-5)+12*(max-min)),
+         with(weather,12*(max-5)^2/(max-min))))
+weather$GDH7<-ifelse(
+  with(weather,max<=7),0,
+  ifelse(with(weather,max>7&min>7),
+         with(weather,24*(min-7)+12*(max-min)),
+         with(weather,12*(max-7)^2/(max-min))))
+weather$GDH10<-ifelse(
+  with(weather,max<=10),0,
+  ifelse(with(weather,max>10&min>10),
+         with(weather,24*(min-10)+12*(max-min)),
+         with(weather,12*(max-10)^2/(max-min))))
 pander(head(weather), split.table = 100, style = 'rmarkdown')
 ```
+
+### Write table with weather for further use
+
+```{r}
+weather_GDD<-write_csv(weather,
+                       file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/weather_GDD.csv")
+```
+
 
 ## Calculate julian date as day with respect to vernal equinox
 
@@ -557,7 +586,7 @@ write.table(alldata_weather,
              file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 write.table(tomerge,
-             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
+             file="C:/User/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 ```
 
@@ -865,6 +894,8 @@ fl_pos_dur$days_90_10<-with(fl_pos_dur,date_90-date_10) # Another measure of dur
 head(fl_pos_dur)
 mean_weather4<-merge(mean_weather3,fl_pos_dur[c(1,3:4,9:11)])
 data_sel<-merge(data_sel,fl_pos_dur)
+write.table(mean_weather4,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/mean_weather.csv",
+            sep="\t",dec=".",col.names=T,row.names=F)
 ```
 
 # Selection differentials for each year

@@ -17,9 +17,9 @@ options(xtable.floating = FALSE)
 options(xtable.timestamp = "")
 options(xtable.comment = FALSE)
 
-data_imput<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_20062017_forimput.csv",
+data_imput<-read.table("C:/Users/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_20062017_forimput.csv",
                        header=T,sep="\t",dec=",") #Read all data
-bud_sizes<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/bud_sizes.csv",
+bud_sizes<-read.table("C:/Users/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/bud_sizes.csv",
                        header=T,sep="\t",dec=",") #Read data on bud sizes
 head(data_imput)
 str(data_imput)
