@@ -108,7 +108,7 @@ panderOptions('table.continues', '')
 
 # Temperature and precipitation data manipulation
 
-Temperature (daily mean, minimum and maximum) from two stations: Oxelösund and Södertalje  
+Temperature (daily mean, minimum and maximum) from two stations: Oxelösund and Södertalje\
 Precipitation from one station: Åda
 
 ```{r Temperature and precipitation data, echo=FALSE}
@@ -251,7 +251,6 @@ unique(subset(temperature_wide,is.na(min_O))$month) # min_O
 unique(subset(temperature_wide,is.na(max_S))$month) # max_S 
 unique(subset(temperature_wide,is.na(max_O))$month) # max_O 
 ```
-
 
 ```{r message=FALSE,warning=FALSE}
 # Replace missing values by imputed values
@@ -402,11 +401,12 @@ nrow(subset(weather,is.na(precipitation)))
 
 Bases considered: 3/5/7/10 ºC
 
-GDD:  
-![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDD.png)  
+GDD:\
+![GDD](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDD.png)
 
-GDH:  
-![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDH.png)  
+GDH:\
+![GDH](C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/code/GDH.png)
+
 ```{r Calculation of GDD and GDH}
 weather$GDD3<-ifelse(with(weather,((max+min)/2)-3)<0,0,
                      with(weather,((max+min)/2)-3))
@@ -446,7 +446,6 @@ weather_GDD<-write_csv(weather,
                        file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/weather_GDD.csv")
 ```
 
-
 ## Calculate julian date as day with respect to vernal equinox
 
 ```{r Calculate day with respect to vernal equinox}
@@ -459,7 +458,9 @@ weather_study$date_julian<-as.numeric(with(weather_study,as.POSIXct(date)-vernal
 ```
 
 ## Calculations weather by month
+
 Calculate monthly means of temperature and montly sums of precipitation, GDD and GDH
+
 ```{r Montly data, warning=FALSE,message=FALSE}
 mean_weather1<-plyr::join_all(list(
     aggregate(mean~year+month,data=weather_study,FUN=mean), #Monthly means of mean daily temperature
@@ -495,6 +496,7 @@ pander(head(mean_weather1), split.table = 100, style = 'rmarkdown')
 ```
 
 # Calculations FFD stats
+
 Calculate mean, variance, duration, skewness and kurtosis of FFD and merge with previous data
 
 ```{r Calculate mean, variance, duration, skewness and kurtosis of FFD and merge with previous data}
@@ -510,6 +512,7 @@ names(mean_weather3)
 ```
 
 # Calculations cumulated GDD/GDH
+
 Sum of GDD/GDH until each date, starting from the start of the year
 
 ```{r Calculate cumulated GDD/GDH}
@@ -528,6 +531,7 @@ weather_study<-as.data.frame(weather_study %>%
 ```
 
 Merge with previous data
+
 ```{r Merge with other data}
 weather_study$FFD<-weather_study$date_julian
 alldata_weather<-merge(alldata, weather_study[c(1,5:16,20:28)],all.x=T,all.y=F)
@@ -586,12 +590,11 @@ write.table(alldata_weather,
              file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 write.table(tomerge,
-             file="C:/User/avald/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
+             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 ```
 
-Load new data with some missing values for weather manually substituted in OpenOffice Calc
-(merging by date of FFD did not work in cases where FFD was imputed, because that FFD did not correspond exactly to a "real" date - I merged it manually with the closest value)
+Load new data with some missing values for weather manually substituted in OpenOffice Calc (merging by date of FFD did not work in cases where FFD was imputed, because that FFD did not correspond exactly to a "real" date - I merged it manually with the closest value)
 
 ```{r Load new data with some missing values for weather manually substituted in OpenOffice Calc}
 alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=".")
@@ -638,8 +641,7 @@ names(models1_summary)[5]<-"Rsquare"
 kable(arrange(subset(models1_summary,sig=="*"|sig=="**"|sig=="***"),desc(Rsquare)))
 ```
 
-##Plots of the best models
-Some plots of the best models of proportion of plants that have started flowering against cumulated GDD/GDH
+##Plots of the best models Some plots of the best models of proportion of plants that have started flowering against cumulated GDD/GDH
 
 ```{r Plots of proportion of plants starting flowering against cumulated GDD/GDH 1, echo=FALSE, fig.height=4, fig.width=12}
 grid.arrange(ggplot(alldata_agg, aes(x=cumGDH7, y=n_cum_FFD/max_nflowering,group=year,colour=year))+
@@ -665,7 +667,7 @@ ggplot(alldata_agg, aes(x=cumGDD5, y=n_cum_FFD/max_nflowering,group=year,colour=
 
 # Plots for year 1990
 
-Year 1990 shows high values of GDD/GDH  
+Year 1990 shows high values of GDD/GDH\
 Some plots to look at these high values
 
 ```{r 1990, echo=FALSE}
@@ -722,7 +724,8 @@ data_sel<-subset(alldata_weather_subs,!is.na(n_fl)&!is.na(FFD))
 nrow(subset(data_sel,is.na(n_intact_seeds))) #No NAs for seed data
 ```
 
-# Calculation of relative fitness and standardized traits  
+# Calculation of relative fitness and standardized traits
+
 Relativization and standardization was done within each year.
 
 ```{r Relative fitness and standardized traits}
@@ -903,8 +906,9 @@ write.table(mean_weather4,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathy
 ## FFD, linear
 
 ```{r Selection differentials FFD linear}
-seldiffs_FFD<-data.frame(data_sel %>% group_by(year) %>% 
-  do(model = lm(n_intact_seeds_rel ~ FFD_std, data = .)) %>% tidy(model))
+seldiffs_FFD<-data.frame(data_sel %>% nest_by(year) %>% 
+  mutate(model = list(lm(n_intact_seeds_rel ~ FFD_std, data = data))) %>%
+    summarise(tidy(model)))
 seldiffs_FFD_nobs<-data.frame(data_sel %>% group_by(year) %>% 
   do(nobs = nobs(lm(n_intact_seeds_rel ~ FFD_std, data = .)))) #N observations for each year
 seldiffs_FFD_nobs
@@ -916,8 +920,10 @@ kable(subset(seldiffs_FFD,term=="FFD_std"),digits=3)  #Linear selection differen
 ## FFD, quadratic
 
 ```{r Selection differentials FFD quadratic}
-seldiffs_FFD_q<-data.frame(data_sel %>% group_by(year) %>% 
-  do(model = lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2), data = .)) %>% tidy(model))
+seldiffs_FFD_q<-data.frame(data_sel %>% nest_by(year) %>% 
+  mutate(model = list(lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2),
+                         data = data))) %>% summarise(tidy(model)))
+
 seldiffs_FFD_q$sig<-ifelse(seldiffs_FFD_q$p.value<0.05,"*","") 
 seldiffs_FFD_q$estimate<-ifelse(seldiffs_FFD_q$term=="I(FFD_std^2)",2*(seldiffs_FFD_q$estimate),
                                 seldiffs_FFD_q$estimate)
@@ -931,8 +937,9 @@ kable(subset(seldiffs_FFD_q,term=="I(FFD_std^2)"),digits=3)  #Quadratic selectio
 ## Number of flowers, linear
 
 ```{r Selection differentials nfl linear}
-seldiffs_nfl<-data.frame(data_sel %>% group_by(year) %>% 
-  do(model = lm(n_intact_seeds_rel ~ n_fl_std, data = .)) %>% tidy(model))
+seldiffs_nfl<-data.frame(data_sel %>% nest_by(year) %>% 
+  mutate(model = list(lm(n_intact_seeds_rel ~ n_fl_std, data = data))) %>%
+    summarise(tidy(model)))
 seldiffs_nfl$sig<-ifelse(seldiffs_nfl$p.value<0.05,"*","") 
 kable(subset(seldiffs_nfl,term=="n_fl_std"),digits=3)  #Linear selection differentials for nfl
 #nfl * (selection for high number of flowers) in all years but 1992,1995,2009,2010,2013,2014,2015,2017
@@ -941,8 +948,9 @@ kable(subset(seldiffs_nfl,term=="n_fl_std"),digits=3)  #Linear selection differe
 ## Number of flowers, quadratic
 
 ```{r Selection differentials nfl quadratic}
-seldiffs_nfl_q<-data.frame(data_sel %>% group_by(year) %>% 
-  do(model = lm(n_intact_seeds_rel ~ n_fl_std+I(n_fl_std^2), data = .)) %>% tidy(model))
+seldiffs_nfl_q<-data.frame(data_sel %>% nest_by(year) %>% 
+  mutate(model = list(lm(n_intact_seeds_rel ~ n_fl_std+I(n_fl_std^2), 
+                         data = data))) %>% summarise(tidy(model)))
 seldiffs_nfl_q$sig<-ifelse(seldiffs_nfl_q$p.value<0.05,"*","") 
 seldiffs_nfl_q$estimate<-ifelse(seldiffs_nfl_q$term=="I(nfl_std^2)",2*(seldiffs_nfl_q$estimate),
                                 seldiffs_nfl_q$estimate)
@@ -1040,8 +1048,9 @@ ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results
 ## FFD, linear
 
 ```{r Selection gradients FFD linear}
-selgrads_FFD<-data.frame(data_sel %>% group_by(year) %>% 
-  do(model = lm(n_intact_seeds_rel ~ FFD_std+n_fl_std, data = .)) %>% tidy(model))
+selgrads_FFD<-data.frame(data_sel %>% nest_by(year) %>% 
+  mutate(model = list(lm(n_intact_seeds_rel ~ FFD_std+n_fl_std, 
+                         data = data))) %>% summarise(tidy(model)))
 selgrads_FFD$sig<-ifelse(selgrads_FFD$p.value<0.05,"*","") 
 kable(subset(selgrads_FFD,term=="FFD_std"),digits=3)  #Linear selection gradients for FFD
 #FFD * (selection for early flowering) in 1991,1992,1993,1994,2007,2010,2012,2014
@@ -1050,8 +1059,9 @@ kable(subset(selgrads_FFD,term=="FFD_std"),digits=3)  #Linear selection gradient
 ## FFD, quadratic and correlational
 
 ```{r Selection gradients FFD quadratic}
-selgrads_FFD_q<-data.frame(data_sel %>% group_by(year) %>% 
-  do(model = lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2)+n_fl_std+I(n_fl_std^2)+FFD_std:n_fl_std, data = .)) %>% tidy(model))
+selgrads_FFD_q<-data.frame(data_sel %>% nest_by(year) %>% 
+  mutate(model = list(lm(n_intact_seeds_rel ~ FFD_std+I(FFD_std^2)+n_fl_std+I(n_fl_std^2)+FFD_std:n_fl_std, 
+                         data = data))) %>% summarise(tidy(model)))
 selgrads_FFD_q$sig<-ifelse(selgrads_FFD_q$p.value<0.05,"*","") 
 kable(subset(selgrads_FFD_q,term=="I(FFD_std^2)"),digits=3)  
 #Quadratic selection gradients for FFD 
@@ -1090,7 +1100,7 @@ ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results
 
 Calculate BCa confindence intervals for model estimates? (selection differentials and gradients)
 
-# Merge data 
+# Merge data
 
 ```{r Merge data}
 selgrads_FFD_values<-subset(selgrads_FFD,term=="FFD_std")[c(1,3)]
@@ -1102,7 +1112,6 @@ data_sel<-merge(data_sel,data_sel_agg[c(1:145,156)],by="year")
 data_sel$precipitation_13<-data_sel$precipitation_1+
   data_sel$precipitation_2+data_sel$precipitation_3
 ```
-
 
 # Results 1: Among-year variation and trends
 
@@ -1335,7 +1344,7 @@ ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results
        plot=fig1,device="tiff",width=25,height=36,units="cm",dpi=300,compression="lzw")
 ```
 
-## Fig. S1 
+## Fig. S1
 
 ```{r Fig. S1, echo=FALSE, fig.height=10, fig.width=8, message=FALSE}
 figS1<-grid.arrange(
@@ -1501,7 +1510,8 @@ ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results
        plot=figS4,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
-# Results 2: Response of FFD for each plant, mean position and duration of flowering to climate 
+# Results 2: Response of FFD for each plant, mean position and duration of flowering to climate
+
 ## FFD for each plant (Table 1)
 
 ```{r FFD model sel,warning=FALSE,message=FALSE}
@@ -1586,11 +1596,12 @@ Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:year+n_fl_std+(1|id),data = data
 ```
 
 # Results 4: Are differences in selection among years related to climatic conditions?
+
 Response of selection to climate.
 
 ## Table 2A
 
-### Total selection 
+### Total selection
 
 ```{r GLM total}
 # Variables to use
@@ -1626,7 +1637,7 @@ Anova(lmer(n_intact_seeds_rel ~ FFD_std+FFD_std:min_4+FFD_std:precipitation_3+FF
              (1|id),data = subset3,REML=FALSE,na.action="na.fail"))
 ```
 
-### Direct selection 
+### Direct selection
 
 ```{r GLM direct}
 # Variables to use
@@ -1705,7 +1716,7 @@ fig3<-grid.arrange(p1,p2,ncol=2,
                                     just="center",hjust=0.63,
                                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
 ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig3.tiff",
-       plot=fig4,device="tiff",width=19,height=11,units="cm",dpi=300,compression="lzw")
+       plot=fig3,device="tiff",width=19,height=11,units="cm",dpi=300,compression="lzw")
 ```
 
 ## Proportion of among-year variation in selection explained by climatic factors
@@ -1717,7 +1728,7 @@ New approach, used in paper (as in Hunter et al. 2018, code suggested by M. Morr
 ```{r prop among-year variation in total selection explained by climatic factors}
 data_seldiff<-subset(seldiffs_FFD,term=="FFD_std")[c(1,3:4)]
 names(data_seldiff)<-c("year","seldiff","SE_seldiff")
-data_seldiff<-merge(data_seldiff,unique(data_sel[c(1,183,194:195)]))
+data_seldiff<-merge(data_seldiff,unique(data_sel[c(1,185,196:197)]))
 
 myprior <- list(R = list(V=1, nu=0.002))
 model_seldiff<-MCMCglmm(seldiff~min_4+precipitation_3+precipitation_4,
@@ -1782,7 +1793,7 @@ plot(density(post.Var_seldiff/(post.Var_seldiff+model_seldiff$VCV[,2])))
 ```{r prop among-year variation in direct selection explained by climatic factors}
 data_selgrad<-subset(selgrads_FFD,term=="FFD_std")[c(1,3:4)]
 names(data_selgrad)<-c("year","selgrad","SE_selgrad")
-data_selgrad<-merge(data_selgrad,unique(data_sel[c(1,183,194:195)]))
+data_selgrad<-merge(data_selgrad,unique(data_sel[c(1,185,196:197)]))
 
 myprior <- list(R = list(V=1, nu=0.002))
 model_selgrad<-MCMCglmm(selgrad~min_4+precipitation_3+precipitation_4,
@@ -1842,9 +1853,9 @@ HPDinterval(as.mcmc(post.Var_selgrad/(post.Var_selgrad+model_selgrad$VCV[,2])))
 plot(density(post.Var_selgrad/(post.Var_selgrad+model_selgrad$VCV[,2])))
 ```
 
-Psterior mean vs posterior mode: This is something that Bayesians will argue about, with strong feelings and no real solution.  I don’t think these are differences that will massively influence your overall interpretation.  The posterior mode is most directly analogous to the maximum likelihood estimate.  In that sense it ought to be preferable.  However, the mean is used more often, I think mostly for practical reasons (there is typically less run-to-run variation in the value of the posterior mean than mode to to MCMC error).  Sorry that is not more helpful.
+Psterior mean vs posterior mode: This is something that Bayesians will argue about, with strong feelings and no real solution. I don't think these are differences that will massively influence your overall interpretation. The posterior mode is most directly analogous to the maximum likelihood estimate. In that sense it ought to be preferable. However, the mean is used more often, I think mostly for practical reasons (there is typically less run-to-run variation in the value of the posterior mean than mode to to MCMC error). Sorry that is not more helpful.
 
-If you plot the posterior distributions (i.e. as a histogram or using the density() function) of your estimates of the proportions of variation explained by each variable individually, you’ll find that they are very skewed.  The values with the most posterior support are very small.  However, the distributions will indicate very high uncertainty, with quite large values of the proportion explained being compatible with the available data, such that the mean of the posterior distribution is higher.  Such are the frustrations with tackling hard and important questions that are extremely challenging analytically!
+If you plot the posterior distributions (i.e. as a histogram or using the density() function) of your estimates of the proportions of variation explained by each variable individually, you'll find that they are very skewed. The values with the most posterior support are very small. However, the distributions will indicate very high uncertainty, with quite large values of the proportion explained being compatible with the available data, such that the mean of the posterior distribution is higher. Such are the frustrations with tackling hard and important questions that are extremely challenging analytically!
 
 # Write table for further work
 
@@ -1878,7 +1889,7 @@ crossprod(!is.na(rank[12:23])) # Number of observations for each correlation
 
 ## Hunter et al. 2018
 
-1. Environmentally-structured fitness function
+1.  Environmentally-structured fitness function
 
 ```{r hunter1}
 myprior <- list(R = list(V=1, nu=0.002),
@@ -1891,7 +1902,7 @@ function1<-MCMCglmm(round(n_intact_seeds)~FFD*mean_4,random=~year,rcov =~ units,
                     nitt=100000,burnin=10000,thin=10,prior=myprior,verbose=F)
 ```
 
-2. Function relating mean trait value to environmental variance
+2.  Function relating mean trait value to environmental variance
 
 ```{r hunter2}
 function2<-MCMCglmm(FFD~mean_4,random=~year,rcov=~units,
@@ -1899,7 +1910,7 @@ function2<-MCMCglmm(FFD~mean_4,random=~year,rcov=~units,
                     nitt=100000,burnin=10000,thin=10,prior=myprior,verbose=F)
 ```
 
-3. Function relating trait variance to environmental variance
+3.  Function relating trait variance to environmental variance
 
 ```{r hunter3}
 #function3<-MCMCglmm()
@@ -2005,7 +2016,7 @@ r.squaredGLMM(get.models(modsel_FFD_prev,subset=1)$"960") #R square of best mode
 # Temperature and precipitation of the previous year do affect FFD but the R square is lower (0.30 vs. 0.58)
 ```
 
-### On selection 
+### On selection
 
 ```{r clim previous 3}
 # Variables to use
@@ -2139,4 +2150,3 @@ file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/climate
 write.table(data_indiv,
 file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_indiv.txt",sep="\t",dec=",",col.names=T,row.names=F)
 ```
-
