@@ -14,19 +14,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r Read data created with previous scripts, include=FALSE}
 alldata<-read.csv(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",
+  "C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata.csv",
                        header=T,sep="\t",dec=".") #Read field data
 temperature<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/temperature.csv",
+  "C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/temperature.csv",
                         header=T,sep="\t",dec=".") 
 precipitation<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation.csv",
+  "C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation.csv",
                           header=T,sep="\t",dec=".")
 precipitation_extra<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation_extra.csv",
+  "C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/precipitation_extra.csv",
                           header=T,sep="\t",dec=".")
 dates<-read.table(
-  "C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/dates.csv",
+  "C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/dates.csv",
                         header=T,sep="\t",dec=".") 
 temperature$date<-as.Date(as.character(temperature$date))
 precipitation$date<-as.Date(as.character(precipitation$date))
@@ -443,7 +443,7 @@ pander(head(weather), split.table = 100, style = 'rmarkdown')
 
 ```{r}
 weather_GDD<-write_csv(weather,
-                       file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/weather_GDD.csv")
+                       file="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/weather_GDD.csv")
 ```
 
 ## Calculate julian date as day with respect to vernal equinox
@@ -587,17 +587,17 @@ head(subset(alldata_weather,is.na(mean)&!is.na(FFD)))
 
 #Substitute by hand in OpenOffice Calc NA values in weather columns of alldata_weather by values in #tomerge, matching by closest FFD_r value
 write.table(alldata_weather,
-             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather.csv",
+             file="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 write.table(tomerge,
-             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
+             file="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/tomerge.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 ```
 
 Load new data with some missing values for weather manually substituted in OpenOffice Calc (merging by date of FFD did not work in cases where FFD was imputed, because that FFD did not correspond exactly to a "real" date - I merged it manually with the closest value)
 
 ```{r Load new data with some missing values for weather manually substituted in OpenOffice Calc}
-alldata_weather_subs<-read.table("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=".")
+alldata_weather_subs<-read.table("C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/alldata_weather_subs.csv",header=T,sep="\t",dec=".")
 nrow(subset(alldata_weather_subs,is.na(mean)&!is.na(FFD))) #No rows with missing weather data
 nrow(subset(alldata_weather_subs,n_fr>cum_n_fl)) #No cases where n_fruits>n_flowers
 ```
@@ -758,9 +758,10 @@ propfl$prop_fl<-propfl$n_cum_FFD/propfl$max_flowering
 
 ```{r}
 models_propfl<-propfl %>% 
-  group_by(year) %>% 
-  do(model = glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD, data = .,family=binomial))%>%
-  tidy(model)
+  nest_by(year) %>% 
+  mutate(model = list(glm(cbind(n_cum_FFD,max_flowering-n_cum_FFD) ~ FFD, 
+                          data = data,family=binomial)))%>%
+  summarise(tidy(model))
 models_propfl
 ```
 
@@ -897,7 +898,7 @@ fl_pos_dur$days_90_10<-with(fl_pos_dur,date_90-date_10) # Another measure of dur
 head(fl_pos_dur)
 mean_weather4<-merge(mean_weather3,fl_pos_dur[c(1,3:4,9:11)])
 data_sel<-merge(data_sel,fl_pos_dur)
-write.table(mean_weather4,file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/mean_weather.csv",
+write.table(mean_weather4,file="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/mean_weather.csv",
             sep="\t",dec=".",col.names=T,row.names=F)
 ```
 
@@ -991,7 +992,7 @@ ggplot(subset(seldiffs,term=="I(FFD_std^2)"|term=="I(n_fl_std^2)"), aes(x=year, 
     xlab("Year")+ylab("Quadratic selection differential")+ggtitle("B)")+
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme(),
 ncol=1)
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs1.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs1.tiff",
        plot=plot_seldiffs1,device="tiff",width=25,height=25,units="cm",dpi=300,compression="lzw")
 
 ```
@@ -1017,7 +1018,7 @@ ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel,color=year))+
   theme_base()+theme(plot.background=element_rect(fill="white", colour=NA))+my_theme()+
   ggtitle("B)")+theme(plot.title = element_text(hjust =-0.15,color="white")),
 ncol=2,nrow=2,position="right")
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs2.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs2.tiff",
        plot=plot_seldiffs2,device="tiff",width=25,height=20,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1028,7 +1029,7 @@ plot_seldiffs3<-ggplot(data_sel,aes(x=FFD_std,y=n_intact_seeds_rel))+facet_wrap(
   xlab("Standardized first flowering date")+ylab("Relative number of intact seeds")+
   my_theme()
 plot_seldiffs3
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs3.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs3.tiff",
        plot=plot_seldiffs3,device="tiff",width=14,height=22,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1039,7 +1040,7 @@ plot_seldiffs4<-ggplot(data_sel,aes(x=n_fl_std,y=n_intact_seeds_rel))+facet_wrap
   xlab("Standardized number of flowers")+ylab("Relative number of intact seeds")+
   my_theme()
 plot_seldiffs4
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs4.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/seldiffs4.tiff",
        plot=plot_seldiffs4,device="tiff",width=14,height=22,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1093,7 +1094,7 @@ plot_selgrads1<-ggplot(subset(selgrads_FFD,term=="FFD_std"), aes(x=year, y=estim
     xlab("Year")+ylab("Linear selection gradient for first flowering day")+
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+my_theme()
 plot_selgrads1
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/selgrads1.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/selgrads1.tiff",
        plot=plot_selgrads1,device="tiff",width=25,height=12,units="cm",dpi=300,compression="lzw")
 #This will be part of Fig. 1?
 ```
@@ -1340,7 +1341,7 @@ ggplot(subset(selgrads_FFD,term=="FFD_std"),
     xlab("Year")+ylab("Selection gradient\nfor first flowering date")+
     geom_hline(yintercept=0,size=0.5,colour="grey",linetype="dashed")+ggtitle("D)")+my_theme(),
 ncol=1)
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig1.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig1.tiff",
        plot=fig1,device="tiff",width=25,height=36,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1383,7 +1384,7 @@ figS1<-grid.arrange(
   scale_x_continuous(breaks=seq(1961,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS1.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS1.tiff",
        plot=figS1,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1426,7 +1427,7 @@ figS2<-grid.arrange(
   scale_x_continuous(breaks=seq(1961,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS2.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS2.tiff",
        plot=figS2,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1469,7 +1470,7 @@ figS3<-grid.arrange(
   scale_x_continuous(breaks=seq(1961,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS3.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS3.tiff",
        plot=figS3,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1506,7 +1507,7 @@ figS4<-grid.arrange(
   scale_x_continuous(breaks=seq(1945,2017,4)),
 ncol=1)
 
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS4.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/figS4.tiff",
        plot=figS4,device="tiff",width=25,height=33,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1533,7 +1534,7 @@ clusterEvalQ(clust1, library(lme4))
 modsel_FFD<-pdredge(globmod_FFD,fixed=c("n_fl"),subset=smat1,cluster=clust1)
 
 summary(model.avg(modsel_FFD,subset=delta<2)) # Summary averaged model
-importance(modsel_FFD) # Variable importance
+sw(modsel_FFD) # Variable importance
 r.squaredGLMM(get.models(modsel_FFD,subset=1)$"1585") #R square of best model
 ```
 
@@ -1575,7 +1576,7 @@ fig2<-grid.arrange(
     theme(plot.title=element_text(hjust=-0.13,vjust=2)),
   ncol=4,left=textGrob("First flowering date",just="center",hjust=0.42,
                      gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig2.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig2.tiff",
        plot=fig2,device="tiff",width=38,height=9,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1629,7 +1630,7 @@ modsel_total_selection<-pdredge(globmod_total_selection,subset=smat3,fixed=c("FF
                           cluster=clust1)
 
 summary(model.avg(modsel_total_selection,subset=delta<2)) # Summary averaged model
-importance(modsel_total_selection) # Variable importance
+sw(modsel_total_selection) # Variable importance
 r.squaredGLMM(get.models(modsel_total_selection,subset=1)$"1696") #R square of best model
 
 # Anova (Table 4A) with model including variables that were significant in the averaged model
@@ -1665,7 +1666,7 @@ modsel_direct_selection<-pdredge(globmod_direct_selection,subset=smat4,
                                  fixed=c("FFD_std","n_fl_std"),cluster=clust1)
 
 summary(model.avg(modsel_direct_selection,subset=delta<2)) # Summary averaged model
-importance(modsel_direct_selection) # Variable importance
+sw(modsel_direct_selection) # Variable importance
 r.squaredGLMM(get.models(modsel_direct_selection,subset=1)$"1696") #R square of best model
 
 # Anova (Table 4A) with model including variables that were significant in the averaged model
@@ -1715,7 +1716,7 @@ fig3<-grid.arrange(p1,p2,ncol=2,
                       left=textGrob("Relative number of intact seeds",
                                     just="center",hjust=0.63,
                                     gp=gpar(fontsize=16,fontfamily="serif"),rot = 90))
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig3.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig3.tiff",
        plot=fig3,device="tiff",width=19,height=11,units="cm",dpi=300,compression="lzw")
 ```
 
@@ -1861,7 +1862,7 @@ If you plot the posterior distributions (i.e. as a histogram or using the densit
 
 ```{r write table with selected data (2411 flowering events) for further work}
 write.table(data_sel,
-             file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_sel.csv",
+             file="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_sel.csv",
              sep="\t",dec=",",col.names=T,row.names=F)
 ```
 
@@ -1930,7 +1931,7 @@ with(data_sel,summary(lm(n_fl~period)))
 ## FFD-MFD-LFD
 
 ```{r FFD-MFD-LFD}
-MFD_LFD<-read.delim("C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/MFD_LFD.csv")
+MFD_LFD<-read.delim("C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/MFD_LFD.csv")
 MFD_LFD$FFD<-as.Date(as.character(MFD_LFD$FFD),format="%d/%m/%Y")
 MFD_LFD$MFD<-as.Date(as.character(MFD_LFD$MFD),format="%d/%m/%Y")
 MFD_LFD$LFD<-as.Date(as.character(MFD_LFD$LFD),format="%d/%m/%Y")
@@ -2011,7 +2012,7 @@ clusterEvalQ(clust1, library(lme4))
 modsel_FFD_prev<-pdredge(globmod_FFD_prev,fixed=c("n_fl"),subset=smat5,cluster=clust1)
 
 summary(model.avg(modsel_FFD_prev,subset=delta<2)) # Summary averaged model
-importance(modsel_FFD_prev) # Variable importance
+sw(modsel_FFD_prev) # Variable importance
 r.squaredGLMM(get.models(modsel_FFD_prev,subset=1)$"960") #R square of best model
 # Temperature and precipitation of the previous year do affect FFD but the R square is lower (0.30 vs. 0.58)
 ```
@@ -2044,7 +2045,7 @@ modsel_direct_selection_prev<-pdredge(globmod_direct_selection_prev,subset=smat6
                                  fixed=c("FFD_std","n_fl_std"),cluster=clust1)
 
 summary(model.avg(modsel_direct_selection_prev,subset=delta<2)) # Summary averaged model
-importance(modsel_direct_selection_prev) # Variable importance
+sw(modsel_direct_selection_prev) # Variable importance
 r.squaredGLMM(get.models(modsel_direct_selection_prev,subset=1)$"512") #R square of best model
 
 # Anova (Table 4A) with model including variables that were significant in the averaged model
@@ -2075,7 +2076,7 @@ clusterEvalQ(clust1, library(lme4))
 modsel_FFD_prev_curr<-pdredge(globmod_FFD_prev_curr,fixed=c("n_fl"),subset=smat7,cluster=clust1)
 
 summary(model.avg(modsel_FFD_prev_curr,subset=delta<2)) # Summary averaged model
-importance(modsel_FFD_prev_curr) # Variable importance
+sw(modsel_FFD_prev_curr) # Variable importance
 r.squaredGLMM(get.models(modsel_FFD_prev_curr,subset=1)$"127") #R square of best model
 # Temperature and precipitation of the previous year do affect FFD but the R square is lower (0.30 vs. 0.58)
 ```
@@ -2134,7 +2135,7 @@ fig4_new<-ggplot(new_data, aes(coef_FFD,selgradFFD))+
     geom_smooth(method="lm",se=T,size=1,color="black")+
     xlab("Partial regression coefficient of\nabsolute fitness on FFD")+
   ylab("Selection gradient for FFD")+my_theme()
-ggsave(filename="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig4_new.tiff",
+ggsave(filename="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/results/figures/fig4_new.tiff",
        plot=fig4_new,device="tiff",width=10,height=10,units="cm",dpi=300,compression="lzw")
 
 ```
@@ -2146,7 +2147,7 @@ climate_1961_2017<-merge(mean_temp[c(1,103:105,115:117,127:129)],
                          mean_prec[c(1,7:9)])
 data_indiv<-data_sel[c(1:3,20,42,160:162,172:174,184:186,196:198)]
 write.table(climate_1961_2017,
-file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/climate_1961_2017.txt",sep="\t",dec=",",col.names=T,row.names=F)
+file="C:/Users/alici/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/climate_1961_2017.txt",sep="\t",dec=",",col.names=T,row.names=F)
 write.table(data_indiv,
 file="C:/Users/User/Dropbox/SU/Projects/lathyrus/lathyrus_ms1/data/clean/data_indiv.txt",sep="\t",dec=",",col.names=T,row.names=F)
 ```

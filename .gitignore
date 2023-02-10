@@ -2,3 +2,5 @@ data/raw/
 .Rproj.user
 data/
 results/figures/
+.Rhistory
+docs/
